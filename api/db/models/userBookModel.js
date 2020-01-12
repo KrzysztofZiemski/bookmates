@@ -1,21 +1,34 @@
-const connection=require('../connection');
+const connection = require('../connection');
 
 const tableName = 'user_books';
 
-const insertBook=(book)=>{
-    const{ userID, title, author, isbn, genre, rating, status} = book;
-    const sql =`
+const insertBook = (book) => {
+    const {
+        userID,
+        title,
+        author,
+        isbn,
+        genre,
+        rating,
+        status
+    } = book;
+    const sql = `
         INSERT INTO ${tableName}
         VALUES(
-           ${userID}, DEFAULT ,${title},${author},${isbn},${genre},${rating}, ${status}
+           ${userID}, DEFAULT ,'${title}','${author}','${isbn}','${genre}',${rating},'${status}'
         )
     `;
     return connection.query(sql);
 }
 
-const getBook=()=>{
+const getBook = (id) => {
     const sql = `
-        SELECT * FROM ${tableName}
+        SELECT * FROM ${tableName} WHERE user_book_id = ${id};
     `;
-    return connection.query(sql);
+    return connection.query(sql).then(response => response.rows);
 }
+
+module.exports = {
+    insertBook,
+    getBook
+};
