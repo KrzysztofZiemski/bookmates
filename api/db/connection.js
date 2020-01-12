@@ -1,4 +1,4 @@
-const { Pool, Client } = require('pg');
+const { Client } = require('pg');
 const config = require('../config.json');
 
 const client = new Client(config.DB);
