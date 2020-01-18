@@ -1,8 +1,8 @@
-const generateToken = (user) => {
-    return jwt.sign();
+// const generateToken = (user) => {
+//     return jwt.sign();
 
-};
+// };
 
-const validateToken = () =>{
+// const validateToken = () =>{
 
-};
+// };

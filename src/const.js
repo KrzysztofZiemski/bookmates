@@ -1,1 +1,1 @@
-export const BOOKS_ROUTE = "/book"; //
+export const BOOKS_ROUTE = "/book"; 
