@@ -5,21 +5,21 @@ import { addUser } from '../../../repos/user'
 
 const RegistrationPage = () => {
 
-  let [name, setName] = React.useState(undefined);
-  let [surName, setSurName] = React.useState(undefined);
-  let [mail, setMail] = React.useState(undefined);
-  let [country, setCountry] = React.useState(undefined);
-  let [city, setCity] = React.useState(undefined);
-  let [street, setStreet] = React.useState(undefined);
-  let [streetNumber, setStreetNumber] = React.useState(undefined);
-  let [localNumber, setLocalNumber] = React.useState(undefined);
-  let [postalCode, setPostalCode] = React.useState(undefined);
-  let [region, setRegion] = React.useState(undefined);
-  let [gender, setGender] = React.useState(undefined);
-  let [birth, setBirth] = React.useState(undefined);
-  let [password, setPassword] = React.useState(undefined);
-  let [confirmPassword, setConfirmPassword] = React.useState(undefined);
-
+  let [name, setName] = React.useState("");
+  let [surName, setSurName] = React.useState("");
+  let [mail, setMail] = React.useState("");
+  let [country, setCountry] = React.useState("");
+  let [city, setCity] = React.useState("");
+  let [street, setStreet] = React.useState("");
+  let [streetNumber, setStreetNumber] = React.useState("");
+  let [localNumber, setLocalNumber] = React.useState("");
+  let [postalCode, setPostalCode] = React.useState("");
+  let [region, setRegion] = React.useState("");
+  let [gender, setGender] = React.useState("");
+  let [birth, setBirth] = React.useState("");
+  let [password, setPassword] = React.useState("");
+  let [confirmPassword, setConfirmPassword] = React.useState("");
+  let [message, setMessage] = React.useState(null);
 
   const handleRegistration = async (e) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ const RegistrationPage = () => {
       if (password !== confirmPassword) return console.log('hasło nie jest zgodne');
       const coords = await getCoords(`${city} ${street} ${streetNumber}`);
       const user = { name, surName, mail, country, city, street, streetNumber, localNumber, postalCode, region, gender, birth, password, coords }
-      addUser(user)
+      addUser(user).then(response => console.log('response.status'))
     } else {
       console.log('nie wypełnione pole')
     }
@@ -86,6 +86,7 @@ const RegistrationPage = () => {
         </div>
         <button type="submit">Zarejestruj</button>
       </form>
+      {message ? <div>Udana rejestracja</div> : null}
     </div >
 
   );

@@ -1,5 +1,6 @@
-create TABLE users(
-  id  SERIAL,
+create TABLE users
+(
+  id SERIAL,
   email VARCHAR(128) UNIQUE NOT NULL,
   password_salt VARCHAR(16) NOT NULL,
   passworh_hash VARCHAR(128) NOT NULL,
@@ -14,6 +15,6 @@ create TABLE users(
   local_number VARCHAR (16),
   coordinates point not NULL,
   gender VARCHAR(16),
-  
-  primary key(id)
+  birth VARCHAR(16)
+    primary key(id)
 )

@@ -5,8 +5,8 @@ export const getUser = id => {
 };
 
 export const addUser = (user) => {
-    console.log(user)
-    fetch(url, {
+
+    return fetch(url, {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {

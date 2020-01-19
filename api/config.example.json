@@ -3,7 +3,9 @@
     "user": "postgres",
     "host": "35.189.101.35",
     "database": "postgres",
-    "password": "fix me",
+    "password": "password",
     "port": 5432
-  }
+  },
+  "HASH_ROUND": "numberRound",
+  "TOKEN_SECRET": "secret"
 }

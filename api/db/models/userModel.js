@@ -1,11 +1,11 @@
 const connection = require('../connection');
 const tableName = 'users';
-//dodać pole birth
+
 const userModel = (row) => ({
     id: row.id,
     email: row.email,
     password_salt: row.password_salt,
-    passworh_hash: row.passworh_hash,
+    passworh_hash: row.password_hash,
     name: row.name,
     surname: row.surname,
     country: row.country,
@@ -16,27 +16,27 @@ const userModel = (row) => ({
     street_number: row.street_number,
     local_number: row.local_number,
     coordinates: row.coordinates,
-    gender: row.gender
-
+    gender: row.gender,
+    birth: row.birth
 
 });
 
-//userModel.update = (data) =>{
-//   console.log(data);
-//};
+userModel.update = (data) => {
+    console.log(data);
+};
 
-
-const insertUser = (user) => { // w nawiasie userData  '${userData.email}'
-    //dodać pole birth
+const insertUser = (user) => {
     const sql = `
         INSERT INTO ${tableName}
         VALUES (
-            DEFAULT, '${user.mail}', 'olaola', 'olaniemakota', '${user.name}', '${user.surname}', '${user.country}', '${user.city}', 
-            '${user.postalCode}', NULL, 'Testowa', '33', '123', ${user.coords}, ' Krowa'
+            DEFAULT, '${user.mail}', '${user.salt}', '${user.password}', '${user.name}','${user.surName}', '${user.country}', '${user.city}', 
+            '${user.postalCode}', '${user.region}', '${user.street}', '${user.streetNumber}', '${user.localNumber}', POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}'
     )
     `;
     return connection.query(sql);
 };
+
+
 
 const getUsers = () => {
     const sql = `
@@ -55,14 +55,13 @@ const getUser = (id) => {
 
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
-const getUserByLogin = (login) => {
+const getUserByMail = (mail) => {
     const sql = `
     SELECT * FROM ${tableName}
-    WHERE login = ${login}    `;
+    WHERE email = '${mail}'`;
+
 
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
-
-module.exports = { getUsers, getUser, getUserByLogin, insertUser };
-
-//getUser(1).then((results) =>console.log(results[0]));
+//getUserByMail('krzyszto').then(e => console.log(e))
+module.exports = { insertUser, getUserByMail, getUser };
