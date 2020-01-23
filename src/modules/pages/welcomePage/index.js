@@ -3,8 +3,8 @@ import { auth } from '../../../repos/auth';
 import { setCookie } from '../../cookies';
 
 
-const WelcomePage = () => {
-
+const WelcomePage = (props) => {
+  const { setLoginUser } = props;
   let [password, setPassword] = React.useState("");
   let [mail, setMail] = React.useState("");
 
@@ -15,10 +15,9 @@ const WelcomePage = () => {
       throw new Error();
     }).then(user => {
       setCookie(user.token);
-      //zrobić redirect bez przeładowania
-      window.location.replace("http://localhost:3000/dashboard");
-
+      setLoginUser(user)
     })
+      .catch(err => console.log(err))
   }
   return (
     <div>

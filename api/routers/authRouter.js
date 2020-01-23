@@ -4,6 +4,7 @@ const { checkPassword } = require('../db/utils/passwordEncryption');
 const { getUserByMailContoller, getUserContoller } = require('../controllers/user');
 const { generateToken, validateToken } = require('../db/utils/token');
 
+
 const login = async (req, res) => {
     const userData = req.body;
 
@@ -13,49 +14,22 @@ const login = async (req, res) => {
     const isOk = checkPassword(user, userData.password);
     if (!isOk) res.status(404).json('sprawdź login lub hasło');
     const token = generateToken(user)
-    const data = {
-        id: user.id,
-        mail: user.email,
-        name: user.name,
-        surname: user.surname,
-        country: user.country,
-        city: user.city,
-        postal_code: user.postal_code,
-        region: user.region,
-        street_name: user.street_name,
-        street_number: user.street_number,
-        local_number: user.local_number,
-        coords: user.coordinates,
-        gender: user.gender,
-        birth: user.birth,
-        token: token
-    }
-    res.status(200).json(data);
+
+    const { password_salt, password_hash, ...safeUserData } = user;
+    const data = { ...safeUserData, token }
+
+    return res.status(200).json(data);
 }
 
 const checkToken = (req, res) => {
 
 
-    getUserContoller(req.token.sub).
-        then(userList => {
+    getUserContoller(req.token.sub)
+        .then(userList => {
             const user = userList[0];
-            const data = {
-                id: user.id,
-                mail: user.email,
-                name: user.name,
-                surname: user.surname,
-                country: user.country,
-                city: user.city,
-                postal_code: user.postal_code,
-                region: user.region,
-                street_name: user.street_name,
-                street_number: user.street_number,
-                local_number: user.local_number,
-                coords: user.coordinates,
-                gender: user.gender,
-                birth: user.birth,
-            }
-            res.status(200).json(data)
+            const { password_salt, password_hash, ...safeUserData } = user;
+
+            res.status(200).json(safeUserData)
         })
 }
 

@@ -5,7 +5,7 @@ const userModel = (row) => ({
     id: row.id,
     email: row.email,
     password_salt: row.password_salt,
-    passworh_hash: row.password_hash,
+    password_hash: row.password_hash,
     name: row.name,
     surname: row.surname,
     country: row.country,

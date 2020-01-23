@@ -24,7 +24,7 @@ const RegistrationPage = () => {
   const handleRegistration = async (e) => {
     e.preventDefault();
     if (name && surName && mail && country && city && street && streetNumber && postalCode && region && gender && birth && password && confirmPassword) {
-      if (password !== confirmPassword) return console.log('hasło nie jest zgodne');
+      if (password !== confirmPassword) return alert.log('Podane hasła nie są jednakowe');
       const coords = await getCoords(`${city} ${street} ${streetNumber}`);
       const user = { name, surName, mail, country, city, street, streetNumber, localNumber, postalCode, region, gender, birth, password, coords }
       addUser(user).then(response => console.log('response.status'))

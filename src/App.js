@@ -5,7 +5,8 @@ import {
   Switch,
   Route,
   Link,
-  useRouteMatch
+  useRouteMatch,
+  Redirect
 } from "react-router-dom";
 
 import WelcomePage from "./modules/pages/welcomePage";
@@ -22,6 +23,9 @@ import ErrorPage from "./modules/pages/errorPage";
 //dodawanie ksiazki  //profil zalogowanego uzytkownika// profil oglądanego użytkownika
 function App() {
   //header zrobić warunkowo w zależności od ścierzki wyświetglać lub nie za pomocą useRouteMatch.
+
+  //po zalogowaniu się w loggedUser są zapisywane podstawowe dane użytkownika(można dać inne dane potrzebne) i następuje przeładowanie path na dashboard
+  let [loggedUser, setLoginUser] = React.useState(null)
   return (
     <Router>
       <header>
@@ -31,7 +35,8 @@ function App() {
       <main>
         <Switch>
           <Route exact path="/">
-            <WelcomePage></WelcomePage>
+            {loggedUser ? <Redirect to="/dashboard" /> : <WelcomePage setLoginUser={setLoginUser} />}
+
           </Route>
           <Route path="/dashboard">
             <DashboardPage></DashboardPage>
