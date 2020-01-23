@@ -36,8 +36,8 @@ const login = async (req, res) => {
 const checkToken = (req, res) => {
 
 
-    getUserContoller(req.token.sub).
-        then(userList => {
+    getUserContoller(req.token.sub)
+        .then(userList => {
             const user = userList[0];
             const data = {
                 id: user.id,
