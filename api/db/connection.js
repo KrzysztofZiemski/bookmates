@@ -7,6 +7,7 @@ client.connect();
 
 module.exports = client;
 
+// TODO: 'SELECT NOW()' is not returning error, even if there is no connection to db
 client.query('SELECT NOW()', (err, res) => {
   console.log('db connected');
 });
