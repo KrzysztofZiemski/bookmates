@@ -13,13 +13,11 @@ const generateToken = (user) => {
 };
 
 const validateToken = (req, res, next) => {
-
     const AUTHORIZATION_TOKEN = req.headers.authorization && req.headers.authorization.split(' ');
     if (AUTHORIZATION_TOKEN === null || AUTHORIZATION_TOKEN === undefined) return res.status(401).json('not authorized');
     if (AUTHORIZATION_TOKEN[0] !== 'Bearer') return res.status(401)
 
     jwt.verify(AUTHORIZATION_TOKEN[1], config.TOKEN_SECRET, (err, decoded) => {
-        console.log(decoded)
         if (decoded) {
             req.token = decoded;
             next()

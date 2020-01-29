@@ -16,7 +16,9 @@ const addUser = async (req, res) => {
     user.salt = salt;
     user.password = password;
     addUserContoller(user)
-        .then(result => res.status(200).json(result))
+        .then(result => {
+            return res.status(200).json(result)
+        })
         .catch(e => res.status(500))
 }
 

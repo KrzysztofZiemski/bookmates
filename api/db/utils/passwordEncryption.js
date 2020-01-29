@@ -7,6 +7,6 @@ const hashPassword = async (user) => {
     return { salt, password }
 }
 const checkPassword = (user, password) => {
-    return bcrypt.compareSync(password, user.passworh_hash);
+    return bcrypt.compareSync(password, user.password_hash);
 }
 module.exports = { hashPassword, checkPassword }

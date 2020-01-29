@@ -29,8 +29,7 @@ const insertUser = (user) => {
     const sql = `
         INSERT INTO ${tableName}
         VALUES (
-            DEFAULT, '${user.mail}', '${user.salt}', '${user.password}', '${user.name}','${user.surName}', '${user.country}', '${user.city}', 
-            '${user.postalCode}', '${user.region}', '${user.street}', '${user.streetNumber}', '${user.localNumber}', POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}'
+            DEFAULT, '${user.mail}', '${user.salt}', '${user.password}', '${user.name}','${user.surName}', '${user.country}', '${user.city}', '${user.postalCode}', '${user.region}', '${user.street}', '${user.streetNumber}', '${user.localNumber}', POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}'
     )
     `;
     return connection.query(sql);
@@ -44,7 +43,10 @@ const getUsers = () => {
     `;
 
 
-    return connection.query(sql).then((response) => response.rows.map(userModel));
+    return connection.query(sql).then((response) => {
+        console.log('weszło?')
+        return response.rows.map(userModel)
+    }).catch(err => console.log(err));
 };
 
 const getUser = (id) => {
@@ -63,5 +65,32 @@ const getUserByMail = (mail) => {
 
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
+const removeUser = (id) => {
+    console.log('remove')
+    const sql = `
+        DELETE FROM ${tableName}
+        WHERE id = ${id}
+        `
+    return connection.query(sql);
+}
 //getUserByMail('krzyszto').then(e => console.log(e))
+const x = {
+    name: 'kamil',
+    surName: 'luby',
+    mail: 'qweq',
+    country: 'Polska',
+    city: 'Warszawa',
+    street: 'opinogórska',
+    streetNumber: '5',
+    localNumber: '',
+    postalCode: '04-039',
+    region: 'asas',
+    gender: 'man',
+    birth: '15-09-1985',
+    password: '$2a$13$JU/2HkSgNY3tl3dc9x1JouMjFg2abIG1X/ORRgeEFljX/H2x9JZoO',
+    coords: { lat: 52.2326387, lng: 21.0796689 },
+    salt: '$2a$13$JU/2HkSgNY3tl3dc9x1Jou'
+}
+//insertUser(x)
+removeUser(1)
 module.exports = { insertUser, getUserByMail, getUser };

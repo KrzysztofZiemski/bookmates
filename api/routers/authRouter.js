@@ -7,11 +7,10 @@ const { generateToken, validateToken } = require('../db/utils/token');
 
 const login = async (req, res) => {
     const userData = req.body;
-
     const responseUser = await getUserByMailContoller(userData);
     if (responseUser.length === 0) res.status(404).json('sprawdź login lub hasło');
     const user = responseUser[0];
-    const isOk = checkPassword(user, userData.password);
+    const isOk = await checkPassword(user, userData.password);
     if (!isOk) res.status(404).json('sprawdź login lub hasło');
     const token = generateToken(user)
 
