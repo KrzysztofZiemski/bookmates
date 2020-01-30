@@ -20,24 +20,12 @@ const login = async (req, res) => {
     return res.status(200).json(data);
 }
 
-const checkToken = (req, res) => {
-
-
-    getUserContoller(req.token.sub)
-        .then(userList => {
-            const user = userList[0];
-            const { password_salt, password_hash, ...safeUserData } = user;
-
-            res.status(200).json(safeUserData)
-        })
-}
-
 //localhost:3010/auth
 
 //logowanie i zwracanie Bearer tokena przy poprawnym logowaniu
 authRouter.post('/', login);
 
 //sprawdzanie poprawności Bearer tokena(token wysyłamy w headersach )
-authRouter.get('/token', validateToken, checkToken);
+//authRouter.get('/token', validateToken, checkToken);
 
 module.exports = authRouter;

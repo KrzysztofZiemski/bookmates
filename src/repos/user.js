@@ -1,11 +1,15 @@
 const url = 'http://localhost:3010/user/';
 
-export const getUser = id => {
+export const getUser = (id) => {
     //return...  fetch(url, {})
+    return fetch('localhost:3010/user/:id', {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
 };
 
 export const addUser = (user) => {
-
     return fetch(url, {
         method: 'POST',
         body: JSON.stringify(user),
