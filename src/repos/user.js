@@ -1,5 +1,6 @@
 const url = 'http://localhost:3010/user/';
 
+
 export const getUser = id => {
     //return...  fetch(url, {})
 };

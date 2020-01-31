@@ -2,9 +2,9 @@
 import Geocode from "react-geocode";
 import { ApiKeyMaps } from "../config";
 
+console.log(ApiKeyMaps)
 Geocode.setApiKey(ApiKeyMaps);
 Geocode.setLanguage("pl");
-console.log(ApiKeyMaps)
 
 export const getCoords = (adress) => {
     return Geocode.fromAddress(adress).then(
@@ -17,3 +17,4 @@ export const getCoords = (adress) => {
         }
     );
 }
+
