@@ -1,6 +1,6 @@
 import React from 'react';
 import { getCoords } from '../../../utils/geoLocation';
-import { placeAutoComplite } from '../../../utils/autoCopliteGoogle';
+import { autoCopliteGoogle } from '../../../utils/autoCopliteGoogle';
 import { CoutriesListOptions } from './coutriesListOptions';
 
 
@@ -20,12 +20,14 @@ const FormRegistration = (props) => {
     //     .catch(err => console.log('error', err))
 
     const handleAutoComplite = () => {
-        placeAutoComplite(city)
+        autoCopliteGoogle(city)
             .then(res => {
-                return res.text()
+                if (res.status !== 200) throw new Error(res.status);
+                return res.json();
             }).then(data => console.log('sukcess', data))
             .catch(err => console.log('błąd', err))
     }
+
     const handleRegistration = async (e) => {
         e.preventDefault()
         if (name && mail && country && city && gender && birth && password && confirmPassword) {
