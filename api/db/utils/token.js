@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../../config.json');
+
 const generateToken = (user) => {
     return jwt.sign({
         mail: user.email,

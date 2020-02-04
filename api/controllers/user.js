@@ -13,14 +13,13 @@ const getUserContoller = (id) => {
 }
 
 const getUserSafeDetails = (req) => {
-    getUserContoller(req.token.sub)
-        .then(userList => {
+    let userId = req.token.sub
+    return getUserContoller(userId)
+        .then((userList) => {
             const user = userList[0];
             const { password_salt, password_hash, ...safeUserData } = user;
-            
             return safeUserData;
         })
 }
-
 
 module.exports = { addUserContoller, getUserByMailContoller, getUserContoller, getUserSafeDetails };

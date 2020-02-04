@@ -15,6 +15,7 @@ import RegistrationPage from "./modules/pages/registrationPage";
 import BookPage from "./modules/pages/bookPage";
 import UserPage from "./modules/pages/userPage";
 import ErrorPage from "./modules/pages/errorPage";
+import ProfilePage from "./modules/pages/userPage";
 
 //do zrobienia rejestracja logowanie front i back
 
@@ -25,7 +26,7 @@ function App() {
   //header zrobić warunkowo w zależności od ścierzki wyświetglać lub nie za pomocą useRouteMatch.
 
   //po zalogowaniu się w loggedUser są zapisywane podstawowe dane użytkownika(można dać inne dane potrzebne) i następuje przeładowanie path na dashboard
-  let [loggedUser, setLoginUser] = React.useState(null)
+  let [loggedUser, setLoginUser] = React.useState(null);
   return (
     <Router>
       <header>
@@ -50,11 +51,8 @@ function App() {
           <Route path="/user">
             <UserPage></UserPage>
           </Route>
-          <Route path="/profile">
-            <></>
-            {
-              //do uzupelnienia profil zalogowanego
-            }
+          <Route path="/profile/">
+            <ProfilePage />
           </Route>
           <Route>
             <ErrorPage></ErrorPage>

@@ -1,8 +1,11 @@
+import { getCookies } from "../modules/cookies";
+
 const url = 'http://localhost:3010/user/';
 
 export const getUser = (id) => {
-    //return...  fetch(url, {})
-    return fetch('localhost:3010/user/:id', {
+    let accessToken = getCookies().accessToken;
+    return fetch(`localhost:3010/user/${id}`, {
+        method: 'GET',
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
