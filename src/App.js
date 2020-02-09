@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -8,14 +8,19 @@ import {
   useRouteMatch,
   Redirect
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import WelcomePage from "./modules/pages/welcomePage";
-import DashboardPage from "./modules/pages/dashboardPage";
+import MainHeader from "./modules/pages/headerPage/headerUnlogged";
+import LoggedHeader from "./modules/pages/headerPage/headerLogged";
+import WelcomePage from "./modules/pages/welcomePage/welcomePage";
+import DashboardPage from "./modules/pages/dashboardPage/dashboardPage";
 import RegistrationPage from "./modules/pages/registrationPage";
-import BookPage from "./modules/pages/bookPage";
-import UserPage from "./modules/pages/userPage";
-import ErrorPage from "./modules/pages/errorPage";
-import ProfilePage from "./modules/pages/userPage";
+import BookPage from "./modules/pages/bookPage/bookPage";
+import UserPage from "./modules/pages/userPage/userPage";
+import ErrorPage from "./modules/pages/errorPage/errorPage";
+import ProfilePage from "./modules/pages/userPage/userPage";
+import { getCookies } from "./modules/cookies/cookies";
+import { getUserDetails} from "./repos/user"
 
 //do zrobienia rejestracja logowanie front i back
 
@@ -23,24 +28,29 @@ import ProfilePage from "./modules/pages/userPage";
 
 //dodawanie ksiazki  //profil zalogowanego uzytkownika// profil oglądanego użytkownika
 function App() {
-  //header zrobić warunkowo w zależności od ścierzki wyświetglać lub nie za pomocą useRouteMatch.
+  let [loggedUser, setLoginUser] = useState(null);
 
+  useEffect(() => {
+    getUserDetails(getCookies().accessToken).then(user => {setLoginUser(user); console.log(user)})
+  }, []);
+
+  //header zrobić warunkowo w zależności od ścieżki wyświetlać lub nie za pomocą useRouteMatch.
+  //sprawdzenie czy jest accessToken
   //po zalogowaniu się w loggedUser są zapisywane podstawowe dane użytkownika(można dać inne dane potrzebne) i następuje przeładowanie path na dashboard
-  let [loggedUser, setLoginUser] = React.useState(null);
+
   return (
     <Router>
       <header>
-        <Link to={"/"}> welcomePage</Link>
-        <Link to={"/registration"}>registration</Link>
+        {loggedUser ? <LoggedHeader loggedUser={loggedUser} /> : <MainHeader setLoginUser={setLoginUser} />}
       </header>
       <main>
         <Switch>
           <Route exact path="/">
-            {loggedUser ? <Redirect to="/dashboard" /> : <WelcomePage setLoginUser={setLoginUser} />}
+            {loggedUser ? <Redirect to="/dashboard" /> : <WelcomePage />}
 
           </Route>
           <Route path="/dashboard">
-            <DashboardPage></DashboardPage>
+            {!loggedUser ? <Redirect to="/" /> : <DashboardPage />}
           </Route>
           <Route path="/registration">
             <RegistrationPage></RegistrationPage>
@@ -52,7 +62,8 @@ function App() {
             <UserPage></UserPage>
           </Route>
           <Route path="/profile/">
-            <ProfilePage />
+
+            <ProfilePage loggedUser={loggedUser} />
           </Route>
           <Route>
             <ErrorPage></ErrorPage>

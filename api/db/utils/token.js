@@ -23,7 +23,7 @@ const validateToken = (req, res, next) => {
             req.token = decoded;
             next()
         } else {
-            return res.status(401).json('not access');
+            return res.status(401);
         }
     })
 };
