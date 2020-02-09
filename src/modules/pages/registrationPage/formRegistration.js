@@ -4,6 +4,7 @@ import { coutriesListOptions } from './coutriesListOptions';
 import InputCity from './inputCity';
 import ErrorMessage from './errorMessage';
 import { Form, Input, Label, Select } from 'semantic-ui-react';
+import { ButtonBasic } from "../../button";
 
 const FormRegistration = (props) => {
     const { sendRegistrationForm } = props;
@@ -133,10 +134,13 @@ const FormRegistration = (props) => {
                 <ErrorMessage error={errorPassword} message={'Hasło musi zawierać przynajmniej 8 znaków. Muszą się w nim znaleźć małe i duże litery oraz cyfra'} />
             </Form.Field>
             <Form.Field className={errorConfirmPassword ? 'errorElementRegistration' : null}>
-                <Label htmlFor="registrationPasswordConfirm">Powtórz hasło </Label><Input type="password" id="registrationPasswordConfirm" onBlur={validateConfirmPassword} onChange={(e, data) => setConfirmPassword(data.value)} />
+                <Label htmlFor="registrationPasswordConfirm">Powtórz hasło </Label>
+                <Input type="password" id="registrationPasswordConfirm" onBlur={validateConfirmPassword} onChange={(e, data) => setConfirmPassword(data.value)} />
                 <ErrorMessage error={errorConfirmPassword} message={'Hasła różnią się od siebie'} />
             </Form.Field>
-            <button type="submit">Zarejestruj</button>
+            <Form.Field>
+                <ButtonBasic content={"Zarejestruj"} />
+            </Form.Field>
         </form>
 
 

@@ -19,18 +19,17 @@ const MainHeader = (props) => {
       })
       .catch(err => console.log(err));
   }
-  
   return (
     <div>
       <Link className="logo" to={"/"}> BookMates</Link>
       <Link to={"/registration"}>registration</Link>
-        <form onSubmit={handleLogin}>
-          <label htmlFor="mail">Mail</label><input type="text" id="login" onChange={(e) => setMail(e.target.value)} />
-          <label htmlFor="password">Hasło</label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
-          <ButtonBasic content="Zaloguj" />
-        </form>
+      <form onSubmit={handleLogin}>
+        <label htmlFor="mail">Mail</label><input type="text" id="login" onChange={(e) => setMail(e.target.value)} />
+        <label htmlFor="password">Hasło</label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+        <ButtonBasic content="Zaloguj" />
+      </form>
     </div>
-    );
+  );
 };
 
 
