@@ -2,8 +2,6 @@ import React, {useState} from "react";
 import {SearchArea} from "./searchArea";
 import request from 'superagent';
 import {BookList} from "./bookList";
-import axios from "axios";
-
 
 const Dashboard = () => {
   let [books, setBooks] = useState([]);

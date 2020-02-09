@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
     .headerUnlogged{
+        background-color: $colorOrange;
+        font-family: $fontHeader;
 
         @media (min-width: 641px)and(max-width: 1024px) {
             
