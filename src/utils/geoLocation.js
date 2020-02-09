@@ -1,8 +1,10 @@
+
 import Geocode from "react-geocode";
-import { ApiKeyMaps } from "../config"
+import { ApiKeyMaps } from "../config";
 
 Geocode.setApiKey(ApiKeyMaps);
 Geocode.setLanguage("pl");
+console.log(ApiKeyMaps)
 
 export const getCoords = (adress) => {
     return Geocode.fromAddress(adress).then(
