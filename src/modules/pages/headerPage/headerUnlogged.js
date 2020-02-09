@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from '../../../repos/user';
 import { setCookie } from '../../cookies/cookies';
 import { Link } from "react-router-dom";
+import { ButtonBasic } from "../../button";
 
 const MainHeader = (props) => {
   const { setLoginUser } = props;
@@ -21,13 +22,15 @@ const MainHeader = (props) => {
   
   return (
     <div>
-    <Link to={"/"}> welcomePage</Link>
-    <Link to={"/registration"}>registration</Link>
-      <form onSubmit={handleLogin}>
-        <label htmlFor="mail">Mail</label><input type="text" id="login" onChange={(e) => setMail(e.target.value)} />
-        <label htmlFor="password">Hasło</label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
-        <button type='submit'>Zaloguj</button>
-      </form>
+      <h1>BookMates</h1>
+      <Link to={"/"}> welcomePage</Link>
+
+      <Link to={"/registration"}>registration</Link>
+        <form onSubmit={handleLogin}>
+          <label htmlFor="mail">Mail</label><input type="text" id="login" onChange={(e) => setMail(e.target.value)} />
+          <label htmlFor="password">Hasło</label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+          <ButtonBasic content="Zaloguj" />
+        </form>
     </div>);
 };
 

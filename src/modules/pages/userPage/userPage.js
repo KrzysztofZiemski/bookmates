@@ -14,7 +14,7 @@ import { getCookies } from "../../cookies/cookies";
 
 const ProfilePage = (props) => {
 
-  console.log(props)
+  console.log(props);
   return (
   <div>
     <p>user id is: </p>

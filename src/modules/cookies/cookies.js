@@ -4,8 +4,11 @@ export const setCookie = (value, name = 'accessToken', maxAge = 60 * 60 * 24 * 7
     document.cookie = `${name}=${checkedValue};Max-Age=${maxAge};path=/`
 }
 
-export const getCookies = () => {
+export const deleteCookie = (name) => {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
+}
 
+export const getCookies = () => {
     const decoded = decodeURIComponent(document.cookie);
     const decodedArr = decoded.split(';');
     if (!decodedArr[0]) return {}

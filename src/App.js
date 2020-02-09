@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import "./App.css";
+import 'semantic-ui-css/semantic.min.css';
+import "./App.scss";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,13 +9,13 @@ import {
   useRouteMatch,
   Redirect
 } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from 'semantic-ui-react';
 
 import MainHeader from "./modules/pages/headerPage/headerUnlogged";
 import LoggedHeader from "./modules/pages/headerPage/headerLogged";
 import WelcomePage from "./modules/pages/welcomePage/welcomePage";
 import DashboardPage from "./modules/pages/dashboardPage/dashboardPage";
-import RegistrationPage from "./modules/pages/registrationPage";
+import RegistrationPage from "./modules/pages/registrationPage/registrationPage";
 import BookPage from "./modules/pages/bookPage/bookPage";
 import UserPage from "./modules/pages/userPage/userPage";
 import ErrorPage from "./modules/pages/errorPage/errorPage";
@@ -40,13 +41,13 @@ function App() {
 
   return (
     <Router>
-      <header>
-        {loggedUser ? <LoggedHeader loggedUser={loggedUser} /> : <MainHeader setLoginUser={setLoginUser} />}
+      <header className="headerUnlogged">
+        {loggedUser ? <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} /> : <MainHeader setLoginUser={setLoginUser} />}
       </header>
       <main>
         <Switch>
           <Route exact path="/">
-            {loggedUser ? <Redirect to="/dashboard" /> : <WelcomePage />}
+            <WelcomePage />
 
           </Route>
           <Route path="/dashboard">

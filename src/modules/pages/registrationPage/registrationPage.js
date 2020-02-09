@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.css";
+import "./registrationPage.css";
 import { getCoords } from '../../../utils/geoLocation'
 import { addUser } from '../../../repos/user'
 
