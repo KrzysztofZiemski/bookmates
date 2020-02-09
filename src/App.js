@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   useRouteMatch,
   Redirect
 } from "react-router-dom";
@@ -21,7 +20,7 @@ import UserPage from "./modules/pages/userPage/userPage";
 import ErrorPage from "./modules/pages/errorPage/errorPage";
 import ProfilePage from "./modules/pages/userPage/userPage";
 import { getCookies } from "./modules/cookies/cookies";
-import { getUserDetails} from "./repos/user"
+import { getUserDetails } from "./repos/user"
 
 //do zrobienia rejestracja logowanie front i back
 
@@ -32,7 +31,7 @@ function App() {
   let [loggedUser, setLoginUser] = useState(null);
 
   useEffect(() => {
-    getUserDetails(getCookies().accessToken).then(user => {setLoginUser(user); console.log(user)})
+    getUserDetails(getCookies().accessToken).then(user => { setLoginUser(user); console.log(user) })
   }, []);
 
   //header zrobić warunkowo w zależności od ścieżki wyświetlać lub nie za pomocą useRouteMatch.
