@@ -25,3 +25,5 @@ yarn-error.log*
 api/config.json
 
 src/config.js
+
+.idea/

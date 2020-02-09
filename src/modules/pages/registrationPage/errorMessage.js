@@ -5,7 +5,6 @@ import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 const ErrorMessage = (props) => {
     const { message, error } = props;
     let icon;
-    console.log('message', error)
     switch (error) {
         case true:
             icon = <><span><FontAwesomeIcon icon={faTimesCircle} /></span><div className="registrationErrorMessage">{message}</div></>;

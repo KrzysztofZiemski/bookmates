@@ -1,1 +1,1 @@
-export const BOOKS_ROUTE = "/book"; 
+export const BACKEND_URL = "http://localhost:3010";

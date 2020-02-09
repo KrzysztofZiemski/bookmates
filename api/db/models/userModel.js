@@ -40,9 +40,10 @@ const getUsers = () => {
     const sql = `
         SELECT * FROM ${tableName}
     `;
-
-
-    return connection.query(sql).then((response) => response.rows.map(userModel));
+    return connection.query(sql).then((response) => {
+        console.log('weszło?')
+        return response.rows.map(userModel)
+    }).catch(err => console.log(err));
 };
 
 const getUser = (id) => {
@@ -57,9 +58,16 @@ const getUserByMail = (mail) => {
     const sql = `
     SELECT * FROM ${tableName}
     WHERE email = '${mail}'`;
-
-
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
+const removeUser = (id) => {
+    console.log('remove')
+    const sql = `
+        DELETE FROM ${tableName}
+        WHERE id = ${id}
+        `
+    return connection.query(sql);
+}
 //getUserByMail('krzyszto').then(e => console.log(e))
+
 module.exports = { insertUser, getUserByMail, getUser };

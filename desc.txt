@@ -1,0 +1,88 @@
+Na początku wczytywania strony dla zalogowanego trzeba sprawdzic czy istnieje token
+
+Token powinien być zapisany w cookies jeżeli ktoś jest zalogowany.
+Aby pobrać token z cookies stworzyłem już funkcję w folderze modules/cookies
+getCookies
+nie testowalem - przekleilem z mojego innego projektu. 
+Funkcja ta zwraca wszystkie ciasteczka w formie obiektu
+trzeba sprawdzić czy isnieje w tym obiekcie wlasciwosc accessToken i pobrac wartość
+
+Sprawdzanie tokena:
+
+fetch(localhost:3010/auth/token, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+
+W odpowiedzi otrzymujemy dane usera w jsonie i status 200
+jesli blad w odpowiedzi status 401
+trzeba w tej sytuacji zrobic przekierowanie na strone główną "/"zrobiłem takie przekierowanie w registration, więc możecie sobie zerknąć
+
+
+
+Konrad. Ty zrób na początku dodawanie książki.
+Pierw sprawdź czy dziala api/db/models/userBookModel.js.
+najlepiej wywołaj funkcję insert book gdzieś na dole pliku i odpal nodem sam plik userBookModel.js
+jak się w bazie danych doda użytkownik, to znaczy że baze danych mamy załatwioną
+następnie w folderze routers/bookRouter stwórz ścierzkę "/" dla metody post, która wywołuje jakąś funkcję. Na początku zrób tylko w tej funkcji console.log('cos') i sprawdź czy jak wyślesz pytanie postmanem to czy się w konsoli cos pokazuje, potem postamnem pprzeslij jakies dane i sprobu je zlapac w console.logu, jak wszystko bedzie ok, to wywolujesz z pliku  api/db/models/userBookModel.js, z odpowiednimi danymi którą już wcześniej sprawdziłeś że działa :-)
+
+potem zrób to samo ale dla metody get pobranie książki z bazy danych. Przy czym odpowiednia ścierzka to routerze będzie "/:id" metoda get czyli scierzka /numer id, który tpo możemy pobrać - poczytaj jak :-)
+
+potem zrób to samo ale dla metody get wszystkie książki czyli scierzka w router "/" metoda get pobranie w z bazy danych.
+Tu już masz trudniej, bo w pliku api/db/models/userBookModel.js. nie ma jeszcze modelu stworzonego dla pobrania wszystkich, musisz na podstawie tego co juz jest napisac funkcje do pobierania wszystkich pozycji(prawie tak samo jak pojedyncza)
+
+
+
+Zalogowany użytkownik:
+tak jak u Konrada sprawdzamy token
+
+
+
+Na początku wczytywania strony dla zalogowanego trzeba sprawdzic czy istnieje token
+
+Token powinien być zapisany w cookies jeżeli ktoś jest zalogowany.
+Aby pobrać token z cookies stworzyłem już funkcję w folderze modules/cookies
+getCookies
+nie testowalem - przekleilem z mojego innego projektu. 
+Funkcja ta zwraca wszystkie ciasteczka w formie obiektu
+trzeba sprawdzić czy isnieje w tym obiekcie wlasciwosc accessToken i pobrac wartość
+
+Sprawdzanie tokena:
+
+fetch(localhost:3010/auth/token, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+
+W odpowiedzi otrzymujemy dane usera w jsonie i status 200
+jesli blad w odpowiedzi status 401
+trzeba w tej sytuacji zrobic przekierowanie na strone główną "/"zrobiłem takie przekierowanie w registration, więc możecie sobie zerknąć
+
+
+Jak już mamy użytkownika, to można wyrenderować jego danew profilu.
+Zrób na początek funkcjonalność np zmiane hasla czy adresu czy czego tam jeszcze.
+Wysyłasz dane do backendu na stworzoną przezz siebie ścierzkę w folderze routers userRouter
+Powinno to iść metodą put "users/:id", w pliku userRouter.js już domyślnie jest ścierzka users, więc tam można stworzyć poprostu userRouter.put('/:id', updateUser)
+zresztą z tego co widzę nazwy potworzyłem(na szybko, więc mogą być błędy)
+też pierw zrób console.log(data) i zobacz czy dochodzi wszystko ok.
+
+potem sugeruję Ci podobnie jak konradowi sztucznie odpalać sam plik userModel.js w db/models
+tak stwórz i wywołaj z ręcznie wpisanymi danymi funkcję updateUser, którą musisz napisać :Pierw
+Jak będzie zmieniało, to dopiero łącz baze danych z routerem
+
+
+niezalogowany profil użytkownika
+
+Nie musisz przynajmniej sprawdzać tokena :P
+pod linkiem localhost:3000/user/:id
+albo  localhost:3000/user?id=89778957895789568656785
+Jak będziesz wolała. Myślę że pierwszy sposób będzie czystrzy.
+pobieramy id z linku, robimy fetcha do backendu na ścierzkę którą sama stworzysz.
+w backendzie tak samo jak pozostali sprawdź za pomocą console.log() czy dane dochodzą, i dopiero leć dalej
+jak masz id to wystarczy skorzystać z funkcji getUser w pliku userModel.js w folderze db/models
+wybierasz ktore dane chcesz odeslac, a ktyre nie i tyle
+Jak konrad już zrobi crud książki, to będziesz mogła pobierać jeszcze książki w biblioteczce
+Jako, że ten panel będzie dość odizolowany od innych funkcjonalności to możesz już też nad wyglądem popracować. 
+robimy mobile first czy pierw pod desctopy projektujemy?
