@@ -15,8 +15,11 @@ const addUser = async (req, res) => {
     const { salt, password } = await hashPassword(user);
     user.salt = salt;
     user.password = password;
+
     addUserContoller(user)
-        .then(result => res.status(200).json(result))
+        .then(result => {
+            res.status(200).json(result)
+        })
         .catch(e => res.status(500))
 }
 

@@ -2,17 +2,14 @@ import React from 'react';
 import getCitiesGoogle from '../../../utils/autoCompliteGoogle';
 
 const InputCity = (props) => {
-    const { city, setCity, validateCity, setErrorCity } = props;
+    const { city, setCity, validateCity, setErrorCity, children } = props;
     let [cityList, setCityList] = React.useState("");
 
     const hideList = (e) => {
-        window.addEventListener('click', () => {
-            setCityList(null);
-            console.log('window')
-            //nie dział remove
-            window.removeEventListener('click', () => setCityList(null))
-        })
+        setTimeout(setCityList(null), 0);
+        validateCity()
     }
+
     const handleCityInput = (e) => {
         setCity({ value: e.target.value, picked: false })
         if (city.value.length < 2) return
@@ -22,12 +19,10 @@ const InputCity = (props) => {
                 return res.json();
             }).then(data => {
                 const citiesName = data.filter(city => city.types[0] === "locality");
-                const listTips = citiesName.map(city => <li key={city.description} onClick={(e) => {
-                    e.stopPropagation();
+                const listTips = citiesName.map(city => <li key={city.description}> <button onClick={(e) => {
                     setCity({ value: city.description, picked: true });
-                    setCityList(null);
                     setErrorCity(false);
-                }}>{city.description}</li>)
+                }}>{city.description}</button></li>)
 
                 setCityList(listTips)
                 window.addEventListener('click', () => setCityList(null))
@@ -40,7 +35,7 @@ const InputCity = (props) => {
         <>
             <label htmlFor="registrationCity">Miejscowość: </label>
             <input autoComplete="none" type="text" id="registrationCity" onFocus={hideList} value={city.value} onChange={handleCityInput} onBlur={validateCity} />
-
+            {children}
             <ul className="cityTips">{cityList}</ul>
         </>
     )

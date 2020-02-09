@@ -15,7 +15,6 @@ const FormRegistration = (props) => {
     let [password, setPassword] = React.useState("");
     let [confirmPassword, setConfirmPassword] = React.useState("");
 
-
     let [errorName, setErrorName] = React.useState(null);
     let [errorMail, setErrorMail] = React.useState(null);
     let [errorCountry, setErrorCountry] = React.useState(null);
@@ -24,11 +23,11 @@ const FormRegistration = (props) => {
     let [errorBirth, setErrorBirth] = React.useState(null);
     let [errorPassword, setErrorPassword] = React.useState(null);
     let [errorConfirmPassword, setErrorConfirmPassword] = React.useState(null);
-
     const validateName = () => {
         if (name.length < 3) return setErrorName(true)
         setErrorName(false)
     }
+
     const validateEmail = () => {
         if (!mail.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) return setErrorMail(true);
         setErrorMail(false)
@@ -38,13 +37,15 @@ const FormRegistration = (props) => {
         setErrorCountry(false)
     }
     const validateCity = () => {
-        if (!city.picked || city.value < 2) return setErrorCity(true);
-        setErrorCity(false)
+        console.log('walidate', city)
+        if (city.picked) return setErrorCity(false);
+        setErrorCity(true)
     }
     const validateGender = () => {
         if (gender.length < 2) return setErrorGender(true);
         setErrorGender(false)
     }
+
     const validateBirth = () => {
         if (Number(birth) < 1900 || Number(birth) > new Date().getFullYear()) return setErrorBirth(true);
         setErrorBirth(false)
@@ -62,7 +63,8 @@ const FormRegistration = (props) => {
     const handleRegistration = async (e) => {
         e.preventDefault();
         //tutaj validacja i wyswietlenie komunikatu
-        let coords = await getCoords(`${country} ${city}`).catch(e => HTMLFormControlsCollection.log('nie udalo sie zarejestrować'));//message
+        let coords = await getCoords(`${country} ${city.value}`).catch(e => HTMLFormControlsCollection.log('nie udalo sie zarejestrować'));//message
+        console.log(coords)
         if (!coords) coords = null;
 
         const user = { name, mail, country, city: city.value, gender, birth, password, coords }
@@ -95,7 +97,6 @@ const FormRegistration = (props) => {
                 <InputCity setErrorCity={setErrorCity} setCity={setCity} city={city} validateCity={validateCity} >
                     <ErrorMessage error={errorCity} message={"Wpisz nazwę miejscowości i wybierz jedną z podpowiedzi"} />
                 </InputCity>
-
             </div>
             <div className={errorGender ? 'errorElementRegistration' : null}>
                 <label htmlFor="registrationGender">Płeć</label>
