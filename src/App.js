@@ -13,7 +13,7 @@ import { Button } from 'semantic-ui-react';
 import MainHeader from "./modules/pages/headerPage/headerUnlogged";
 import LoggedHeader from "./modules/pages/headerPage/headerLogged";
 import WelcomePage from "./modules/pages/welcomePage/welcomePage";
-import DashboardPage from "./modules/pages/dashboardPage/dashboardPage";
+import Dashboard from "./modules/pages/dashboardPage/dashboardPage";
 import RegistrationPage from "./modules/pages/registrationPage/registrationPage";
 import BookPage from "./modules/pages/bookPage/bookPage";
 import UserPage from "./modules/pages/userPage/userPage";
@@ -47,10 +47,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <WelcomePage />
-
           </Route>
           <Route path="/dashboard">
-            {!loggedUser ? <Redirect to="/" /> : <DashboardPage />}
+            {!loggedUser ? <Redirect to="/" /> : <Dashboard />}
           </Route>
           <Route path="/registration">
             <RegistrationPage></RegistrationPage>
@@ -62,7 +61,6 @@ function App() {
             <UserPage></UserPage>
           </Route>
           <Route path="/profile/">
-
             <ProfilePage loggedUser={loggedUser} />
           </Route>
           <Route>

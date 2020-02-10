@@ -3,6 +3,21 @@ import { auth } from '../../../repos/user';
 import { setCookie } from '../../cookies/cookies';
 import { Link } from "react-router-dom";
 import { ButtonBasic } from "../../button";
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  List,
+  Menu,
+  Responsive,
+  Segment,
+  Sidebar,
+  Visibility,
+} from 'semantic-ui-react'
 
 const MainHeader = (props) => {
   const { setLoginUser } = props;
@@ -32,6 +47,5 @@ const MainHeader = (props) => {
     </div>
   );
 };
-
 
 export default MainHeader;
