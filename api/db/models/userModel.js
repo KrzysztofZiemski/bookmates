@@ -29,16 +29,27 @@ const insertUser = (user) => {
     const sql = `
         INSERT INTO ${tableName}
         VALUES (
-            DEFAULT, '${user.mail}', '${user.salt}', '${user.password}', '${user.name}', '${user.country}', '${user.city}', POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}'
+            DEFAULT, '${user.mail}', '${user.salt}', '${user.password}', '${user.name}', '${user.country}', '${user.city}',
+             POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}',
     )`;
     return connection.query(sql);
 };
 
-
-
-const getUsers = () => {
+const addToBookShelf = (bookData, userId) => {
+    console.log(bookData,userId)
     const sql = `
-        SELECT * FROM ${tableName}
+    UPDATE users
+    SET bookdata = bookdata || '${JSON.stringify(bookData)}'::jsonb
+    WHERE id = ${userId}`;
+   return connection.query(sql);
+};
+
+
+
+
+const getUsers = (id) => {
+    const sql = `
+        SELECT * FROM ${tableName} WHERE id=${id}
     `;
     return connection.query(sql).then((response) => {
         console.log('weszło?')
@@ -68,6 +79,15 @@ const removeUser = (id) => {
         `
     return connection.query(sql);
 }
+
+const insertBook = (book) => {
+    const { userID, title, author, isbn, genre, rating, status } = book;
+    const sql = `INSERT INTO ${tableName}VALUES(
+           ${userID}, DEFAULT ,'${title}','${author}','${isbn}','${genre}',${rating},'${status}'
+        )
+    `;
+    return connection.query(sql);
+};
 //getUserByMail('krzyszto').then(e => console.log(e))
 
-module.exports = { insertUser, getUserByMail, getUser };
+module.exports = { insertUser, getUserByMail, getUser, insertBook, addToBookShelf };
