@@ -26,22 +26,24 @@ userModel.update = (data) => {
 };
 
 const insertUser = (user) => {
+
     const sql = `
         INSERT INTO ${tableName}
         VALUES (
             DEFAULT, '${user.mail}', '${user.salt}', '${user.password}', '${user.name}', '${user.country}', '${user.city}',
-             POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}',
+             POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}', DEFAULT
     )`;
+
     return connection.query(sql);
 };
 
 const addToBookShelf = (bookData, userId) => {
-    console.log(bookData,userId)
+    console.log(bookData, userId)
     const sql = `
     UPDATE users
     SET bookdata = bookdata || '${JSON.stringify(bookData)}'::jsonb
     WHERE id = ${userId}`;
-   return connection.query(sql);
+    return connection.query(sql);
 };
 
 
