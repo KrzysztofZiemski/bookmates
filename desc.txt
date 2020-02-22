@@ -22,15 +22,15 @@ trzeba w tej sytuacji zrobic przekierowanie na strone główną "/"zrobiłem tak
 
 
 Konrad. Ty zrób na początku dodawanie książki.
-Pierw sprawdź czy dziala api/db/models/userBookModel.js.
-najlepiej wywołaj funkcję insert book gdzieś na dole pliku i odpal nodem sam plik userBookModel.js
+Pierw sprawdź czy dziala api/db/models/.js.
+najlepiej wywołaj funkcję insert book gdzieś na dole pliku i odpal nodem sam plik .js
 jak się w bazie danych doda użytkownik, to znaczy że baze danych mamy załatwioną
-następnie w folderze routers/bookRouter stwórz ścierzkę "/" dla metody post, która wywołuje jakąś funkcję. Na początku zrób tylko w tej funkcji console.log('cos') i sprawdź czy jak wyślesz pytanie postmanem to czy się w konsoli cos pokazuje, potem postamnem pprzeslij jakies dane i sprobu je zlapac w console.logu, jak wszystko bedzie ok, to wywolujesz z pliku  api/db/models/userBookModel.js, z odpowiednimi danymi którą już wcześniej sprawdziłeś że działa :-)
+następnie w folderze routers/bookRouter stwórz ścierzkę "/" dla metody post, która wywołuje jakąś funkcję. Na początku zrób tylko w tej funkcji console.log('cos') i sprawdź czy jak wyślesz pytanie postmanem to czy się w konsoli cos pokazuje, potem postamnem pprzeslij jakies dane i sprobu je zlapac w console.logu, jak wszystko bedzie ok, to wywolujesz z pliku  api/db/models/.js, z odpowiednimi danymi którą już wcześniej sprawdziłeś że działa :-)
 
 potem zrób to samo ale dla metody get pobranie książki z bazy danych. Przy czym odpowiednia ścierzka to routerze będzie "/:id" metoda get czyli scierzka /numer id, który tpo możemy pobrać - poczytaj jak :-)
 
 potem zrób to samo ale dla metody get wszystkie książki czyli scierzka w router "/" metoda get pobranie w z bazy danych.
-Tu już masz trudniej, bo w pliku api/db/models/userBookModel.js. nie ma jeszcze modelu stworzonego dla pobrania wszystkich, musisz na podstawie tego co juz jest napisac funkcje do pobierania wszystkich pozycji(prawie tak samo jak pojedyncza)
+Tu już masz trudniej, bo w pliku api/db/models/.js. nie ma jeszcze modelu stworzonego dla pobrania wszystkich, musisz na podstawie tego co juz jest napisac funkcje do pobierania wszystkich pozycji(prawie tak samo jak pojedyncza)
 
 
 

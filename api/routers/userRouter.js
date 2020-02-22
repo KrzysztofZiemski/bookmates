@@ -1,6 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
-const { addUserContoller, getUserContoller, getUserSafeDetails } = require('../controllers/user');
+const { addUserContoller, getUserContoller, getUserSafeDetails, insertBook } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
 
@@ -36,13 +36,20 @@ const updateUser = (req, res) => {
 
 }
 
+const addUserBook = (req, res) => {
+   // const { userId, book } = req;
+    console.log(req.body);
+    insertBook();
+};
+
 //localhost:3010/user
-userRouter.get('/', getAllUser)
-userRouter.get('/details', validateToken, getUserDetails)
-userRouter.get('/:id', validateToken, getUser)
-userRouter.post('/', addUser)
-userRouter.put('/:id', updateUser)
-userRouter.delete('/:id', removeUser)
+userRouter.get('/', getAllUser);
+userRouter.get('/details', validateToken, getUserDetails);
+userRouter.get('/:id', validateToken, getUser);
+userRouter.post('/', addUser);
+userRouter.put('/books', addUserBook);
+userRouter.put('/:id', updateUser);
+userRouter.delete('/:id', removeUser);
 
 
 module.exports = userRouter;

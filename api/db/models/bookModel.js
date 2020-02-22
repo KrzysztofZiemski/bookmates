@@ -1,15 +1,18 @@
 const connection = require('../connection');
 
-const tableName = 'user_books';
+
+const tableName = 'books';
 
 const insertBook = (book) => {
-    const { userID, title, author, isbn, genre, rating, status } = book;
-    const sql = `INSERT INTO ${tableName}VALUES(
-           ${userID}, DEFAULT ,'${title}','${author}','${isbn}','${genre}',${rating},'${status}'
+    const { isbn, title, authors, publishedYear, imageurl, description  } = book;
+    console.log(authors);
+    const sql = `INSERT INTO ${tableName} (id, isbn, title, authors, publishedYear) VALUES (
+           DEFAULT, ${isbn}, '${title}', ARRAY [${authors.map(s => `'${s}'`)}], ${publishedYear}
         )
     `;
+    console.log(sql);
     return connection.query(sql);
-}
+};
 
 const getBook = (id) => {
     const sql = `

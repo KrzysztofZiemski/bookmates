@@ -1,4 +1,4 @@
-const { insertUser, getUserByMail, getUser } = require('../db/models/userModel');
+const { insertUser, getUserByMail, getUser, addToBookShelf } = require('../db/models/userModel');
 
 const addUserContoller = (user) => {
     return insertUser(user)
@@ -20,6 +20,10 @@ const getUserSafeDetails = (req) => {
             const { password_salt, password_hash, ...safeUserData } = user;
             return safeUserData;
         })
+};
+
+const insertBook = () => {
+addToBookShelf({author: 'fee'}, 128).then(data => console.log(data)).catch(error => console.log(error));
 }
 
-module.exports = { addUserContoller, getUserByMailContoller, getUserContoller, getUserSafeDetails };
+module.exports = { addUserContoller, getUserByMailContoller, getUserContoller, getUserSafeDetails, insertBook };
