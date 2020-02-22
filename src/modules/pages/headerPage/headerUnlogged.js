@@ -38,11 +38,11 @@ const MainHeader = (props) => {
   return (
     <Menu className="navbar">
       <Container>
-        <Menu.Item as='a' active>
-          <Link to={"/"} className="logo">BookMates</Link>
+        <Menu.Item as={Link} to={"/"} className="logo" active>
+          BookMates
         </Menu.Item>
-        <Menu.Item as='a'>
-          <Link to={"/registration"}>registration</Link>
+        <Menu.Item as={Link} to={"/registration"}>
+          registration
         </Menu.Item>
         <Menu.Item position='right'>
           <form onSubmit={handleLogin}>

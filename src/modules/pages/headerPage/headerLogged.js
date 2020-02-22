@@ -21,14 +21,14 @@ const LoggedHeader = (props) => {
   return (
       <Menu className="navbar">
       <Container>
-        <Menu.Item as='a' active>
-          <Link to={"/"} className="logo">BookMates</Link>
+        <Menu.Item as={Link} to={"/"} active className="logo">
+          BookMates
         </Menu.Item>
-        <Menu.Item as='a'>
-          <Link to={"/profile"}>profile</Link>
+        <Menu.Item as={Link} to={"/profile"}>
+          profile
         </Menu.Item>
-        <Menu.Item as='a'>
-          <Link to={"/dashboard"}>dashboard</Link>
+        <Menu.Item as={Link} to={"/dashboard"}>
+          dashboard
         </Menu.Item>
         <Menu.Item position='right'>
             <ButtonBasic content="Wyloguj" handleClick={logout} />
