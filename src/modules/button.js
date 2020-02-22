@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react';
 const ButtonBasic = (props) => {
     const { content, handleClick } = props;
     return (
-        <Button secondary onClick={handleClick}>{ content }</Button>
+        <Button className="buttonBasic" secondary onClick={handleClick}>{ content }</Button>
     );
 }
 export { ButtonBasic };
