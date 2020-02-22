@@ -61,7 +61,7 @@ function App() {
             <UserPage></UserPage>
           </Route>
           <Route path="/profile/">
-            <ProfilePage loggedUser={loggedUser} />
+            {!loggedUser ? <Redirect to="/" /> : <ProfilePage loggedUser={loggedUser} />}
           </Route>
           <Route>
             <ErrorPage></ErrorPage>

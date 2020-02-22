@@ -36,15 +36,23 @@ const MainHeader = (props) => {
   }
 
   return (
-    <div>
-      <Link className="logo" to={"/"}> BookMates</Link>
-      <Link to={"/registration"}>registration</Link>
-      <form onSubmit={handleLogin}>
-        <label htmlFor="mail">Mail</label><input type="text" id="login" onChange={(e) => setMail(e.target.value)} />
-        <label htmlFor="password">Hasło</label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
-        <ButtonBasic content="Zaloguj" />
-      </form>
-    </div>
+    <Menu className="navbar">
+      <Container>
+        <Menu.Item as='a' active>
+          <Link to={"/"} className="logo">BookMates</Link>
+        </Menu.Item>
+        <Menu.Item as='a'>
+          <Link to={"/registration"}>registration</Link>
+        </Menu.Item>
+        <Menu.Item position='right'>
+          <form onSubmit={handleLogin}>
+            <label htmlFor="mail">Mail</label><input type="text" id="login" onChange={(e) => setMail(e.target.value)} />
+            <label htmlFor="password">Hasło</label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+            <ButtonBasic content="Zaloguj" />
+          </form>
+        </Menu.Item>
+      </Container>
+    </Menu>
   );
 };
 

@@ -16,12 +16,13 @@ const LoggedHeader = (props) => {
   }
 
   // TODO: fix link cliking issues
+  // TODO: hamburger menu
 
   return (
-      <Menu className="headerUnlogged">
+      <Menu className="navbar">
       <Container>
         <Menu.Item as='a' active>
-          <Link to={"/"} className="logo">Bookmates</Link>
+          <Link to={"/"} className="logo">BookMates</Link>
         </Menu.Item>
         <Menu.Item as='a'>
           <Link to={"/profile"}>profile</Link>
