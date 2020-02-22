@@ -47,10 +47,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <WelcomePage />
-
           </Route>
           <Route path="/dashboard">
-            {!loggedUser ? <Redirect to="/" /> : <Dashboard/>}
+            {!loggedUser ? <Redirect to="/" /> : <Dashboard />}
           </Route>
           <Route path="/registration">
             <RegistrationPage></RegistrationPage>
