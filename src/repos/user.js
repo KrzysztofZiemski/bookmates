@@ -40,10 +40,10 @@ export const auth = (data) => {
             'Content-Type': 'application/json'
         },
     })
-    .then(response => {
-        if (response.status === 200) return response.json();
-        throw new Error();
-    })
+        .then(response => {
+            if (response.status === 200) return response.json();
+            throw new Error();
+        })
 };
 
 export const getUserDetails = (accessToken) => {

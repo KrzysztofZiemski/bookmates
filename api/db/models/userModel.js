@@ -29,9 +29,8 @@ const insertUser = (user) => {
     const sql = `
         INSERT INTO ${tableName}
         VALUES (
-            DEFAULT, '${user.mail}', '${user.salt}', '${user.password}', '${user.name}','${user.surName}', '${user.country}', '${user.city}', '${user.postalCode}', '${user.region}', '${user.street}', '${user.streetNumber}', '${user.localNumber}', POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}'
-    )
-    `;
+            DEFAULT, '${user.mail}', '${user.salt}', '${user.password}', '${user.name}', '${user.country}', '${user.city}', POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}'
+    )`;
     return connection.query(sql);
 };
 
@@ -41,8 +40,6 @@ const getUsers = () => {
     const sql = `
         SELECT * FROM ${tableName}
     `;
-
-
     return connection.query(sql).then((response) => {
         console.log('weszło?')
         return response.rows.map(userModel)
@@ -61,8 +58,6 @@ const getUserByMail = (mail) => {
     const sql = `
     SELECT * FROM ${tableName}
     WHERE email = '${mail}'`;
-
-
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
 const removeUser = (id) => {

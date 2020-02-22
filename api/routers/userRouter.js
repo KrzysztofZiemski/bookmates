@@ -1,6 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
-const { addUserContoller,getUserContoller, getUserSafeDetails } = require('../controllers/user');
+const { addUserContoller, getUserContoller, getUserSafeDetails } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
 
@@ -21,6 +21,7 @@ const addUser = async (req, res) => {
     const { salt, password } = await hashPassword(user);
     user.salt = salt;
     user.password = password;
+
     addUserContoller(user)
         .then(result => {
             return res.status(200).json(result)
