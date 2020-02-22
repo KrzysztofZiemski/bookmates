@@ -8,7 +8,7 @@ const jsonParser = bodyParser.json();
 app.use(jsonParser)
 app.use(cors());
 
-//wszystkie ścierzki przekazuje do index.js w folderze routers i tam będziemy obsługiwać ścierzk izapytań
+//wszystkie ściezki przekazuje do index.js w folderze routers i tam będziemy obsługiwać ściezki zapytań
 app.use('/', routers);
 
 const runServer = (port) => {

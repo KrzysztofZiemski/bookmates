@@ -7,7 +7,7 @@ const WelcomePage = (props) => {
  
   return (
     <div>
-      <h1>Welcome</h1>
+      <h1>BookMates - Witamy :)</h1>
     </div>);
 };
 
