@@ -25,9 +25,11 @@ import { getUserDetails } from "./repos/user";
 
 function App() {
   let [loggedUser, setLoginUser] = useState(null);
+  //isLoading - póki się nie załaduje, ma się kręcić kółeczko
 
   useEffect(() => {
-    getUserDetails(getCookies().accessToken).then(user => { setLoginUser(user); console.log(user) })
+    getUserDetails(getCookies().accessToken)
+    .then(user => { setLoginUser(user); console.log(user) })
   }, []);
 
   //header zrobić warunkowo w zależności od ścieżki wyświetlać lub nie za pomocą useRouteMatch.

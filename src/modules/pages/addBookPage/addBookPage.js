@@ -7,14 +7,12 @@ const AddBookPage = () => {
     let [addBookSuccess, setAddBookSuccess] = React.useState(null);
 
     const addBookForm = (book) => {
-        addBook(book).then(response => setAddBookSuccess(true))
+        addBook(book).then(response => setAddBookSuccess(true));
     }
     return (
         <div>
             {setAddBookSuccess === null ? <AddBookForm addBookForm={addBookForm} /> : <IsBookAdded addBookSuccess= {addBookSuccess} />}
-
-        </div >
-
+        </div>
     );
 };
 
