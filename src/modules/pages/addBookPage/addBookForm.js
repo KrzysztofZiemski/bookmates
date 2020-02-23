@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input, Label } from "semantic-ui-react";
-import ErrorMessage from "../registrationPage/errorMessage";
+import ErrorMessage from "./errorMessage";
 import { ButtonBasic} from "../../button";
+import './addBookPage.scss';
 
 const AddBookForm = props => {
   const { addBookForm } = props;
 
-  let [isbn, setISBN] = React.useState();
+  let [isbn, setISBN] = React.useState(0);
   let [title, setTitle] = React.useState("");
   let [authors, setAuthors] = React.useState("");
-  let [publishedYear, setPublishedYear] = React.useState();
+  let [publishedYear, setPublishedYear] = React.useState(0);
   let [imageURL, setImageURL] = React.useState("");
   let [description, setDescription] = React.useState("");
 
@@ -22,22 +23,22 @@ const AddBookForm = props => {
 
 
   const validateISBN = () => {
-    if (isbn.length === 10 || isbn.length === 13) return setErrorISBN(false);
-    setErrorISBN(true);
+    if (isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
+    setErrorISBN(false);
   };
   const validateTitle = () => {
-    if (title.length > 1) return setErrorTitle(false);
-    setErrorTitle(true);
+    if (title.length < 2) return setErrorTitle(true);
+    setErrorTitle(false);
   };
   const validateAuthors = () => {
-    if (authors.length > 2) return setErrorAuthors(false);
-    setErrorTitle(true);
+    if (authors.length < 2) return setErrorAuthors(true);
+    setErrorAuthors(false);
   };
 
   const validatePublishedYear = () => {
-    if (publishedYear.length === 4 && publishedYear > 1000)
-      return setErrorPublishedYear(false);
-    setErrorPublishedYear(true);
+    if (publishedYear.toString().length !== 4 && publishedYear < 1000)
+      return setErrorPublishedYear(true);
+    setErrorPublishedYear(false);
   };
 
     const validateImageURL = () => {
@@ -60,7 +61,7 @@ const AddBookForm = props => {
   return (
     <form className="addBookForm" onSubmit={handleAddBook}>
       <Form.Field className={errorISBN ? "errorElementRegistration" : null}>
-        <Label htmlFor="isbn">ISBN: </Label>
+        <Label htmlFor="formISBN">ISBN: </Label>
         <Input
           type="number"
           id="formISBN"
@@ -109,8 +110,8 @@ const AddBookForm = props => {
           onChange={(e, data) => setPublishedYear(data.value)}
         />
         <ErrorMessage
-          error={errorISBN}
-          message={"Rok publikacji powinien mieć 4 znaki"}
+          error={errorPublishedYear}
+          message={"Rok publikacji powinien mieć 4 cyfry"}
         />
       </Form.Field>
       <Form.Field className={errorImageURL ? "errorElementRegistration" : null}>
