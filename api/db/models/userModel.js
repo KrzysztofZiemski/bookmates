@@ -41,11 +41,8 @@ const addToBookShelf = (bookData, userId) => {
     UPDATE users
     SET bookdata = bookdata || '${JSON.stringify(bookData)}'::jsonb
     WHERE id = ${userId}`;
-   return connection.query(sql);
+    return connection.query(sql);
 };
-
-
-
 
 const getUsers = (id) => {
     const sql = `
@@ -61,8 +58,6 @@ const getUser = (id) => {
     const sql = `
     SELECT * FROM ${tableName}
     WHERE id = ${id}    `;
-
-
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
 const getUserByMail = (mail) => {

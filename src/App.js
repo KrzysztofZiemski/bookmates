@@ -15,6 +15,7 @@ import LoggedHeader from "./modules/pages/headerPage/headerLogged";
 import WelcomePage from "./modules/pages/welcomePage/welcomePage";
 import Dashboard from "./modules/pages/dashboardPage/dashboardPage";
 import RegistrationPage from "./modules/pages/registrationPage/registrationPage";
+import addBookPage from "./modules/pages/addBookPage/addBookPage";
 import BookPage from "./modules/pages/bookPage/bookPage";
 import UserPage from "./modules/pages/userPage/userPage";
 import ErrorPage from "./modules/pages/errorPage/errorPage";
@@ -22,11 +23,6 @@ import ProfilePage from "./modules/pages/userPage/userPage";
 import { getCookies } from "./modules/cookies/cookies";
 import { getUserDetails } from "./repos/user";
 
-//do zrobienia rejestracja logowanie front i back
-
-//nastepnie
-
-//dodawanie ksiazki  //profil zalogowanego uzytkownika// profil oglądanego użytkownika
 function App() {
   let [loggedUser, setLoginUser] = useState(null);
 
@@ -53,6 +49,9 @@ function App() {
           </Route>
           <Route path="/registration">
             <RegistrationPage></RegistrationPage>
+          </Route>
+          <Route path="/addbook">
+            {!loggedUser ? <Redirect to="/" /> : <addBookPage />}
           </Route>
           <Route path="/book">
             <BookPage></BookPage>

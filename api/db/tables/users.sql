@@ -2,7 +2,6 @@
  CREATE TABLE users (
 
   id SERIAL,
-   title VARCHAR(128) UNIQUE NOT NULL,
    password_salt VARCHAR(16) NOT NULL,
    passworh_hash VARCHAR(128) NOT NULL,
    name VARCHAR(32) NOT NULL,
