@@ -2,17 +2,17 @@ import React from "react";
 import "./registrationPage.scss";
 import { addUser } from '../../../repos/user'
 import FormRegistration from './formRegistration.js';
-import IsRejestration from "./isRejestration";
+import IsRegistered from "./isRegistered";
 
 const RegistrationPage = () => {
-  let [registrationSucces, setRegistrationSucces] = React.useState(null);
+  let [registrationSuccess, setRegistrationSuccess] = React.useState(null);
 
   const sendRegistrationForm = (user) => {
-    addUser(user).then(response => setRegistrationSucces(true))
+    addUser(user).then(response => setRegistrationSuccess(true))
   }
   return (
     <div>
-      {registrationSucces === null ? <FormRegistration sendRegistrationForm={sendRegistrationForm} /> : <IsRejestration registrationSucces={registrationSucces} />}
+      {registrationSuccess === null ? <FormRegistration sendRegistrationForm={sendRegistrationForm} /> : <IsRegistered registrationSuccess={registrationSuccess} />}
 
     </div >
 
