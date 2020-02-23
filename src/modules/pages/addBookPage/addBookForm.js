@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Label } from "semantic-ui-react";
 import ErrorMessage from "../registrationPage/errorMessage";
+import { ButtonBasic} from "../../button";
 
 const AddBookForm = props => {
   const { addBookForm } = props;
@@ -63,7 +64,7 @@ const AddBookForm = props => {
         <Input
           type="number"
           id="formISBN"
-          onBlur={validateISBN()}
+          onBlur={validateISBN}
           onChange={(e, data) => setISBN(data.value)}
         />
         <ErrorMessage
@@ -104,7 +105,7 @@ const AddBookForm = props => {
         <Input
           type="number"
           id="formPublishedYear"
-          onBlur={validatePublishedYear()}
+          onBlur={validatePublishedYear}
           onChange={(e, data) => setPublishedYear(data.value)}
         />
         <ErrorMessage
@@ -128,7 +129,7 @@ const AddBookForm = props => {
       <Form.Field
         className={errorDescription ? "errorElementRegistration" : null}
       >
-        <Label htmlFor="formDescription">Autorzy (po przecinku): </Label>
+        <Label htmlFor="formDescription">Opis: </Label>
         <Input
           type="text"
           id="formDescription"
@@ -140,6 +141,7 @@ const AddBookForm = props => {
           message={"Podaj poprawnie opis książki"}
         />
       </Form.Field>
+      <ButtonBasic content="Prześlij" handleClick={handleAddBook} />
     </form>
   );
 };
