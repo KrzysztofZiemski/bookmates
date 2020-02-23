@@ -5,7 +5,7 @@ export const getBook = id => {
   //return...  fetch(url, {})
 };
 
-export const addBook = () => {
+export const addBook = (book) => {
   return fetch(urlBook, {
     method: 'POST',
     body: JSON.stringify(book),

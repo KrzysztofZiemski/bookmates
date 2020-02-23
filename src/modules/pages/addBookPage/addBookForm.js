@@ -9,13 +9,16 @@ const AddBookForm = props => {
   let [title, setTitle] = React.useState("");
   let [authors, setAuthors] = React.useState("");
   let [publishedYear, setPublishedYear] = React.useState();
-  let [imageURl, setImageURL] = React.useState("");
-  let [description, setDescrition] = React.useState("");
+  let [imageURL, setImageURL] = React.useState("");
+  let [description, setDescription] = React.useState("");
 
   let [errorISBN, setErrorISBN] = React.useState(null);
   let [errorTitle, setErrorTitle] = React.useState(null);
   let [errorAuthors, setErrorAuthors] = React.useState(null);
   let [errorPublishedYear, setErrorPublishedYear] = React.useState(null);
+  let [errorImageURL, setErrorImageURL] = React.useState(null);
+  let [errorDescription, setErrorDescription] = React.useState(null);
+
 
   const validateISBN = () => {
     if (isbn.length === 10 || isbn.length === 13) return setErrorISBN(false);
@@ -36,9 +39,18 @@ const AddBookForm = props => {
     setErrorPublishedYear(true);
   };
 
-  const handleAddBook = async e => {
+    const validateImageURL = () => {
+        if (!imageURL) return setErrorImageURL(false);
+    };
+
+    const validateDescription = () => {
+        if (!description) return setErrorDescription(false);
+    };
+
+
+    const handleAddBook = async e => {
     e.preventDefault();
-      const book = { isbn, title, authors, publishedYear, imageURl, description };
+      const book = { isbn, title, authors, publishedYear, imageURL, description };
 
       addBookForm(book);
 
