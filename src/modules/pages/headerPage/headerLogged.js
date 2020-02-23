@@ -15,7 +15,6 @@ const LoggedHeader = (props) => {
     setLoginUser(null);
   }
 
-  // TODO: fix link cliking issues
   // TODO: hamburger menu
 
   return (
@@ -29,6 +28,9 @@ const LoggedHeader = (props) => {
         </Menu.Item>
         <Menu.Item as={Link} to={"/dashboard"}>
           dashboard
+        </Menu.Item>
+        <Menu.Item as={Link} to={"/addbook"}>
+          dodaj książkę
         </Menu.Item>
         <Menu.Item position='right'>
             <ButtonBasic content="Wyloguj" handleClick={logout} />

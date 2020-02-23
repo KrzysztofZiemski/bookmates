@@ -36,7 +36,7 @@ const updateUser = (req, res) => {
 
 }
 
-const addUserBook = (req, res) => {
+const addUserBookToBookshelf = (req, res) => {
    // const { userId, book } = req;
     console.log(req.body);
     insertBook();
@@ -47,9 +47,8 @@ userRouter.get('/', getAllUser);
 userRouter.get('/details', validateToken, getUserDetails);
 userRouter.get('/:id', validateToken, getUser);
 userRouter.post('/', addUser);
-userRouter.put('/books', addUserBook);
+userRouter.put('/books', addUserBookToBookshelf);
 userRouter.put('/:id', updateUser);
 userRouter.delete('/:id', removeUser);
-
 
 module.exports = userRouter;

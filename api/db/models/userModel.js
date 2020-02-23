@@ -46,9 +46,6 @@ const addToBookShelf = (bookData, userId) => {
     return connection.query(sql);
 };
 
-
-
-
 const getUsers = (id) => {
     const sql = `
         SELECT * FROM ${tableName} WHERE id=${id}
@@ -63,8 +60,6 @@ const getUser = (id) => {
     const sql = `
     SELECT * FROM ${tableName}
     WHERE id = ${id}    `;
-
-
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
 const getUserByMail = (mail) => {
