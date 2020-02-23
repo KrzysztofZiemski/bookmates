@@ -7,10 +7,12 @@ export const getBook = id => {
 
 export const addBook = (book) => {
   const { isbn, title, authors, publishedYear, imageURL, description } = book;
-  authors.split(",");
+  let authorsArr = authors.split(',');
+  let newBook = { isbn, title, authors: authorsArr, publishedYear, imageURL, description };
+  console.log(authorsArr);
   return fetch(urlBook, {
     method: 'POST',
-    body: book,
+    body: JSON.stringify(newBook),
     headers: {
         'Content-Type': 'application/json'
     },
