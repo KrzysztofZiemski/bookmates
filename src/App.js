@@ -15,7 +15,7 @@ import LoggedHeader from "./modules/pages/headerPage/headerLogged";
 import WelcomePage from "./modules/pages/welcomePage/welcomePage";
 import Dashboard from "./modules/pages/dashboardPage/dashboardPage";
 import RegistrationPage from "./modules/pages/registrationPage/registrationPage";
-import addBookPage from "./modules/pages/addBookPage/addBookPage";
+import AddBookPage from "./modules/pages/addBookPage/addBookPage";
 import BookPage from "./modules/pages/bookPage/bookPage";
 import UserPage from "./modules/pages/userPage/userPage";
 import ErrorPage from "./modules/pages/errorPage/errorPage";
@@ -51,7 +51,7 @@ function App() {
             <RegistrationPage></RegistrationPage>
           </Route>
           <Route path="/addbook">
-            {!loggedUser ? <Redirect to="/" /> : <addBookPage />}
+            {!loggedUser ? <Redirect to="/" /> : <AddBookPage />}
           </Route>
           <Route path="/book">
             <BookPage></BookPage>
