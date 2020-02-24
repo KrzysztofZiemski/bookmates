@@ -7,7 +7,7 @@ const insertBook = (book) => {
     const { isbn, title, authors, publishedYear, imageurl, description  } = book;
     console.log(authors);
     const sql = `INSERT INTO ${tableName} (id, isbn, title, authors, publishedYear) VALUES (
-           DEFAULT, ${isbn}, '${title}', ARRAY [${authors.map(s => `'${s}'`)}], ${publishedYear}
+           DEFAULT, ${isbn}, '${title}', ARRAY [${authors.map(s => `'${s.trim()}'`)}], ${publishedYear}
         )
     `;
     console.log(sql);
