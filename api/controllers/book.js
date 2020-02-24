@@ -1,7 +1,11 @@
-const { insertBook, getBook } = require('../db/models/bookModel');
+const { insertBook, getBook, getAllBooks } = require('../db/models/bookModel');
 
 const addBookToDB = (book) => {
     return insertBook(book);
 };
 
-module.exports = { addBookToDB };
+const getAllBooksFromDB = () => {
+    return getAllBooks();
+}
+
+module.exports = { addBookToDB, getAllBooksFromDB };

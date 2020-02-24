@@ -19,9 +19,17 @@ const getBook = (id) => {
         SELECT * FROM ${tableName} WHERE user_book_id = ${id};
     `;
     return connection.query(sql).then(response => response.rows);
+};
+
+const getAllBooks = () => {
+    const sql = `
+        SELECT * FROM ${tableName};
+    `;
+    return connection.query(sql).then(response => response.rows);
 }
 
 module.exports = {
     insertBook,
-    getBook
+    getBook,
+    getAllBooks
 };

@@ -1,8 +1,15 @@
 const express = require("express");
 const bookRouter = express.Router();
-const { addBookToDB } = require('../controllers/book');
+const { addBookToDB, getAllBooksFromDB } = require('../controllers/book');
 
-const getAllBooks = (req, res) => console.log('book');
+const getAllBooks = (req, res) => {
+    getAllBooksFromDB()
+        .catch(err => {
+            console.log(err);
+            res.status(400).send(err)
+        })
+        .then(result => res.send(result));
+};
 
 const addBook = (req, res) => {
     const book = req.body;
