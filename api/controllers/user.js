@@ -1,11 +1,11 @@
-const { insertUser, getUserByMail, getUser, addToBookShelf } = require('../db/models/userModel');
+const { insertUser, getUserByName, getUser, addToBookShelf } = require('../db/models/userModel');
 
 const addUserContoller = (user) => {
     return insertUser(user)
 }
 
-const getUserByMailContoller = (userData) => {
-    return getUserByMail(userData.mail)
+const getUserByNameController = (userData) => {
+    return getUserByName(userData.name)
 }
 
 const getUserContoller = (id) => {
@@ -28,4 +28,4 @@ const insertBookToBookshelf = (book, userId) => {
         .catch(error => console.log(error));
 }
 
-module.exports = { addUserContoller, getUserByMailContoller, getUserContoller, getUserSafeDetails, insertBookToBookshelf };
+module.exports = { addUserContoller, getUserByNameController, getUserContoller, getUserSafeDetails, insertBookToBookshelf };

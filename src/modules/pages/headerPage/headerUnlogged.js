@@ -3,31 +3,17 @@ import { auth } from '../../../repos/user';
 import { setCookie } from '../../cookies/cookies';
 import { Link } from "react-router-dom";
 import { ButtonBasic } from "../../button";
-import {
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  List,
-  Menu,
-  Responsive,
-  Segment,
-  Sidebar,
-  Visibility,
-} from 'semantic-ui-react'
+import { Container, Menu } from 'semantic-ui-react'
 
 const MainHeader = (props) => {
   const { setLoginUser } = props;
   let [password, setPassword] = React.useState("");
-  let [mail, setMail] = React.useState("");
+  let [name, setName] = React.useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    auth({ mail, password })
+    auth({ name, password })
       .then(user => {
         setCookie(user.token);
         setLoginUser(user)
@@ -46,7 +32,7 @@ const MainHeader = (props) => {
         </Menu.Item>
         <Menu.Item position='right'>
           <form onSubmit={handleLogin}>
-            <label htmlFor="mail">Mail</label><input type="text" id="login" onChange={(e) => setMail(e.target.value)} />
+            <label htmlFor="name">Nazwa użytkownika</label><input type="text" id="name" onChange={(e) => setName(e.target.value)} />
             <label htmlFor="password">Hasło</label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
             <ButtonBasic content="Zaloguj" />
           </form>
