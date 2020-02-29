@@ -67,7 +67,7 @@ const FormRegistration = (props) => {
         let coords = await getCoords(`${country} ${city.value}`).catch(e => HTMLFormControlsCollection.log('nie udalo sie zarejestrować'));//message
         if (!coords) coords = null;
 
-        const user = { name, mail, country, city: city.value, gender, birth, password, coords }
+        const user = { name, mail, country, city: city.value, gender, birth, password, coords };
 
         sendRegistrationForm(user)
 

@@ -35,7 +35,7 @@ const InputCity = (props) => {
     return (
         <>
             <Label htmlFor="registrationCity">Miejscowość: </Label>
-            <Input class="inputCity" autoComplete="none" type="text" id="registrationCity" onFocus={hideList} value={city.value} onChange={handleCityInput} onBlur={validateCity} />
+            <Input className="inputCity" autoComplete="none" type="text" id="registrationCity" onFocus={hideList} value={city.value} onChange={handleCityInput} onBlur={validateCity} />
             {children}
             <ul className="cityTips">{cityList}</ul>
         </>
