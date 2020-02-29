@@ -1,6 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
-const { addUserContoller, getUserContoller, getUserSafeDetails, insertBookToBookshelf, getAllUserBooksController } = require('../controllers/user');
+const { addUserController, getUserController, getUserSafeDetails, insertBookToBookshelf, getAllUserBooksController } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
 
@@ -9,7 +9,7 @@ const getAllUser = (req, res) => {
 };
 
 const getUser = (req, res) => {
-    return getUserContoller(req.params.id).then((response) => res.json(response));
+    return getUserController(req.params.id).then((response) => res.json(response));
 };
 
 const getUserDetails = (req, res) => {
@@ -22,7 +22,7 @@ const addUser = async (req, res) => {
     user.salt = salt;
     user.password = password;
 
-    addUserContoller(user)
+    addUserController(user)
         .then(result => {
             return res.status(200).json(result);
         })

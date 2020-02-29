@@ -1,7 +1,7 @@
 const express = require("express");
 const authRouter = express.Router();
 const { checkPassword } = require('../db/utils/passwordEncryption');
-const { getUserByNameController, getUserContoller } = require('../controllers/user');
+const { getUserByNameController, getUserController } = require('../controllers/user');
 const { generateToken, validateToken } = require('../db/utils/token');
 
 
