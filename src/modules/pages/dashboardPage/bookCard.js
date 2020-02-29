@@ -8,9 +8,9 @@ export const BookCard = props => {
             <div className="desc">
                 <h2>{props.title}</h2>
                 <h3>{props.author}</h3>
-                <p>Published: {props.published === '0000' ? 'unknown' : props.published.substring(0,4)}</p>
-                <button>Dodaj na półkę</button>
+                <p>Published: {props.published === '0000' ? 'unknown' : props.published.substring(0, 4)}</p>
+                <button onClick={props.handleSubmit}>Dodaj na półkę</button>
             </div>
         </div>
-    )
-}
+    );
+};

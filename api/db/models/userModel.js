@@ -38,9 +38,15 @@ const insertUser = (user) => {
 };
 
 const addToBookShelf = (bookData, userId) => {
+    console.log(bookData);
+    console.log(userId);
     const sql = `
     UPDATE users
-    SET bookdata = bookdata || '${JSON.stringify(bookData)}'::jsonb
+    SET bookdata = (CASE
+        WHEN bookdata IS NULL THEN '[]'::jsonb
+        ELSE bookdata
+    END
+) ||  '${JSON.stringify(bookData)}'::jsonb
     WHERE id = ${userId}`;
     return connection.query(sql);
 };
@@ -50,7 +56,7 @@ const getUsers = (id) => {
         SELECT * FROM ${tableName} WHERE id=${id}
     `;
     return connection.query(sql).then((response) => {
-        return response.rows.map(userModel)
+        return response.rows.map(userModel);
     }).catch(err => console.log(err));
 };
 
@@ -70,13 +76,13 @@ const removeUser = (id) => {
     const sql = `
         DELETE FROM ${tableName}
         WHERE id = ${id}
-        `
+        `;
     return connection.query(sql);
-}
+};
 
 const insertBook = (book) => {
     const { userID, title, author, isbn, genre, rating, status } = book;
-    const sql = `INSERT INTO ${tableName}VALUES(
+    const sql = `INSERT INTO ${tableName} VALUES (
            ${userID}, DEFAULT ,'${title}','${author}','${isbn}','${genre}',${rating},'${status}'
         )
     `;
@@ -84,4 +90,11 @@ const insertBook = (book) => {
 };
 //getUserByMail('krzyszto').then(e => console.log(e))
 
-module.exports = { insertUser, getUserByName, getUser, insertBook, addToBookShelf };
+const getAllUserBooks = (userId) => {
+    const sql = `SELECT bookdata
+  FROM ${tableName} WHERE id=${userId}
+    `;
+    return connection.query(sql);
+};
+
+module.exports = { insertUser, getUserByName, getUser, insertBook, addToBookShelf, getAllUserBooks };
