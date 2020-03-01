@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SearchArea } from './searchArea';
 import { BookList } from './bookList';
 import getGoogleBooks from '../../../utils/googleBooksApi';
+import { UserBookList } from './userBookList';
 
 const Dashboard = (props) => {
     const { loggedUser: { id } } = props;
@@ -11,7 +12,7 @@ const Dashboard = (props) => {
     let [sort, setSort] = useState('');
 
 
-    const searchBook = (e, data) => {
+    const searchBook = (e) => {
         e.preventDefault();
         getGoogleBooks(searchField)
             .then(res => {
@@ -43,6 +44,7 @@ const Dashboard = (props) => {
         <div>
             <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort}/>
             <BookList books={sortedBooks} id={id}/>
+            <UserBookList id={id}/>
         </div>
     );
 };
