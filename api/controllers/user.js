@@ -1,4 +1,4 @@
-const { insertUser, getUserByName, getUser, addToBookShelf, getAllUserBooks } = require('../db/models/userModel');
+const { insertUser, getUserByName, getUser, addToBookShelf, getAllUserBooks, deleteUserBook } = require('../db/models/userModel');
 
 const addUserController = (user) => {
     return insertUser(user);
@@ -24,11 +24,15 @@ const getUserSafeDetails = (req) => {
 
 const insertBookToBookshelf = (book, userId) => {
     return addToBookShelf(book, userId);
-
 };
 
 const getAllUserBooksController = (userId) => {
     return getAllUserBooks(userId);
+};
+
+const deleteUserBookController = (userId, bookId) => {
+
+    return deleteUserBook(userId, bookId);
 };
 
 module.exports = {
@@ -37,5 +41,6 @@ module.exports = {
     getUserController,
     getUserSafeDetails,
     insertBookToBookshelf,
-    getAllUserBooksController
+    getAllUserBooksController,
+    deleteUserBookController
 };

@@ -14,13 +14,24 @@ export const UserBookList = ({ id }) => {
             .catch(err => console.log(err));
     }, []);
 
+    const handleBookDelete = (userBookId) => {
+        fetch(`http://localhost:3010/user/books/${userBookId}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err)
+            );
+    };
 
     return (
         <div className="list">
             {userBooks.map((book, i) => (
-                <UserBookCard key={i} image={book.imageUrl} title={book.title}
-                              author={book.authors}/>
+                <UserBookCard key={i} userBookId={i} image={book.imageUrl} title={book.title}
+                              author={book.authors} handleBookDelete={() => handleBookDelete(i + 1)}/>
             ))}
         </div>
     );
 };
+
+

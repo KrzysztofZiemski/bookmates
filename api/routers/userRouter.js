@@ -1,6 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
-const { addUserController, getUserController, getUserSafeDetails, insertBookToBookshelf, getAllUserBooksController } = require('../controllers/user');
+const { addUserController, getUserController, getUserSafeDetails, insertBookToBookshelf, getAllUserBooksController, deleteUserBooksController } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
 
@@ -36,19 +36,37 @@ const updateUser = (req, res) => {
 
 };
 
-const addUserBookToBookshelf = (req, res) => {
-    // const { userId, book } = req;
+const addUserBookToBookshelf = async (req, res) => {
     console.log(req.body);
     const { book, userId } = req.body;
-    console.log(book);
-    console.log(userId);
-    insertBookToBookshelf(book, userId)
-        .then(data => console.log(data))
-        .catch(error => console.log(error));
+    try {
+        let currentUserBooks = await getAllUserBooksController(userId);
+        let bookArr = currentUserBooks.rows[0].bookdata;
+        if (bookArr.map(b => b.bookId).indexOf(book.bookId) === -1) {
+            res.status(200);
+            let insertResult = await insertBookToBookshelf(book, userId);
+            res.json(insertResult);
+        }
+        throw new Error('book already exist in your library');
+    } catch (err) {
+        res.status(400).json(err);
+        console.error(err.message);
+    }
 };
 
 const getAllUserBooks = (req, res) => {
     getAllUserBooksController(req.params.userId)
+        .catch(err => {
+            console.log(err);
+            res.status(400).send(err);
+        })
+        .then(result => {
+            res.json(result.rows[0].bookdata || []);
+        });
+};
+
+const deleteUserBook = (req, res) => {
+    deleteUserBooksController(req.params.userId, req.params.userBookId)
         .catch(err => {
             console.log(err);
             res.status(400).send(err);
@@ -63,6 +81,7 @@ userRouter.get('/:id', validateToken, getUser);
 userRouter.post('/', addUser);
 userRouter.put('/books', addUserBookToBookshelf);
 userRouter.get('/books/:userId', getAllUserBooks);
+userRouter.delete('/books/:userId/:userBookId', deleteUserBook);
 userRouter.put('/:id', updateUser);
 userRouter.delete('/:id', removeUser);
 

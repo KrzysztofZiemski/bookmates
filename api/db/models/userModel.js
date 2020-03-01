@@ -38,8 +38,6 @@ const insertUser = (user) => {
 };
 
 const addToBookShelf = (bookData, userId) => {
-    console.log(bookData);
-    console.log(userId);
     const sql = `
     UPDATE users
     SET bookdata = (CASE
@@ -97,4 +95,15 @@ const getAllUserBooks = (userId) => {
     return connection.query(sql);
 };
 
-module.exports = { insertUser, getUserByName, getUser, insertBook, addToBookShelf, getAllUserBooks };
+const deleteUserBook = (userId, bookId) => {
+    const sql = ` UPDATE users
+    SET bookdata = (CASE
+        WHEN bookdata IS NULL THEN '[]'::jsonb
+        ELSE bookdata
+    END
+)`;
+    return connection.query(sql);
+};
+
+
+module.exports = { insertUser, getUserByName, getUser, insertBook, addToBookShelf, getAllUserBooks, deleteUserBook };

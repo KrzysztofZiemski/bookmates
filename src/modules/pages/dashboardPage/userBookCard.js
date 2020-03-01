@@ -8,7 +8,7 @@ export const UserBookCard = props => {
             <div className="desc">
                 <h2>{props.title}</h2>
                 <h3>{props.author}</h3>
-                <button>Usuń z półki</button>
+                <button onClick={props.handleBookDelete}>Usuń z półki</button>
             </div>
         </div>
     );
