@@ -10,9 +10,7 @@ export const UserBookList = ({ id }) => {
                 if (res.status !== 200) throw new Error(res.status);
                 return res.json();
             })
-            .then(res => {
-                if (emptyResponse !== true) setUserBooks(res);
-            })
+            .then(res => setUserBooks(res))
             .catch(err => console.log(err));
     }, []);
 
