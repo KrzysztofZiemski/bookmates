@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { SearchArea } from "./searchArea";
+import { SearchAreaUser } from "./searchAreaUser";
 import request from 'superagent';
 import { BookList } from "./bookList";
 
 const Dashboard = () => {
   let [books, setBooks] = useState([]);
+  let [users, setUsers] = useState([]);
   let [searchField, setSearchField] = useState('');
   let [sort, setSort] = useState('');
 
@@ -20,11 +22,20 @@ const Dashboard = () => {
         book.volumeInfo['authors'] = ['not found'];
       }
       return book;
-
-
     });
     return cleanedData;
   };
+
+  /*const cleanDataUser = (dataUser) => {
+    const cleanedDataUser = dataUser.items.map((user) => {
+      return user;
+      console.log('user');
+
+    });
+    return cleanedDataUser;
+    console.log(cleanedDataUser);
+  };
+*/
 
   const searchBook = (e) => {
     e.preventDefault();
@@ -36,24 +47,27 @@ const Dashboard = () => {
         setBooks(cleanData(data));
       });
   };
-  // const searchBook = (e) => {
-  //   e.preventDefault();
-  //   request
-  // .get("https://data.bn.org.pl/api/bibs.json")
-  //       .query({title: searchField})
-  //       .then(data => setBooks([data.bibs]));
-  // }
-  // const searchBook = (e) => {
-  //   e.preventDefault();
-  //   axios
-  //       .get(`https://data.bn.org.pl/api/bibs.json?title=${searchField}`)
-  //       .then(data => setBooks([...data.bibs]));
-  // }
+
+ 
+  const searchUser = (event) => {
+    event.preventDefault();
+    request
+      .get("http://localhost:3010/user")
+      .then(dataUser => {
+        console.log(dataUser);
+        setUsers(dataUser);
+      });
+  };
+  
+  
 
   const handleSearch = (e) => {
     setSearchField(e.target.value);
   }
-
+ 
+  const handleSearchUser = (event) => {
+    setSearchField(event.target.value);
+  }
   const handleSort = (e) => {
     console.log(e.target.value);
     setSort(e.target.value);
@@ -68,12 +82,17 @@ const Dashboard = () => {
     }
   });
 
+  
+  
   return (
     <div>
       <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} />
       <BookList books={sortedBooks} />
+      <SearchAreaUser handleSearchUser={handleSearchUser} searchUser={searchUser} />
     </div>
+
   )
+
 };
 
 

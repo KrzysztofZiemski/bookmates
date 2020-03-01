@@ -17,8 +17,18 @@ const ProfilePage = (props) => {
   );
 };
 
-const UserPage = () => {
-  return <div>userpage</div>
+const UserPage = (props) => {
+  const {unloggedUser: {id, name, country, city, gender, userBooks}} = props;
+
+  return <div>
+    <p>Użytkownik: {name} </p>
+    <p>Kraj: {country} </p>
+    <p>Miasto: {city} </p>
+    <p>Płeć: {gender} </p> 
+    <p>Półka z książkami:  </p>
+    <p>Dodaj użytkownika do Bookmates  </p>
+    
+    </div>
 }
 
 export default ProfilePage;

@@ -1,15 +1,15 @@
 const express = require("express");
 const userRouter = express.Router();
-const { addUserContoller, getUserContoller, getUserSafeDetails, insertBook } = require('../controllers/user');
+const { addUserController, getUserController, getAllUsersController, getUserSafeDetails, insertBook } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
 
-const getAllUser = (req, res) => {
-
+const getAllUsers = (req, res) => {
+    return getAllUsersController(req.params.id).then((response) => res.json(response));
 }
 
 const getUser = (req, res) => {
-    return getUserContoller(req.params.id).then((response) => res.json(response));
+    return getUserController(req.params.id).then((response) => res.json(response));
 }
 
 const getUserDetails = (req, res) => {
@@ -22,7 +22,7 @@ const addUser = async (req, res) => {
     user.salt = salt;
     user.password = password;
 
-    addUserContoller(user)
+    addUserController(user)
         .then(result => {
             return res.status(200).json(result)
         })
@@ -43,9 +43,10 @@ const addUserBookToBookshelf = (req, res) => {
 };
 
 //localhost:3010/user
-userRouter.get('/', getAllUser);
+userRouter.get('/', getAllUsers);
 userRouter.get('/details', validateToken, getUserDetails);
-userRouter.get('/:id', validateToken, getUser);
+//userRouter.get('/:id', validateToken, getUser);
+userRouter.get('/:id', getUser);
 userRouter.post('/', addUser);
 userRouter.put('/books', addUserBookToBookshelf);
 userRouter.put('/:id', updateUser);

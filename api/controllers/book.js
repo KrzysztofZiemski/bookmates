@@ -1,4 +1,4 @@
-const { insertBook, getBook, getAllBooks } = require('../db/models/bookModel');
+const { insertBook, getBook, getAllBooks, getUserBooks } = require('../db/models/bookModel');
 
 const addBookToDB = (book) => {
     return insertBook(book);
@@ -6,6 +6,11 @@ const addBookToDB = (book) => {
 
 const getAllBooksFromDB = () => {
     return getAllBooks();
-}
+};
 
-module.exports = { addBookToDB, getAllBooksFromDB };
+const getUserBooksFromDB = (user) => {
+    return getUserBooks(user);
+};
+
+
+module.exports = { addBookToDB, getAllBooksFromDB, getUserBooksFromDB };

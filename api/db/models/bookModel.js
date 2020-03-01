@@ -2,6 +2,7 @@ const connection = require('../connection');
 
 
 const tableName = 'books';
+const tableUser = 'users';
 
 const insertBook = (book) => {
     const { isbn, title, authors, publishedYear, imageurl, description  } = book;
@@ -28,8 +29,17 @@ const getAllBooks = () => {
     return connection.query(sql).then(response => response.rows);
 }
 
+const getUserBooks =(id) => {
+    const sql =`
+        SELECT * FROM ${tableUser} WHERE user_id = ${id};
+    `;
+    return connection.query(sql).then(response => response.rows);
+}
+
+
 module.exports = {
     insertBook,
     getBook,
-    getAllBooks
+    getAllBooks,
+    getUserBooks
 };

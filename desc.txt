@@ -78,11 +78,11 @@ niezalogowany profil użytkownika
 Nie musisz przynajmniej sprawdzać tokena :P
 pod linkiem localhost:3000/user/:id
 albo  localhost:3000/user?id=89778957895789568656785
-Jak będziesz wolała. Myślę że pierwszy sposób będzie czystrzy.
-pobieramy id z linku, robimy fetcha do backendu na ścierzkę którą sama stworzysz.
+Jak będziesz wolała. Myślę że pierwszy sposób będzie czystszy.
+pobieramy id z linku, robimy fetcha do backendu na ścieżkę którą sama stworzysz.
 w backendzie tak samo jak pozostali sprawdź za pomocą console.log() czy dane dochodzą, i dopiero leć dalej
 jak masz id to wystarczy skorzystać z funkcji getUser w pliku userModel.js w folderze db/models
-wybierasz ktore dane chcesz odeslac, a ktyre nie i tyle
-Jak konrad już zrobi crud książki, to będziesz mogła pobierać jeszcze książki w biblioteczce
+wybierasz ktore dane chcesz odeslac, a które nie i tyle
+Jak Konrad już zrobi crud książki, to będziesz mogła pobierać jeszcze książki w biblioteczce
 Jako, że ten panel będzie dość odizolowany od innych funkcjonalności to możesz już też nad wyglądem popracować. 
 robimy mobile first czy pierw pod desctopy projektujemy?

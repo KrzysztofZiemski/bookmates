@@ -45,9 +45,9 @@ const addToBookShelf = (bookData, userId) => {
     return connection.query(sql);
 };
 
-const getUsers = (id) => {
+const getAllUsers = () => {
     const sql = `
-        SELECT * FROM ${tableName} WHERE id=${id}
+        SELECT name, country, city, gender, birth FROM ${tableName} 
     `;
     return connection.query(sql).then((response) => {
         return response.rows.map(userModel)
@@ -60,6 +60,8 @@ const getUser = (id) => {
     WHERE id = ${id}    `;
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
+
+
 const getUserByName = (name) => {
     const sql = `
     SELECT * FROM ${tableName}
@@ -84,4 +86,4 @@ const insertBook = (book) => {
 };
 //getUserByMail('krzyszto').then(e => console.log(e))
 
-module.exports = { insertUser, getUserByName, getUser, insertBook, addToBookShelf };
+module.exports = { insertUser, getUserByName, getUser, getAllUsers, insertBook, addToBookShelf };

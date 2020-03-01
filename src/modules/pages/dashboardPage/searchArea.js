@@ -14,5 +14,7 @@ export const SearchArea = props => {
                 </select>
             </form>
         </div>
+
+      
     )
 }
