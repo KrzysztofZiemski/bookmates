@@ -4,7 +4,7 @@ const addUserController = (user) => {
     return insertUser(user)
 }
 
-const getUserByUsername = (userData) => {
+const getUserByNameController = (userData) => {
     return getUserByName(userData.name)
 }
 
@@ -32,4 +32,11 @@ const insertBookToBookshelf = (book, userId) => {
         .catch(error => console.log(error));
 }
 
-module.exports = { addUserController, getUserByUsername, getUserController, getAllUsersController, getUserSafeDetails, insertBookToBookshelf };
+module.exports = { 
+    addUserController, 
+    getUserByNameController, 
+    getUserController, 
+    getAllUsersController, 
+    getUserSafeDetails, 
+    insertBookToBookshelf 
+};

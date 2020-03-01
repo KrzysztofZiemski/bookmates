@@ -68,6 +68,7 @@ const getUserByName = (name) => {
     WHERE name = '${name}'`;
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
+
 const removeUser = (id) => {
     const sql = `
         DELETE FROM ${tableName}

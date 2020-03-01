@@ -26,16 +26,15 @@ const Dashboard = () => {
     return cleanedData;
   };
 
-  /*const cleanDataUser = (dataUser) => {
-    const cleanedDataUser = dataUser.items.map((user) => {
-      return user;
-      console.log('user');
+/*  const mapUsers = (users) => {
+    const mappedUsers = users.map((user) => {
+      return mappedUsers;
+      console.log(mappedUsers);
 
     });
-    return cleanedDataUser;
-    console.log(cleanedDataUser);
   };
 */
+ 
 
   const searchBook = (e) => {
     e.preventDefault();
@@ -53,21 +52,40 @@ const Dashboard = () => {
     event.preventDefault();
     request
       .get("http://localhost:3010/user")
-      .then(dataUser => {
-        console.log(dataUser);
-        setUsers(dataUser);
-      });
+      .then((response) => response.body)
+      .then(dataUsers => {
+          const filteredUsers = dataUsers.filter((user) => {
+          console.log(user.name);
+          return user.name === searchField;
+        });
+
+        setUsers(dataUsers);
+      })
   };
   
-  
+ /* function MapUsers(dataUsers) {
+    console.log('mapppp');
+    const users = dataUsers.users;
+    const listUsers = users.map((user) =>
+      <li key={user.toString()}>
+        {user}
+      </li>
+    );
+    return (
+      <ul>{listUsers}</ul>
+      
+    );
+  };
 
+*/
   const handleSearch = (e) => {
     setSearchField(e.target.value);
   }
  
-  const handleSearchUser = (event) => {
-    setSearchField(event.target.value);
+  const handleSearchUser = (e) => {
+    setSearchField(e.target.value);
   }
+
   const handleSort = (e) => {
     console.log(e.target.value);
     setSort(e.target.value);
@@ -89,6 +107,7 @@ const Dashboard = () => {
       <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} />
       <BookList books={sortedBooks} />
       <SearchAreaUser handleSearchUser={handleSearchUser} searchUser={searchUser} />
+      {/* <listUsers users={listUsers} /> */}
     </div>
 
   )
