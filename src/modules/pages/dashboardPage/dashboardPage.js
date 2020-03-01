@@ -3,6 +3,7 @@ import { SearchArea } from "./searchArea";
 import { SearchAreaUser } from "./searchAreaUser";
 import request from 'superagent';
 import { BookList } from "./bookList";
+import { UserList} from "./userList";
 
 const Dashboard = () => {
   let [books, setBooks] = useState([]);
@@ -26,15 +27,6 @@ const Dashboard = () => {
     return cleanedData;
   };
 
-/*  const mapUsers = (users) => {
-    const mappedUsers = users.map((user) => {
-      return mappedUsers;
-      console.log(mappedUsers);
-
-    });
-  };
-*/
- 
 
   const searchBook = (e) => {
     e.preventDefault();
@@ -63,21 +55,7 @@ const Dashboard = () => {
       })
   };
   
- /* function MapUsers(dataUsers) {
-    console.log('mapppp');
-    const users = dataUsers.users;
-    const listUsers = users.map((user) =>
-      <li key={user.toString()}>
-        {user}
-      </li>
-    );
-    return (
-      <ul>{listUsers}</ul>
-      
-    );
-  };
-
-*/
+ 
   const handleSearch = (e) => {
     setSearchField(e.target.value);
   }
@@ -107,7 +85,7 @@ const Dashboard = () => {
       <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} />
       <BookList books={sortedBooks} />
       <SearchAreaUser handleSearchUser={handleSearchUser} searchUser={searchUser} />
-      {/* <listUsers users={listUsers} /> */}
+      {/* <UserList users={} />  */}
     </div>
 
   )

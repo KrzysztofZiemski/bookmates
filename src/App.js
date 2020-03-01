@@ -20,6 +20,7 @@ import BookPage from "./modules/pages/bookPage/bookPage";
 import UserPage from "./modules/pages/userPage/userPage";
 import ErrorPage from "./modules/pages/errorPage/errorPage";
 import ProfilePage from "./modules/pages/userPage/ProfilePage";
+import UserList from "./modules/pages/dashboardPage/userList";
 import { getCookies } from "./modules/cookies/cookies";
 import { getUserDetails } from "./repos/user";
 
@@ -59,6 +60,9 @@ function App() {
           <Route path="/user">
             <UserPage />
           </Route>
+          <Route path="/users">
+            <UserList />
+          </Route>         
           <Route path="/profile/">
             {!loggedUser ? <Redirect to="/" /> : <ProfilePage loggedUser={loggedUser} />}
           </Route>
