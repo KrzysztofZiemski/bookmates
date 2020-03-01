@@ -1,6 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
-const { addUserContoller, getUserContoller, getUserSafeDetails, insertBook } = require('../controllers/user');
+const { addUserContoller, getUserContoller, getUserSafeDetails, removeUserController, insertBook } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
 
@@ -30,10 +30,12 @@ const addUser = async (req, res) => {
 }
 
 const removeUser = (req, res) => {
+    removeUserController(req.id);
 
 }
 const updateUser = (req, res) => {
-
+    //check if update user details or change password
+    //req.params.action - wybrać co dalej i odesłać do controllers
 }
 
 const addUserBookToBookshelf = (req, res) => {

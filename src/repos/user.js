@@ -24,12 +24,20 @@ export const addUser = (user) => {
     })
 };
 
-export const updateUser = (id) => {
-    //  return fetch(url, {})
+export const updateUser = (id, userData, action) => {
+    return fetch(`${urlUser}${id}?action=${action}`, {
+        method: 'PUT',
+        body: JSON.stringify(userData),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
 };
 
 export const removeUser = id => {
-    //  return fetch(url, {})
+    return fetch(`${urlUser}${id}`, {
+        method: 'DELETE',
+    })
 };
 
 export const auth = (data) => {

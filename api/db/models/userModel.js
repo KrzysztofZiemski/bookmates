@@ -18,11 +18,28 @@ const userModel = (row) => ({
     coordinates: row.coordinates,
     gender: row.gender,
     birth: row.birth
-
 });
 
-userModel.update = (data) => {
-    console.log(data);
+const updateUserDetails = (userId, userDetails) => {
+    const sql = `
+        UPDATE ${tableName}
+        SET name = '${userDetails.name}',
+            country = '${userDetails.country}',
+            city = '${userDetails.city}',
+            coordinates = POINT(${userDetails.coords.lat}, ${userDetails.coords.lng})
+        WHERE id = ${userId};
+    `
+    return connection.query(sql);
+};
+
+const updateUserPassword = (userId, salt, hash) => {
+    const sql = `
+        UPDATE ${tableName}
+        SET password_salt = '${salt}',
+            password_hash = '${hash}'
+        WHERE id = ${userId};
+    `
+    return connection.query(sql);
 };
 
 const insertUser = (user) => {
@@ -41,7 +58,7 @@ const addToBookShelf = (bookData, userId) => {
     console.log(bookData, userId)
     const sql = `
     UPDATE users
-    SET bookdata = bookdata || '${JSON.stringify(bookData)}'::jsonb
+    SET bookuserDetails = bookuserDetails || '${JSON.stringify(bookData)}'::jsonb
     WHERE id = ${userId}`;
     return connection.query(sql);
 };
@@ -62,20 +79,22 @@ const getUser = (id) => {
     WHERE id = ${id}    `;
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
+
 const getUserByMail = (mail) => {
     const sql = `
     SELECT * FROM ${tableName}
     WHERE email = '${mail}'`;
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
+
 const removeUser = (id) => {
-    console.log('remove')
+    console.log('removed')
     const sql = `
         DELETE FROM ${tableName}
         WHERE id = ${id}
         `
     return connection.query(sql);
-}
+};
 
 const insertBook = (book) => {
     const { userID, title, author, isbn, genre, rating, status } = book;
@@ -87,4 +106,4 @@ const insertBook = (book) => {
 };
 //getUserByMail('krzyszto').then(e => console.log(e))
 
-module.exports = { insertUser, getUserByMail, getUser, insertBook, addToBookShelf };
+module.exports = { insertUser, getUserByMail, getUser, insertBook, addToBookShelf, removeUser };

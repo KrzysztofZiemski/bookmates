@@ -1,4 +1,4 @@
-const { insertUser, getUserByMail, getUser, addToBookShelf } = require('../db/models/userModel');
+const { insertUser, getUserByMail, getUser, addToBookShelf, updateUserDetails, removeUser } = require('../db/models/userModel');
 
 const addUserContoller = (user) => {
     return insertUser(user)
@@ -28,4 +28,27 @@ const insertBookToBookshelf = (book, userId) => {
         .catch(error => console.log(error));
 }
 
-module.exports = { addUserContoller, getUserByMailContoller, getUserContoller, getUserSafeDetails, insertBookToBookshelf };
+const changeUserPasswordController = (userId, userPasswords) => {
+    //walidacja starego hasła
+    //jeśli jest ok, to dla nowego hasła wygenerować hash i salt i skorzystać z userModel żeby wypchnąć do db
+
+}
+
+const updateUserDetailsController = (userId, userDetails) => {
+    updateUserDetails(userId, userDetails);
+}
+
+const removeUserController = (userId) => {
+    removeUser(userId);
+}
+
+module.exports = { 
+    addUserContoller, 
+    getUserByMailContoller, 
+    getUserContoller, 
+    getUserSafeDetails, 
+    insertBookToBookshelf,
+    changeUserPasswordController,
+    updateUserDetailsController,
+    removeUserController
+};
