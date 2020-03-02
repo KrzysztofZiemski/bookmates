@@ -11,7 +11,7 @@ const RegistrationPage = () => {
     addUser(user).then(response => setRegistrationSuccess(true))
   }
   return (
-    <div>
+    <div className="registrationPage">
       {registrationSuccess === null ? <FormRegistration sendRegistrationForm={sendRegistrationForm} /> : <IsRegistered registrationSuccess={registrationSuccess} />}
 
     </div >

@@ -7,13 +7,13 @@ const ErrorMessage = (props) => {
     let icon;
     switch (error) {
         case true:
-            icon = <><span className="inCorrect"><FontAwesomeIcon icon={faTimesCircle} /></span><div className="registrationErrorMessage">{message}</div></>;
+            icon = <><span className="errorIcon red"><FontAwesomeIcon icon={faTimesCircle} /></span><div className="registrationErrorMessage">{message}</div></>;
             break;
         case false:
-            icon = < span className="correct"> <FontAwesomeIcon icon={faCheckCircle} /></span >;
+            icon = < span className="errorIcon green"> <FontAwesomeIcon className={"errorSign"} icon={faCheckCircle} /></span >;
             break;
         default:
-            icon = null;
+            icon = <span></span>;
 
     }
 

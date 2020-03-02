@@ -17,7 +17,8 @@ const userModel = (row) => ({
     local_number: row.local_number,
     coordinates: row.coordinates,
     gender: row.gender,
-    birth: row.birth
+    birth: row.birth,
+    books: row.bookdata
 
 });
 
@@ -26,7 +27,6 @@ userModel.update = (data) => {
 };
 
 const insertUser = (user) => {
-
     const sql = `
         INSERT INTO ${tableName}
         VALUES (

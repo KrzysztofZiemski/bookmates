@@ -1,51 +1,93 @@
-.registrationForm {
+.registrationPage {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 
-    .field {
-        display: flex;
+    .registrationForm {
+        margin-top: 15px;
         width: 50%;
-        margin: 5px;
-        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-        .label {
-            width: 100px;
-        }
-
-        .input,
-        .selection {
-            width: 200px;
-        }
-
-        .cityTips {
-            position: absolute;
-            top: 30px;
-            left: 70px;
-            z-index: 1000
-        }
-
-
-        .correct {
+        .field {
             display: flex;
-            align-items: center;
-            font-size: 20px;
-            color: green;
-        }
+            flex-wrap: wrap;
+            width: 100%;
+            margin: 5px;
+            position: relative;
 
-        .inCorrect {
-            display: flex;
-            align-items: center;
-            font-size: 20px;
-            color: red;
-        }
+            &.submitRegistrationBtn {
+                display: flex;
+                flex-direction: row-reverse;
+                justify-content: space-between;
+            }
 
-        .registrationErrorMessage {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            color: red;
-        }
+            .label {
+                width: 40%;
+            }
 
+            .input,
+            .selection {
+                width: 40%;
+            }
+
+            .inputCityContainer {
+                width: 40%;
+                position: relative;
+
+                .inputCity {
+                    width: 100%;
+                }
+
+                .cityTips {
+                    position: absolute;
+                    top: 40px;
+                    left: 0;
+                    z-index: 990;
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+
+                    li {
+                        width: 100%;
+                        border: 1px solid black;
+                        margin: 1px;
+
+                        button {
+                            background-color: #fff;
+                            width: 100%;
+
+                            &:focus {
+                                background-color: grey;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            .errorIcon {
+                flex-grow: 1;
+                font-size: 2em;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &.red {
+                    color: red;
+                }
+
+                &.green {
+                    color: green;
+                }
+            }
+
+            .registrationErrorMessage {
+                width: 100%;
+                text-align: center;
+                font-size: 14px;
+                color: red;
+            }
+        }
     }
 }

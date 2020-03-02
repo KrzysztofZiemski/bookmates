@@ -8,12 +8,12 @@ import { Container, Menu } from 'semantic-ui-react'
 const MainHeader = (props) => {
   const { setLoginUser } = props;
   let [password, setPassword] = React.useState("");
-  let [name, setName] = React.useState("");
+  let [mail, setMail] = React.useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    auth({ name, password })
+    auth({ mail, password })
       .then(user => {
         setCookie(user.token);
         setLoginUser(user)
@@ -32,8 +32,8 @@ const MainHeader = (props) => {
         </Menu.Item>
         <Menu.Item position='right'>
           <form onSubmit={handleLogin}>
-            <label htmlFor="name">Nazwa użytkownika</label><input type="text" id="name" onChange={(e) => setName(e.target.value)} />
-            <label htmlFor="password">Hasło</label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+            <label htmlFor="mail">E-mail </label><input type="text" id="mail" onChange={(e) => setMail(e.target.value)} />
+            <label htmlFor="password">Hasło </label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
             <ButtonBasic content="Zaloguj" />
           </form>
         </Menu.Item>

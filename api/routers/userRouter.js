@@ -24,6 +24,7 @@ const addUser = async (req, res) => {
 
     addUserContoller(user)
         .then(result => {
+            console.log(result)
             return res.status(200).json(result)
         })
         .catch(e => res.status(500))
@@ -37,7 +38,7 @@ const updateUser = (req, res) => {
 }
 
 const addUserBookToBookshelf = (req, res) => {
-   // const { userId, book } = req;
+    // const { userId, book } = req;
     console.log(req.body);
     insertBook();
 };
