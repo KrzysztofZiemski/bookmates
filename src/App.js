@@ -62,7 +62,7 @@ function App() {
             <UserPage></UserPage>
           </Route>
           <Route path="/profile/">
-            {!loggedUser ? <Redirect to="/" /> : <ProfilePage loggedUser={loggedUser} />}
+            {!loggedUser ? <Redirect to="/" /> : <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser} />}
           </Route>
           <Route>
             <ErrorPage></ErrorPage>

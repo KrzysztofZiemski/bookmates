@@ -39,7 +39,12 @@ const updateUserDetailsController = (userId, userDetails) => {
 }
 
 const removeUserController = (userId) => {
-    removeUser(userId);
+    let isRemoved = false;
+    removeUser(userId)
+        .then(response => {
+            response.rowCount === 1 ? isRemoved = true : isRemoved = false
+        });
+    return isRemoved;
 }
 
 module.exports = { 

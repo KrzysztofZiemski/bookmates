@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ButtonBasic } from "../../button";
 import { Form, Select, Label, Input, Button } from 'semantic-ui-react';
+import { deleteCookie } from "../../cookies/cookies";
 import { updateUser, removeUser } from "../../../repos/user";
 import { getCoords } from '../../../utils/geoLocation';
 import { coutriesListOptions } from '../registrationPage/coutriesListOptions';
@@ -15,14 +16,15 @@ const IsUpdated = (props) => {
   return successful;
 }
 
-const IsDeleted = (props) => {
-  const { updateSuccess } = props;
+const IsDeleted = (result, props) => {
+  const { setLoginUser } = props;
   const successful = alert("Konto usunięte");
   const failed = alert("Nie udało się usunąć konta. Skontaktuj się z administratorem");
-  if(updateSuccess === false){
+  if(result === false){
     return failed;
   } else {
-    // wyloguj usera
+    deleteCookie("accessToken");
+    setLoginUser(null);
     return successful;
   }
 }
@@ -52,8 +54,9 @@ const UpdateUserDataForm = (props) => {
   }
 
   const deleteAccount = () => {
-    removeUser(id).then(response => IsDeleted(updateSuccess(true)));
-
+    removeUser(id).then(response => {
+      response === 204 ? IsDeleted(true, props) : IsDeleted(false, props);
+    });
   }
 
   // updateSuccess === true ? <IsUpdated updateSuccess={true} /> : <IsUpdated updateSuccess={false} />

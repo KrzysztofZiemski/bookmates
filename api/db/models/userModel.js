@@ -88,10 +88,10 @@ const getUserByMail = (mail) => {
 };
 
 const removeUser = (id) => {
-    console.log('removed')
+    console.log("trying to remove: " + id);
     const sql = `
         DELETE FROM ${tableName}
-        WHERE id = ${id}
+        WHERE id = ${id};
         `
     return connection.query(sql);
 };

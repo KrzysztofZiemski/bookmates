@@ -30,8 +30,11 @@ const addUser = async (req, res) => {
 }
 
 const removeUser = (req, res) => {
-    removeUserController(req.id);
-
+    removeUserController(req.params.id)
+        .then(result => {
+            result === true ? res.status(204) : res.status(404)
+        })
+        .catch(err => res.status(500))
 }
 const updateUser = (req, res) => {
     //check if update user details or change password
