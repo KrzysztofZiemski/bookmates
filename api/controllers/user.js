@@ -1,31 +1,46 @@
-const { insertUser, getUserByName, getUser, addToBookShelf } = require('../db/models/userModel');
+const { insertUser, getUserByName, getUser, addToBookShelf, getAllUserBooks, deleteUserBook } = require('../db/models/userModel');
 
-const addUserContoller = (user) => {
-    return insertUser(user)
-}
+const addUserController = (user) => {
+    return insertUser(user);
+};
 
 const getUserByNameController = (userData) => {
-    return getUserByName(userData.name)
-}
+    return getUserByName(userData.name);
+};
 
-const getUserContoller = (id) => {
+const getUserController = (id) => {
     return getUser(id);
-}
+};
 
 const getUserSafeDetails = (req) => {
     let userId = req.token.sub;
-    return getUserContoller(userId)
+    return getUserController(userId)
         .then((userList) => {
             const user = userList[0];
             const { password_salt, password_hash, ...safeUserData } = user;
             return safeUserData;
-        })
+        });
 };
 
 const insertBookToBookshelf = (book, userId) => {
-    addToBookShelf(book, userId)
-        .then(data => console.log(data))
-        .catch(error => console.log(error));
-}
+    return addToBookShelf(book, userId);
+};
 
-module.exports = { addUserContoller, getUserByNameController, getUserContoller, getUserSafeDetails, insertBookToBookshelf };
+const getAllUserBooksController = (userId) => {
+    return getAllUserBooks(userId);
+};
+
+const deleteUserBookController = (userId, bookId) => {
+
+    return deleteUserBook(userId, bookId);
+};
+
+module.exports = {
+    addUserController,
+    getUserByNameController,
+    getUserController,
+    getUserSafeDetails,
+    insertBookToBookshelf,
+    getAllUserBooksController,
+    deleteUserBookController
+};
