@@ -1,15 +1,14 @@
 const express = require("express");
 const authRouter = express.Router();
 const { checkPassword } = require('../db/utils/passwordEncryption');
-const { getUserByNameController, getUserController } = require('../controllers/user');
+const { getUserByMailController, getUserController } = require('../controllers/user');
 const { generateToken, validateToken } = require('../db/utils/token');
 
 
 const login = async (req, res) => {
     const userData = req.body;
-
-    const responseUser = await getUserByNameController(userData);
-
+    const responseUser = await getUserByMailController(userData);
+    console.log(responseUser)
     if (responseUser.length === 0) res.status(404).json('nie znaleźliśmy takiego użytkownika');
     const user = responseUser[0];
     const isOk = await checkPassword(user, userData.password);

@@ -59,13 +59,14 @@ const FormRegistration = (props) => {
 
     const handleRegistration = async (e) => {
         e.preventDefault();
-        for (let err in errors) {
+        // for (let err in errors) {
 
-            if (errors[err] === true || errors[err] === null) return;
-        }
+        //     if (errors[err] === true || errors[err] === null) return;
+        // }
 
-        let coords = await getCoords(`${country} ${city}`).catch(e => console.log('nie udalo sie nie udało się pobrać lokalizacji'));
+        let coords = await getCoords(`${country} ${city.value}`).catch(e => console.log('nie udalo sie nie udało się pobrać lokalizacji'));
         if (!coords) coords = null;
+
 
         const user = { name, mail, country, city: city.value, gender, birth, password, coords };
 

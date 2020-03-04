@@ -1,6 +1,6 @@
 
 import Geocode from "react-geocode";
-import { ApiKeyMaps } from "../config";
+import { ApiKeyMaps } from "../config.json";
 
 Geocode.setApiKey(ApiKeyMaps);
 Geocode.setLanguage("pl");

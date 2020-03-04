@@ -64,10 +64,10 @@ const getUser = (id) => {
     WHERE id = ${id}    `;
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
-const getUserByName = (name) => {
+const getUserByMail = (mail) => {
     const sql = `
     SELECT * FROM ${tableName}
-    WHERE name = '${name}'`;
+    WHERE email = '${mail}'`;
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
 const removeUser = (id) => {
@@ -86,7 +86,7 @@ const insertBook = (book) => {
     `;
     return connection.query(sql);
 };
-//getUserByMail('krzyszto').then(e => console.log(e))
+
 
 const getAllUserBooks = (userId) => {
     const sql = `SELECT bookdata
@@ -106,4 +106,4 @@ const deleteUserBook = (userId, bookId) => {
 };
 
 
-module.exports = { insertUser, getUserByName, getUser, insertBook, addToBookShelf, getAllUserBooks, deleteUserBook };
+module.exports = { insertUser, getUserByMail, getUser, insertBook, addToBookShelf, getAllUserBooks, deleteUserBook };

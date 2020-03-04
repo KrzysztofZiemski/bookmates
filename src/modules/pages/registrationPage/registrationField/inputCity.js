@@ -20,7 +20,6 @@ const InputCity = (props) => {
     }
 
     const handleCityInput = (e, data) => {
-
         setInputValue(data.value);
         setCity(null);
         getCitiesGoogle(data.value)
@@ -30,7 +29,7 @@ const InputCity = (props) => {
             }).then(data => {
                 const citiesName = data.filter(city => city.types[0] === "locality");
                 const listTips = citiesName.map(city => <li key={city.description}> <button onClick={(e) => {
-                    setCity(city.description);
+                    setCity({ value: city.description, picked: true });
                     setError(false);
                     setInputValue(city.description);
 
