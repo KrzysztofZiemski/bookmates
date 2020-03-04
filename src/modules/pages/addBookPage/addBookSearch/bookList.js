@@ -1,8 +1,8 @@
 import React from 'react';
 import { BookCard } from './bookCard';
 import { addBookToShelf } from '../../../../repos/user';
-export const BookList = ({ id, books }) => {
-
+export const BookList = (props) => {
+    const { id, books } = props;
     const handleSubmit = ({ title, imageLinks, authors, industryIdentifiers }) => {
         const book = {
             bookId: industryIdentifiers[0].identifier,
@@ -21,7 +21,7 @@ export const BookList = ({ id, books }) => {
             {books.map((book, i) => (
                 <BookCard key={i} image={book.imageLinks.thumbnail} title={book.title}
                     author={book.authors.join(', ')}
-                    published={book.publishedDate} handleSubmit={() => handleSubmit(book)} />
+                    published={book.publishedDate} handleSubmit={() => handleSubmit(book, id)} />
             ))}
         </div>
     );

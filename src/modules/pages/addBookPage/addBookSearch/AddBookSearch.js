@@ -4,7 +4,8 @@ import { SearchArea } from './searchArea';
 import { BookList } from './bookList';
 
 export const AddBookSearch = (props) => {
-    const { id } = props;
+    const { loggedUser } = props;
+
     let [books, setBooks] = React.useState([]);
     let [searchField, setSearchField] = React.useState('');
     let [sort, setSort] = React.useState('');
@@ -27,7 +28,6 @@ export const AddBookSearch = (props) => {
     };
 
     const handleSort = (e) => {
-        console.log(e.target.value);
         setSort(e.target.value);
     };
 
@@ -42,8 +42,8 @@ export const AddBookSearch = (props) => {
 
     return (
         <div>
-            <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} />
-            <BookList books={sortedBooks} id={id} />
+            <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} id={loggedUser.id} />
+            <BookList books={sortedBooks} id={loggedUser.id} />
         </div>
     )
 }

@@ -5,9 +5,9 @@ import IsBookAdded from './isBookAdded';
 // import IsRegistered from "../registrationPage/isRegistered";
 import { AddBookSearch } from './addBookSearch/AddBookSearch';
 
-const AddBookPage = () => {
+const AddBookPage = (props) => {
     let [addBookSuccess, setAddBookSuccess] = React.useState(null);
-
+    const { loggedUser } = props;
     const addBookForm = (book) => {
         addBook(book).then(response => {
             if (response.status !== 200) {
@@ -20,7 +20,7 @@ const AddBookPage = () => {
 
     return (
         <div>
-            <AddBookSearch></AddBookSearch>
+            <AddBookSearch loggedUser={loggedUser}></AddBookSearch>
             {addBookSuccess === null ? <AddBookForm addBookForm={addBookForm} /> : <IsBookAdded addBookSuccess={addBookSuccess} />}
         </div >
 

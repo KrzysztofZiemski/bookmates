@@ -28,7 +28,6 @@ function App() {
     useEffect(() => {
         getUserDetails(getCookies().accessToken).then(user => {
             setLoginUser(user);
-            console.log(user);
         });
     }, []);
 

@@ -1,7 +1,6 @@
 import React from 'react';
 
 export const SearchArea = props => {
-    console.log(props.searchBook)
     return (
         <div className="search-area">
             <form onSubmit={props.searchBook} action="">

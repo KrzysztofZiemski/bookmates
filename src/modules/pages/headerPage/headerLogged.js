@@ -9,7 +9,7 @@ import {
 
 const LoggedHeader = (props) => {
   const { loggedUser, setLoginUser } = props;
-  console.log(loggedUser);
+
   const logout = () => {
     deleteCookie("accessToken");
     setLoginUser(null);
