@@ -8,12 +8,19 @@ const RegistrationPage = () => {
   let [registrationSuccess, setRegistrationSuccess] = React.useState(null);
 
   const sendRegistrationForm = (user) => {
-    addUser(user).then(response => setRegistrationSuccess(true))
+    addUser(user).then(response => {
+      if (response.status === 200) return setRegistrationSuccess(true);
+      if (response.status === 200) return setRegistrationSuccess(true);
+      setRegistrationSuccess(false);
+    })
+      .catch(err => {
+        setRegistrationSuccess(false);
+      })
   }
   return (
     <div className="registrationPage">
-      {registrationSuccess === null ? <FormRegistration sendRegistrationForm={sendRegistrationForm} /> : <IsRegistered registrationSuccess={registrationSuccess} />}
-
+      {registrationSuccess !== true ? <FormRegistration sendRegistrationForm={sendRegistrationForm} /> : <IsRegistered registrationSuccess={registrationSuccess} />}
+      {registrationSuccess === false ? <div><p>Nie udało się dokonać rejestracji</p><p>Może już istnieć taka nazwa użytkownika lub e-mail</p></div> : null}
     </div >
 
   );

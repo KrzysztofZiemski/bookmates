@@ -3,25 +3,24 @@ import { Form, Input, Label } from 'semantic-ui-react';
 import ErrorMessage from './errorMessage';
 
 const InputField = (props) => {
-    let { label, value, setValue, condition, type } = props;
-    let [errorValue, setErrorValue] = React.useState(null);
+    let { label, value, setValue, condition, type, error, setError } = props;
 
     const validate = () => {
-        console.log(value)
-        if (condition.hasOwnProperty('length') && value.length < condition.length) return setErrorValue(true);
-        if (condition.hasOwnProperty('pattern') && !value.match(condition.pattern)) return setErrorValue(true);
-        if (condition.hasOwnProperty('isTrue') && !condition.isTrue) return setErrorValue(true);
-        setErrorValue(false)
+
+        if (condition.hasOwnProperty('length') && value.length < condition.length) return setError(true);
+        if (condition.hasOwnProperty('pattern') && !value.match(condition.pattern)) return setError(true);
+        if (condition.hasOwnProperty('isTrue') && !condition.isTrue) return setError(true);
+        setError(false)
     }
     return (
         <>
-            <Form.Field className={errorValue ? 'errorElementRegistration' : null}>
+            <Form.Field className={error ? 'errorElementRegistration' : null}>
                 <Label>{label} </Label>
                 <Input type={type} onBlur={validate} onChange={(e, data) => {
                     setValue(data.value)
                 }
                 } />
-                <ErrorMessage error={errorValue} message={condition.message} />
+                <ErrorMessage error={error} message={condition.message} />
             </Form.Field>
         </>
     )

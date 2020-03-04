@@ -6,6 +6,7 @@ Geocode.setApiKey(ApiKeyMaps);
 Geocode.setLanguage("pl");
 
 export const getCoords = (adress) => {
+    console.log(adress)
     return Geocode.fromAddress(adress).then(
         response => {
             const { lat, lng } = response.results[0].geometry.location;

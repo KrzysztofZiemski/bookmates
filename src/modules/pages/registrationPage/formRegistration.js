@@ -18,6 +18,16 @@ const FormRegistration = (props) => {
     let [password, setPassword] = React.useState("");
     let [confirmPassword, setConfirmPassword] = React.useState("");
 
+    let [nameError, setNameError] = React.useState(null);
+    let [mailError, setMailError] = React.useState(null);
+    let [countryError, setCountryError] = React.useState("Polska");
+    let [cityError, setCityError] = React.useState(null);
+    let [genderError, setGenderError] = React.useState(null);
+    let [birthError, setBirthError] = React.useState(null);
+    let [passwordError, setPasswordError] = React.useState(null);
+    let [confirmPasswordError, setConfirmPasswordError] = React.useState(null);
+    const errors = [nameError, mailError, countryError, cityError, genderError, birthError, passwordError, confirmPasswordError];
+
     const errorNameCondition = {
         message: "nazwa użytkownika powinna mieć conajmniej 3 znaki",
         length: 3,
@@ -49,7 +59,10 @@ const FormRegistration = (props) => {
 
     const handleRegistration = async (e) => {
         e.preventDefault();
-        let coords = await getCoords(`${country} ${city.value}`).catch(e => console.log('nie udalo sie nie udało się pobrać lokalizacji'));
+        for (let err in errors) {
+            if (errors[err] === false || errors[err] === null) return;
+        }
+        let coords = await getCoords(`${country} ${city}`).catch(e => console.log('nie udalo sie nie udało się pobrać lokalizacji'));
         if (!coords) coords = null;
 
         const user = { name, mail, country, city: city.value, gender, birth, password, coords };
@@ -59,14 +72,14 @@ const FormRegistration = (props) => {
 
     return (
         <form className="registrationForm" onSubmit={handleRegistration}>
-            <InputField value={name} setValue={setName} label="Użytkownik" condition={errorNameCondition} type="text" />
-            <InputField value={mail} setValue={setMail} label="E-mail" condition={errorMailCondition} type="email" />
-            <SelectField value={country} setValue={setCountry} label="Państwo" condition={errorCountryCondition} options={coutriesListOptions()} defaultValue="Polska" />
-            <InputCity city={city} setCity={setCity} />
-            <SelectField value={gender} setValue={setGender} label="Płeć" condition={errorGenderCondition} options={genderList} />
-            <InputField value={birth} setValue={setBirth} label="Data urodzenia" condition={errorBirthCondition} type="date" />
-            <InputField value={password} setValue={setPassword} label="Hasło" condition={errorPasswordCondition} type="password" />
-            <InputField value={confirmPassword} setValue={setConfirmPassword} label="Powtórz hasło" condition={errorConfirmPasswordCondition} type="password" />
+            <InputField value={name} setValue={setName} label="Użytkownik" condition={errorNameCondition} error={nameError} setError={setNameError} type="text" />
+            <InputField value={mail} setValue={setMail} label="E-mail" condition={errorMailCondition} type="email" error={mailError} setError={setMailError} />
+            <SelectField value={country} setValue={setCountry} label="Państwo" condition={errorCountryCondition} options={coutriesListOptions()} defaultValue="Polska" error={countryError} setError={setCountryError} />
+            <InputCity city={city} setCity={setCity} error={cityError} setError={setCityError} />
+            <SelectField value={gender} setValue={setGender} label="Płeć" condition={errorGenderCondition} options={genderList} error={genderError} setError={setGenderError} />
+            <InputField value={birth} setValue={setBirth} label="Data urodzenia" condition={errorBirthCondition} type="date" error={birthError} setError={setBirthError} />
+            <InputField value={password} setValue={setPassword} label="Hasło" condition={errorPasswordCondition} type="password" error={passwordError} setError={setPasswordError} />
+            <InputField value={confirmPassword} setValue={setConfirmPassword} label="Powtórz hasło" condition={errorConfirmPasswordCondition} type="password" error={confirmPasswordError} setError={setConfirmPasswordError} />
             <Form.Field className="submitRegistrationBtn">
                 <ButtonBasic content={"Zarejestruj"} />
             </Form.Field>

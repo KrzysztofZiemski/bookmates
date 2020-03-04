@@ -18,6 +18,7 @@ const getUserDetails = (req, res) => {
 
 const addUser = async (req, res) => {
     const user = req.body;
+    if (!user.name || !user.mail || !user.password || !user.coords) return res.status(400).json('not enought informations');
     const { salt, password } = await hashPassword(user);
     user.salt = salt;
     user.password = password;
@@ -27,7 +28,10 @@ const addUser = async (req, res) => {
             console.log(result)
             return res.status(200).json(result)
         })
-        .catch(e => res.status(500))
+        .catch(e => {
+            console.log(e)
+            res.status(500).json(e)
+        })
 }
 
 const removeUser = (req, res) => {

@@ -3,20 +3,19 @@ import { Form, Label, Select } from 'semantic-ui-react';
 import ErrorMessage from './errorMessage';
 
 const SelectField = (props) => {
-    let { label, value, setValue, condition, options, defaultValue } = props;
-    let [errorValue, setErrorValue] = React.useState(null);
+    let { label, value, setValue, condition, options, defaultValue, error, setError } = props;
 
     const validate = () => {
-        if (condition.length < 2) return setErrorValue(true)
-        setErrorValue(false)
+        if (condition.length < 2) return setError(true)
+        setError(false)
     }
 
     return (
         <>
-            <Form.Field className={errorValue ? 'errorElementRegistration' : null}>
+            <Form.Field className={error ? 'errorElementRegistration' : null}>
                 <Label>{label} </Label>
                 <Select onBlur={validate} onChange={(e, data) => setValue(data.value)} options={options} defaultValue={defaultValue} />
-                <ErrorMessage error={errorValue} message={condition.message} />
+                <ErrorMessage error={error} message={condition.message} />
             </Form.Field>
         </>
     )
