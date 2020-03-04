@@ -20,7 +20,7 @@ const FormRegistration = (props) => {
 
     let [nameError, setNameError] = React.useState(null);
     let [mailError, setMailError] = React.useState(null);
-    let [countryError, setCountryError] = React.useState("Polska");
+    let [countryError, setCountryError] = React.useState(false);
     let [cityError, setCityError] = React.useState(null);
     let [genderError, setGenderError] = React.useState(null);
     let [birthError, setBirthError] = React.useState(null);
@@ -60,8 +60,10 @@ const FormRegistration = (props) => {
     const handleRegistration = async (e) => {
         e.preventDefault();
         for (let err in errors) {
-            if (errors[err] === false || errors[err] === null) return;
+
+            if (errors[err] === true || errors[err] === null) return;
         }
+
         let coords = await getCoords(`${country} ${city}`).catch(e => console.log('nie udalo sie nie udało się pobrać lokalizacji'));
         if (!coords) coords = null;
 

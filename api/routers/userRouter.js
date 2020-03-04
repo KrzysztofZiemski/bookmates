@@ -38,7 +38,6 @@ const updateUser = (req, res) => {
 };
 
 const addUserBookToBookshelf = async (req, res) => {
-    console.log(req.body);
     const { book, userId } = req.body;
     try {
         let currentUserBooks = await getAllUserBooksController(userId);
