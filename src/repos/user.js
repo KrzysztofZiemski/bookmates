@@ -55,3 +55,17 @@ export const getUserDetails = (accessToken) => {
         }
     }).then(data => data.json())
 }
+
+export const addBookToShelf = (book, id) => {
+    return fetch(`${urlUser}books`, {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            book,
+            userId: id
+        })
+    }).then(res => res.json())
+}

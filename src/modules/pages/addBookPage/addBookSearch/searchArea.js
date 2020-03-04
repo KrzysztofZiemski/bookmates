@@ -1,11 +1,11 @@
 import React from 'react';
 
 export const SearchArea = props => {
-
+    console.log(props.searchBook)
     return (
         <div className="search-area">
             <form onSubmit={props.searchBook} action="">
-                <input onChange={props.handleSearch} type="text" className="text"/>
+                <input onChange={props.handleSearch} type="text" className="text" />
                 <button type="submit">Search</button>
                 <select defaultValue="Sort" onChange={props.handleSort} name="" id="">
                     <option disabled value="Sort">Sort</option>

@@ -5,7 +5,6 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    useRouteMatch,
     Redirect
 } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
@@ -40,22 +39,25 @@ function App() {
     return (
         <Router>
             <header className="headerUnlogged">
-                {loggedUser ? <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser}/> :
-                    <MainHeader setLoginUser={setLoginUser}/>}
+                {loggedUser ? <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} /> :
+                    <MainHeader setLoginUser={setLoginUser} />}
             </header>
             <main>
                 <Switch>
                     <Route exact path="/">
-                        <WelcomePage/>
+                        <WelcomePage />
                     </Route>
                     <Route path="/dashboard">
-                        {!loggedUser ? <Redirect to="/"/> : <Dashboard loggedUser={loggedUser}/>}
+                        {!loggedUser ? <Redirect to="/" /> : <Dashboard loggedUser={loggedUser} />}
+                    </Route>
+                    <Route path="/addbook">
+                        {!loggedUser ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
                     </Route>
                     <Route path="/registration">
                         <RegistrationPage></RegistrationPage>
                     </Route>
                     <Route path="/addbook">
-                        {!loggedUser ? <Redirect to="/"/> : <AddBookPage/>}
+                        {!loggedUser ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
                     </Route>
                     <Route path="/book">
                         <BookPage></BookPage>
@@ -64,7 +66,7 @@ function App() {
                         <UserPage></UserPage>
                     </Route>
                     <Route path="/profile/">
-                        {!loggedUser ? <Redirect to="/"/> : <ProfilePage loggedUser={loggedUser}/>}
+                        {!loggedUser ? <Redirect to="/" /> : <ProfilePage loggedUser={loggedUser} />}
                     </Route>
                     <Route>
                         <ErrorPage></ErrorPage>

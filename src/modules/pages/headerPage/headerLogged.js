@@ -18,7 +18,7 @@ const LoggedHeader = (props) => {
   // TODO: hamburger menu
 
   return (
-      <Menu className="navbar">
+    <Menu className="navbar">
       <Container>
         <Menu.Item as={Link} to={"/"} active className="logo">
           BookMates
@@ -33,11 +33,11 @@ const LoggedHeader = (props) => {
           dodaj książkę
         </Menu.Item>
         <Menu.Item position='right'>
-            <ButtonBasic content="Wyloguj" handleClick={logout} />
+          <ButtonBasic content="Wyloguj" handleClick={logout} />
         </Menu.Item>
       </Container>
     </Menu>
-    );
+  );
 };
 
 export default LoggedHeader;
