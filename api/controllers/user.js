@@ -38,13 +38,10 @@ const updateUserDetailsController = (userId, userDetails) => {
     updateUserDetails(userId, userDetails);
 }
 
+// TODO: do naprawy
 const removeUserController = (userId) => {
-    let isRemoved = false;
-    removeUser(userId)
-        .then(response => {
-            response.rowCount === 1 ? isRemoved = true : isRemoved = false
-        });
-    return isRemoved;
+    return removeUser(userId)
+        .then(response => response.rowCount);
 }
 
 module.exports = { 

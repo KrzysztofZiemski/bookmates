@@ -18,14 +18,12 @@ const IsUpdated = (props) => {
 
 const IsDeleted = (result, props) => {
   const { setLoginUser } = props;
-  const successful = alert("Konto usunięte");
-  const failed = alert("Nie udało się usunąć konta. Skontaktuj się z administratorem");
   if(result === false){
-    return failed;
+    alert("Nie udało się usunąć konta. Skontaktuj się z administratorem");
   } else {
     deleteCookie("accessToken");
     setLoginUser(null);
-    return successful;
+    alert("Konto usunięte");
   }
 }
 
@@ -55,7 +53,12 @@ const UpdateUserDataForm = (props) => {
 
   const deleteAccount = () => {
     removeUser(id).then(response => {
-      response === 204 ? IsDeleted(true, props) : IsDeleted(false, props);
+      console.log(response.status);
+      if (response.status === 204){
+        IsDeleted(true, props);
+      } else {
+        IsDeleted(false, props);
+      } 
     });
   }
 
