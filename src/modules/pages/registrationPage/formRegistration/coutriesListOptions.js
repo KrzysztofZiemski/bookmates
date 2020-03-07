@@ -1,5 +1,4 @@
 import { coutriesList } from './coutriesList';
-import React from 'react';
 
 export const coutriesListOptions = () => {
     const list = coutriesList.map(country => {
