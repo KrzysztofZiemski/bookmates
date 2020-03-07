@@ -3,12 +3,14 @@ import { BookCard } from './bookCard';
 import { addBookToShelf } from '../../../../repos/user';
 export const BookList = (props) => {
     const { id, books } = props;
-    const handleSubmit = ({ title, imageLinks, authors, industryIdentifiers }) => {
+    const handleSubmit = ({ title, imageLinks, authors, industryIdentifiers, publishedDate, categories }) => {
         const book = {
             bookId: industryIdentifiers[0].identifier,
             title,
             imageUrl: imageLinks.thumbnail,
-            authors: authors.join(', ')
+            authors: authors.join(', '),
+            publishedYear: publishedDate,
+            categories
         };
 
         addBookToShelf(book, id)

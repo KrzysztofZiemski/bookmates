@@ -79,9 +79,9 @@ const removeUser = (id) => {
 };
 
 const insertBook = (book) => {
-    const { userID, title, author, isbn, genre, rating, status } = book;
+    const { userID, title, authors, isbn, genre, rating, status } = book;
     const sql = `INSERT INTO ${tableName} VALUES (
-           ${userID}, DEFAULT ,'${title}','${author}','${isbn}','${genre}',${rating},'${status}'
+           ${userID}, DEFAULT ,'${title}','${authors}','${isbn}','${genre}',${rating},'${status}'
         )
     `;
     return connection.query(sql);

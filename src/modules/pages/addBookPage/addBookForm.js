@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Label } from "semantic-ui-react";
 import ErrorMessage from "./errorMessage";
-import { ButtonBasic} from "../../button";
+import { ButtonBasic } from "../../button";
 import './addBookPage.scss';
 
 const AddBookForm = props => {
@@ -11,14 +11,14 @@ const AddBookForm = props => {
   let [title, setTitle] = React.useState("");
   let [authors, setAuthors] = React.useState("");
   let [publishedYear, setPublishedYear] = React.useState(0);
-  let [imageURL, setImageURL] = React.useState("");
+  let [imageUrl, setImageUrl] = React.useState("");
   let [description, setDescription] = React.useState("");
 
   let [errorISBN, setErrorISBN] = React.useState(null);
   let [errorTitle, setErrorTitle] = React.useState(null);
   let [errorAuthors, setErrorAuthors] = React.useState(null);
   let [errorPublishedYear, setErrorPublishedYear] = React.useState(null);
-  let [errorImageURL, setErrorImageURL] = React.useState(null);
+  let [errorImageUrl, setErrorImageUrl] = React.useState(null);
   let [errorDescription, setErrorDescription] = React.useState(null);
 
 
@@ -41,20 +41,22 @@ const AddBookForm = props => {
     setErrorPublishedYear(false);
   };
 
-    const validateImageURL = () => {
-        if (!imageURL) return setErrorImageURL(false);
-    };
+  const validateImageURL = () => {
+    if (!imageUrl) return setErrorImageUrl(false);
+  };
 
-    const validateDescription = () => {
-        if (!description) return setErrorDescription(false);
-    };
+  const validateDescription = () => {
+    if (!description) return setErrorDescription(false);
+  };
 
 
-    const handleAddBook = async e => {
+  const handleAddBook = async e => {
     e.preventDefault();
-      const book = { isbn, title, authors, publishedYear, imageURL, description };
 
-      addBookForm(book);
+    const book = { isbn, title, authors, publishedYear, imageUrl, description };
+    console.log(book)
+
+    addBookForm(book);
 
   };
 
@@ -114,16 +116,16 @@ const AddBookForm = props => {
           message={"Rok publikacji powinien mieć 4 cyfry"}
         />
       </Form.Field>
-      <Form.Field className={errorImageURL ? "errorElementRegistration" : null}>
+      <Form.Field className={errorImageUrl ? "errorElementRegistration" : null}>
         <Label htmlFor="formImageURL">URL obrazka: </Label>
         <Input
           type="url"
           id="formImageURL"
-          onChange={(e, data) => setImageURL(data.value)}
+          onChange={(e, data) => setImageUrl(data.value)}
           onBlur={validateImageURL}
         />
         <ErrorMessage
-          error={errorImageURL}
+          error={errorImageUrl}
           message={"Podaj poprawnie adres obrazka"}
         />
       </Form.Field>

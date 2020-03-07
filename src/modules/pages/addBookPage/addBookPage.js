@@ -9,6 +9,7 @@ const AddBookPage = (props) => {
     let [addBookSuccess, setAddBookSuccess] = React.useState(null);
     const { loggedUser } = props;
     const addBookForm = (book) => {
+        console.log(book)
         addBook(book).then(response => {
             if (response.status !== 200) {
                 return setAddBookSuccess(false);

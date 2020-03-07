@@ -7,7 +7,6 @@ import {
     Route,
     Redirect
 } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
 
 import MainHeader from './modules/pages/headerPage/headerUnlogged';
 import LoggedHeader from './modules/pages/headerPage/headerLogged';

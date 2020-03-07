@@ -4,13 +4,13 @@ const connection = require('../connection');
 const tableName = 'books';
 
 const insertBook = (book) => {
-    const { isbn, title, authors, publishedYear, imageurl, description  } = book;
-    console.log(authors);
-    const sql = `INSERT INTO ${tableName} (id, isbn, title, authors, publishedYear) VALUES (
-           DEFAULT, ${isbn}, '${title}', ARRAY [${authors.map(s => `'${s.trim()}'`)}], ${publishedYear}
+    const { isbn, title, authors, publishedYear, imageUrl, description } = book;
+    console.log(book)
+    const sql = `INSERT INTO ${tableName} (id, isbn, title, authors, "publishedYear", imageurl, description) VALUES (
+           DEFAULT, ${isbn}, '${title}', ARRAY [${authors.map(s => `'${s.trim()}'`)}], ${publishedYear}, '${imageUrl ? imageUrl : null}', '${description ? description : null}'
         )
     `;
-    console.log(sql);
+
     return connection.query(sql);
 };
 

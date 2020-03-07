@@ -21,7 +21,7 @@ const addBook = (req, res) => {
         .then(result => res.send(result));
 }
 
-const getSingleBook = () => {};
+const getSingleBook = () => { };
 
 //localhost:3010/book
 bookRouter.get('/', getAllBooks);

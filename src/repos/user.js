@@ -63,9 +63,28 @@ export const addBookToShelf = (book, id) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            book,
-            userId: id
-        })
+        body: JSON.stringify({ book, userId: id })
     }).then(res => res.json())
+}
+
+export const getAllBooks = (id) => {
+    return fetch(`${urlUser}books/${id}`)
+        .then(res => {
+            if (res.status !== 200) throw new Error(res.status);
+            console.log(res)
+            return res.json();
+        })
+}
+
+export const deleteUserBook = (userId, bookId) => {
+    console.log(bookId)
+    return fetch(`${urlUser}books/${userId}`, {
+        method: 'DELETE',
+        body: JSON.stringify({ bookId }),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(res => res.json())
 }
