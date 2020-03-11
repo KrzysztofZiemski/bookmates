@@ -4,9 +4,8 @@ import ErrorMessage from './errorMessage';
 import getCitiesGoogle from '../../../../utils/autoCompliteGoogle';
 
 const InputCity = (props) => {
-    const { city, setCity, error, setError } = props;
+    const { city, setCity, error, setError, validate } = props;
     let [cityList, setCityList] = React.useState("");
-    let [inputValue, setInputValue] = React.useState("");
 
     const errorMessage = "Wybierz misto z listy podpowiedzi";
 
@@ -14,14 +13,9 @@ const InputCity = (props) => {
         setTimeout(setCityList(null), 0);
 
     }
-    const validate = () => {
-        if (!city) return setError(false);
-        setError(true)
-    }
 
     const handleCityInput = (e, data) => {
-        setInputValue(data.value);
-        setCity(null);
+        setCity({ value: data.value, picked: false });
         getCitiesGoogle(data.value)
             .then(res => {
                 if (res.status !== 200) throw new Error(res.status);
@@ -31,14 +25,13 @@ const InputCity = (props) => {
                 const listTips = citiesName.map(city => <li key={city.description}> <button onClick={(e) => {
                     setCity({ value: city.description, picked: true });
                     setError(false);
-                    setInputValue(city.description);
 
                 }}>{city.description}</button></li>);
 
                 setCityList(listTips)
                 window.addEventListener('click', () => setCityList(null))
             })
-            .catch(err => console.log('błąd', err))
+            .catch(err => setError(true))
     }
 
 
@@ -46,7 +39,7 @@ const InputCity = (props) => {
         <Form.Field className={error ? 'errorElementRegistration' : null}>
             <Label htmlFor="registrationCity">Miejscowość: </Label>
             <div className="inputCityContainer">
-                <Input className="inputCity" value={inputValue} onBlur={validate} autoComplete="none" type="text" id="registrationCity" onFocus={hideList} onChange={handleCityInput} />
+                <Input className="inputCity" value={city.value} onBlur={validate} autoComplete="none" type="text" id="registrationCity" onFocus={hideList} onChange={handleCityInput} />
                 <ul className="cityTips">{cityList}</ul>
             </div>
             <ErrorMessage error={error} message={errorMessage} />

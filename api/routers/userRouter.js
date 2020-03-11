@@ -27,7 +27,7 @@ const addUser = async (req, res) => {
         .then(result => {
             return res.status(200).json(result);
         })
-        .catch(e => res.status(500));
+        .catch(e => res.status(500).json('invalid data'));
 };
 //TODO
 const removeUser = (req, res) => {

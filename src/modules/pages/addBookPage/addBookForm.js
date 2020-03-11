@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Label } from "semantic-ui-react";
 import ErrorMessage from "./errorMessage";
-import { ButtonBasic } from "../../button";
+import { ButtonBasic } from "../../Button/Button";
 import './addBookPage.scss';
 
 const AddBookForm = props => {

@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ButtonBasic } from "../../button";
+import { ButtonBasic } from "../../Button/Button";
 import { deleteCookie } from "../../cookies/cookies";
 import {
   Container,
   Menu
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
+import "./header.scss";
 
 const LoggedHeader = (props) => {
   const { loggedUser, setLoginUser } = props;

@@ -1,42 +1,7 @@
 @import "./style.scss";
+
 #root {
     display: flex;
     flex-direction: column;
     background-color: $colorWhiteish;
-    .navbar{
-        background-color: $colorOrange;
-        font-family: $fontHeader;
-
-        @media (min-width: 641px)and(max-width: 1024px) {
-            
-        }
-
-        @media (min-width: 1025px){
-
-        }
-        .logo{
-            font-family: $fontLogo;
-            font-size: 24px;
-            color: white;
-            transition: 0.4s;
-            &:hover{
-                color: $colorBlue;
-            }
-        }
-        a {
-            color: white;
-        }
-
-    }
-    .buttonBasic{
-        background-color: $colorBlue;
-        font-family: $fontHeader;
-        border: solid 2px white;
-        transition: 0.4s;
-        &:hover{
-            border: solid 2px $colorBlue;
-            background-color: white;
-            color: $colorBlue;
-        }
-    }
 }

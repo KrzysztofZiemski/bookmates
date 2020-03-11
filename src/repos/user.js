@@ -33,6 +33,7 @@ export const removeUser = id => {
 };
 
 export const auth = (data) => {
+    console.log(data)
     return fetch(urlAuth, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -40,10 +41,9 @@ export const auth = (data) => {
             'Content-Type': 'application/json'
         },
     })
-        .then(response => {
-            console.log(response)
-            if (response.status === 200) return response.json();
-            throw new Error();
+        .then(res => {
+            if (res.status === 200) return res.json();
+            throw new Error(res.status);
         })
 };
 

@@ -1,0 +1,30 @@
+@import '../../../style.scss';
+
+.headerUnlogged {
+
+    .navbar {
+        width: 100%;
+        background-color: $colorOrange;
+        font-family: $fontHeader;
+        overflow: hidden;
+        .ui.container {
+
+            @media (min-width: 641px) and(max-width: 1024px) {}
+
+            @media (min-width: 1025px) {}
+            .logo {
+                font-family: $fontLogo;
+                font-size: 24px;
+                color: white;
+                transition: 0.4s;
+
+                &:hover {
+                    color: $colorBlue;
+                }
+            }
+            a {
+                color: white;
+            }
+        }
+    }
+}

@@ -52,7 +52,7 @@ function App() {
                         {!loggedUser ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
                     </Route>
                     <Route path="/registration">
-                        <RegistrationPage></RegistrationPage>
+                        {!loggedUser ? <RegistrationPage /> : <Redirect to="/dashboard" />}
                     </Route>
                     <Route path="/addbook">
                         {!loggedUser ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
