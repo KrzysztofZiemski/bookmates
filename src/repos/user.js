@@ -54,6 +54,7 @@ export const getUserDetails = (accessToken) => {
             'Authorization': `Bearer ${accessToken}`
         }
     }).then(data => data.json())
+        .catch(e=>console.log(e))
 }
 
 export const addBookToShelf = (book, id) => {

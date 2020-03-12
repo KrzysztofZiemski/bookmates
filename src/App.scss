@@ -4,4 +4,13 @@
     display: flex;
     flex-direction: column;
     background-color: $colorWhiteish;
+    min-height: 100vh;
+    .menuBurger{
+        position: absolute;
+        font-size: 25px;
+        margin:2%;
+        @media (min-width: 1024px){
+            display: none;
+        }
+    }
 }

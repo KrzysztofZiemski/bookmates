@@ -6,6 +6,7 @@ import {
   Container,
   Menu
 } from 'semantic-ui-react';
+
 import "./header.scss";
 
 const LoggedHeader = (props) => {

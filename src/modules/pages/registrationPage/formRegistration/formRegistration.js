@@ -8,6 +8,7 @@ import { SelectField } from "./SelectField";
 import { genderList } from './genderList';
 import { getCoords } from '../../../../utils/geoLocation';
 
+
 const FormRegistration = (props) => {
     const { sendRegistrationForm } = props;
     let [name, setName] = React.useState("");

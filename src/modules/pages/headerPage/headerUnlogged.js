@@ -36,7 +36,7 @@ const MainHeader = (props) => {
   }
 
   return (
-    <Menu className="navbar">
+    <Menu className="navbar" >
       <Container>
         <Menu.Item as={Link} to={"/"} className="logo" active>
           BookMates
