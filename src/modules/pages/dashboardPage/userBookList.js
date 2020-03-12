@@ -13,7 +13,13 @@ export const UserBookList = ({ id }) => {
 
     const handleBookDelete = (id, book) => {
         deleteUserBook(id, book.bookId)
-            .then(data => console.log(data))
+            .then(data => {
+                setUserBooks(data);
+                getAllBooks(id)
+                    .then(res => setUserBooks(res))
+                    .catch(err => console.log(err));
+
+            })
             .catch(err => console.log(err)
             );
     };
@@ -22,7 +28,9 @@ export const UserBookList = ({ id }) => {
         <div className="list">
             {userBooks.map((book, i) => (
                 <UserBookCard key={i} userBookId={i} image={book.imageUrl} title={book.title}
-                    author={book.authors} handleBookDelete={() => { handleBookDelete(id, book) }} />
+                              author={book.authors} handleBookDelete={() => {
+                    handleBookDelete(id, book);
+                }}/>
             ))}
         </div>
     );

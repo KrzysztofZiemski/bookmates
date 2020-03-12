@@ -2,6 +2,10 @@ import React from 'react';
 
 export const BookCard = props => {
 
+    const isAlreadyAdded = () => {
+
+    }
+
     return (
         <div className="card-container">
             <img src={props.image} alt="" />
