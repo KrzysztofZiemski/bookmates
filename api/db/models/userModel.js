@@ -58,14 +58,14 @@ const removeFromBookShelf = (bookData, userId) => {
 };
 
 
-const getUsers = (id) => {
-    const sql = `
-        SELECT * FROM ${tableName} WHERE id=${id}
-    `;
-    return connection.query(sql).then((response) => {
-        return response.rows.map(userModel);
-    }).catch(err => console.log(err));
-};
+// const getUsers = (id) => {
+//     const sql = `
+//         SELECT * FROM ${tableName} WHERE id=${id}
+//     `;
+//     return connection.query(sql).then((response) => {
+//         return response.rows.map(userModel);
+//     }).catch(err => console.log(err));
+// };
 
 const getUser = (id) => {
     const sql = `
@@ -101,10 +101,14 @@ const getAllUserBooks = (userId) => {
     const sql = `SELECT bookdata
   FROM ${tableName} WHERE id=${userId}
     `;
-    return connection.query(sql);
+    return connection.query(sql).then(users=>users.rows);
 };
-
-
+const getByCoords=(x,y,distance)=>{
+    const sql = `
+    SELECT * FROM ${tableName} WHERE circle '((${x},${y}),${distance})' @> coordinates
+    `
+    return connection.query(sql).then(users=>users.rows);
+}
 module.exports = {
     insertUser,
     getUserByMail,
@@ -112,5 +116,6 @@ module.exports = {
     insertBook,
     addToBookShelf,
     getAllUserBooks,
-    removeFromBookShelf
+    removeFromBookShelf,
+    getByCoords
 };
