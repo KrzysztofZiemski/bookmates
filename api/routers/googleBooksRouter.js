@@ -13,6 +13,9 @@ const cleanData = (data) => {
         if (!book.volumeInfo.hasOwnProperty('authors')) {
             book.volumeInfo['authors'] = ['not found'];
         }
+        if (!book.volumeInfo.hasOwnProperty('industryIdentifiers')) {
+            book.volumeInfo['industryIdentifiers'] = [{ identifier: null }];
+        }
         return book.volumeInfo;
     });
 };

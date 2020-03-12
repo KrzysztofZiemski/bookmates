@@ -43,7 +43,7 @@ const addUserBookToBookshelf = async (req, res) => {
 
     try {
         let currentUserBooks = await getAllUserBooksController(userId);
-        let bookArr = currentUserBooks.rows[0].bookdata;
+        let bookArr = currentUserBooks.rows[0].bookdata || [];
         if (bookArr.map(b => b.bookId).indexOf(book.bookId) === -1) {
             let insertResult = await insertBookToBookshelf(book, userId);
             return res.status(200).json(insertResult);
@@ -65,15 +65,20 @@ const getAllUserBooks = (req, res) => {
         });
 };
 
-const deleteUserBook = (req, res) => {
+const deleteUserBookFromBookShelf = async (req, res) => {
+    const { userId, bookId } = req.params;
 
-    //todo
-    deleteUserBookController(req.params.userId, req.body.bookId)
-        .catch(err => {
-            console.log(err);
-            res.status(400).send(err);
-        })
-        .then(result => console.log(result));
+    try {
+        let currentUserBooks = await getAllUserBooksController(userId);
+        let bookArr = currentUserBooks.rows[0].bookdata || [];
+        let booksToStay = bookArr.filter(b => b.bookId !== bookId);
+        console.log(booksToStay);
+        await deleteUserBookController(booksToStay, userId);
+        let newBookArray = await currentUserBooks.rows[0].bookdata || [];
+        return res.status(200).json(newBookArray);
+    } catch (err) {
+        return res.status(400).json(err);
+    }
 };
 const matchMates=(req,res)=>{
     const id = req.body.id;
@@ -89,7 +94,7 @@ userRouter.get('/:id', validateToken, getUser);
 userRouter.post('/', addUser);
 userRouter.put('/books', addUserBookToBookshelf);
 userRouter.get('/books/:userId', getAllUserBooks);
-userRouter.delete('/books/:userId', deleteUserBook);
+userRouter.delete('/books/:userId/:bookId', deleteUserBookFromBookShelf);
 userRouter.put('/:id', updateUser);
 userRouter.delete('/:id', removeUser);
 

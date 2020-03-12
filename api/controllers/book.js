@@ -6,6 +6,6 @@ const addBookToDB = (book) => {
 
 const getAllBooksFromDB = () => {
     return getAllBooks();
-}
+};
 
 module.exports = { addBookToDB, getAllBooksFromDB };

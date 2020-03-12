@@ -49,6 +49,15 @@ const addToBookShelf = (bookData, userId) => {
     return connection.query(sql);
 };
 
+const removeFromBookShelf = (bookData, userId) => {
+    const sql = `
+    UPDATE users
+   SET bookdata = '${JSON.stringify(bookData)}'::jsonb
+    WHERE id = ${userId}`;
+    return connection.query(sql);
+};
+
+
 const getUsers = (id) => {
     const sql = `
         SELECT * FROM ${tableName} WHERE id=${id}
@@ -95,15 +104,13 @@ const getAllUserBooks = (userId) => {
     return connection.query(sql);
 };
 
-const deleteUserBook = (userId, bookId) => {
-    const sql = ` UPDATE users
-    SET bookdata = (CASE
-        WHEN bookdata IS NULL THEN '[]'::jsonb
-        ELSE bookdata
-    END
-)`;
-    return connection.query(sql);
+
+module.exports = {
+    insertUser,
+    getUserByMail,
+    getUser,
+    insertBook,
+    addToBookShelf,
+    getAllUserBooks,
+    removeFromBookShelf
 };
-
-
-module.exports = { insertUser, getUserByMail, getUser, insertBook, addToBookShelf, getAllUserBooks, deleteUserBook };

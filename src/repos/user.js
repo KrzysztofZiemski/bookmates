@@ -1,5 +1,5 @@
-import { getCookies } from "../modules/cookies/cookies";
-import { BACKEND_URL } from "../const";
+import { getCookies } from '../modules/cookies/cookies';
+import { BACKEND_URL } from '../const';
 
 const urlUser = `${BACKEND_URL}/user/`;
 const urlAuth = `${BACKEND_URL}/auth/`;
@@ -20,8 +20,8 @@ export const addUser = (user) => {
         body: JSON.stringify(user),
         headers: {
             'Content-Type': 'application/json'
-        },
-    })
+        }
+    });
 };
 
 export const updateUser = (id) => {
@@ -33,18 +33,18 @@ export const removeUser = id => {
 };
 
 export const auth = (data) => {
-    console.log(data)
+    console.log(data);
     return fetch(urlAuth, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
-        },
+        }
     })
         .then(res => {
             if (res.status === 200) return res.json();
             throw new Error(res.status);
-        })
+        });
 };
 
 export const getUserDetails = (accessToken) => {
@@ -55,9 +55,10 @@ export const getUserDetails = (accessToken) => {
         }
     }).then(data => data.json())
         .catch(e=>console.log(e))
-}
+};
 
 export const addBookToShelf = (book, id) => {
+    console.log(JSON.stringify(book), id);
     return fetch(`${urlUser}books`, {
         method: 'PUT',
         headers: {
@@ -65,27 +66,25 @@ export const addBookToShelf = (book, id) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ book, userId: id })
-    }).then(res => res.json())
-}
+    }).then(res => {
+        console.log(res);
+        if (res.status !== 200) throw new Error(res.status);
+        return res.json();
+    });
+};
 
 export const getAllBooks = (id) => {
     return fetch(`${urlUser}books/${id}`)
         .then(res => {
             if (res.status !== 200) throw new Error(res.status);
-            console.log(res)
+            console.log(res);
             return res.json();
-        })
-}
+        });
+};
 
 export const deleteUserBook = (userId, bookId) => {
-    console.log(bookId)
-    return fetch(`${urlUser}books/${userId}`, {
-        method: 'DELETE',
-        body: JSON.stringify({ bookId }),
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
+    return fetch(`${urlUser}books/${userId}/${bookId}`, {
+        method: 'DELETE'
     })
-        .then(res => res.json())
-}
+        .then(res => res.json());
+};
