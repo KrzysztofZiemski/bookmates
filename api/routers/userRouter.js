@@ -1,6 +1,6 @@
 const express = require('express');
 const userRouter = express.Router();
-const { addUserController, getUserController, getUserSafeDetails, insertBookToBookshelf, getAllUserBooksController, deleteUserBookController } = require('../controllers/user');
+const { addUserController, getUserController, getUserSafeDetails, insertBookToBookshelf, getAllUserBooksController, deleteUserBookController,matchMatesController } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
 //TODO
@@ -80,10 +80,16 @@ const deleteUserBookFromBookShelf = async (req, res) => {
         return res.status(400).json(err);
     }
 };
+const matchMates=(req,res)=>{
+    const id = req.body.id;
+    matchMatesController(id);
+}
 
 //localhost:3010/user
 userRouter.get('/', getAllUser);
 userRouter.get('/details', validateToken, getUserDetails);
+// userRouter.get('/match', validateToken, matchMates);
+userRouter.get('/match', matchMates);
 userRouter.get('/:id', validateToken, getUser);
 userRouter.post('/', addUser);
 userRouter.put('/books', addUserBookToBookshelf);
