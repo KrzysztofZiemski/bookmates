@@ -6,7 +6,7 @@ export const BookList = (props) => {
     const { id, books } = props;
     const handleSubmit = ({ title, imageLinks, authors, industryIdentifiers, publishedDate, categories }) => {
         const book = {
-            bookId: industryIdentifiers[0].identifier,
+            bookId: industryIdentifiers[0].identifier !== null ? industryIdentifiers[0].identifier : JSON.stringify(Math.floor(Math.random() * 10000)),
             title: escape(title),
             imageUrl: imageLinks.thumbnail,
             authors: authors.join(', '),
