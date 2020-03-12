@@ -6,9 +6,12 @@ import { ButtonBasic } from "../../Button/Button";
 import { Container, Menu } from 'semantic-ui-react'
 import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
 import { Loader } from '../../Loader/Loader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const MainHeader = (props) => {
-  const { setLoginUser } = props;
+  const { setLoginUser,toggleMenu } = props;
+
   let [password, setPassword] = React.useState("");
   let [mail, setMail] = React.useState("");
   let [errorMessage, setErrorMessage] = React.useState(null);
@@ -37,6 +40,8 @@ const MainHeader = (props) => {
 
   return (
     <Menu className="navbar" >
+
+      <button className="close" onClick={toggleMenu}><FontAwesomeIcon icon={faTimes} /></button>
       <Container>
         <Menu.Item as={Link} to={"/"} className="logo" active>
           BookMates

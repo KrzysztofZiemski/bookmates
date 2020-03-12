@@ -1,16 +1,28 @@
 @import "./style.scss";
-
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding: 0;
+}
 #root {
     display: flex;
     flex-direction: column;
     background-color: $colorWhiteish;
     min-height: 100vh;
+    @media (max-width: 640px){
+        padding-top: 60px;
+    }
+
+
     .menuBurger{
         position: absolute;
         font-size: 25px;
         margin:2%;
-        @media (min-width: 1024px){
-            display: none;
+        top:10px;
+        left:10px;
+        z-index: 900;
+        @media (min-width: 641px){
+           display: none;
         }
     }
 }

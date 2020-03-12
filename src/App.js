@@ -26,10 +26,12 @@ import { getUserDetails } from './repos/user';
 //TODO SWITCH HIDE MENU
 function App() {
     let [loggedUser, setLoginUser] = useState(null);
-    let[menu,setMenu] = useState('hide');
+    let[menuVisibility,setMenuVisibility] = useState(false);
+
     const toggleMenu=()=>{
-        if(menu !== 'hide') return setMenu('show');
-        setMenu('hide');
+        console.log('dupa')
+        if(!menuVisibility) return setMenuVisibility(true);
+        setMenuVisibility(false);
     }
     useEffect(() => {
         getUserDetails(getCookies().accessToken).then(user => {
@@ -40,9 +42,9 @@ function App() {
     return (
         <Router>
             <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars} /></div>
-            <header className={menu === "hide"? "headerUnlogged" :"headerUnlogged show"}>
-                {loggedUser ? <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} /> :
-                    <MainHeader setLoginUser={setLoginUser} />}
+            <header className={menuVisibility? "headerUnlogged show" :"headerUnlogged"}>
+                {loggedUser ? <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} toggleMenu={toggleMenu}/> :
+                    <MainHeader setLoginUser={setLoginUser} toggleMenu={toggleMenu}/>}
             </header>
             <main>
                 <Switch>
