@@ -104,6 +104,15 @@ const getAllUserBooks = (userId) => {
     return connection.query(sql);
 };
 
+const getByCoordsBetween=(x,y,startDistance,endDistance)=>{
+    const sql = `
+    SELECT * FROM users
+        WHERE (circle(coordinates,1) <-> circle '((${x},${y}),1)' < ${endDistance}) AND (circle(coordinates,1) <-> circle '((${x},${y}),1)' >= ${startDistance})
+        ORDER BY RANDOM()
+        LIMIT 200
+    `;
+    return connection.query(sql).then((response) => response.rows.map(userModel));
+};
 
 module.exports = {
     insertUser,
@@ -112,5 +121,6 @@ module.exports = {
     insertBook,
     addToBookShelf,
     getAllUserBooks,
-    removeFromBookShelf
+    removeFromBookShelf,
+    getByCoordsBetween
 };

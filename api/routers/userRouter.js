@@ -82,8 +82,10 @@ const deleteUserBookFromBookShelf = async (req, res) => {
 };
 const matchMates=(req,res)=>{
     const id = req.body.id;
-    matchMatesController(id);
-}
+    matchMatesController(id)
+        .then(mates=>res.status(200).json(mates))
+        .catch(err=>res.status(500).json(err))
+};
 
 //localhost:3010/user
 userRouter.get('/', getAllUser);
