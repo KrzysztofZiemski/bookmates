@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ButtonBasic } from "./../../Button/Button";
+import { ButtonBasic } from "../../Button/Button";
 import { Form, Label, Input } from 'semantic-ui-react';
-import ErrorMessage from './../registrationPage/formRegistration/errorMessage';
+import ErrorMessage from '../registrationPage/formRegistration/errorMessage';
 
 const ChangePasswordForm = (props) => {
   const { loggedUser: { mail: mail }} = props;

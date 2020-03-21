@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { ButtonBasic } from "./../../Button/Button";
+import { ButtonBasic } from "../../Button/Button";
 import { Form, Select, Label, Input, Button } from 'semantic-ui-react';
 import { deleteCookie } from "../../cookies/cookies";
 import { updateUser, removeUser } from "../../../repos/user";
 import { getCoords } from '../../../utils/geoLocation';
 import { getCountries} from '../registrationPage/formRegistration/coutriesList';
 import InputCity from '../registrationPage/formRegistration/inputCity';
-import ErrorMessage from '../registrationPage/formRegistration/errorMessage';
 
-const IsUpdated = (props) => {
-  const { updateSuccess } = props;
-  const successful = <div><h2>Twoje dane zostały zaktualizowane</h2></div>;
-  const failed = <div><h2>Nie udało się zmienić danych</h2><p>skontaktuj się z administratorem</p></div>;
-  if (updateSuccess === false) return failed;
-  return successful;
+const IsUpdated = (result) => {
+    if (result === false){
+      alert("Nie udało się zaktualizować danych. Skontaktuj się z administratorem.");
+    } else {
+      alert("Dane zostały pomyślnie zaktualizowane.");
+    }
 }
 
 const IsDeleted = (result, props) => {
@@ -30,11 +29,10 @@ const IsDeleted = (result, props) => {
 const UpdateUserDataForm = (props) => {
   const { loggedUser: { id: id, name: name, country: country, city: oldCity }} = props;
 
-  let [newName, setName] = useState(name);
-  let [setCountry] = useState(country);
-  let [city, setCity] = useState({ value: oldCity, picked: false });
-  let [errorCity, setErrorCity] = useState(null);
-  let [ updateSuccess ] = useState(null);
+  let [ newName, setName ] = useState(name);
+  let [ newCountry, setCountry ] = useState(country);
+  let [ city, setCity ] = useState({ value: oldCity, picked: false });
+  let [ errorCity, setErrorCity ] = useState(null);
 
   const validateCity = () => {
     if (city.picked) return setErrorCity(false);
@@ -46,9 +44,14 @@ const UpdateUserDataForm = (props) => {
     let coords = await getCoords(`${country} ${city.value}`)
       .catch(e => HTMLFormControlsCollection.log('nie udalo sie nanieść zmian'));
     if (!coords) coords = null;
-    const newUser = { newName, country, city: city.value, coords };
-    console.log(newUser);
-    updateUser(id, newUser).then(response => updateSuccess(true)); 
+    const newUser = { name: newName, country: newCountry, city: city.value, coords };
+    updateUser(id, newUser).then(response => {
+      if(response.status === 204){
+        IsUpdated(true);
+      } else {
+        IsUpdated(false);
+      }
+    }); 
   }
 
   const deleteAccount = () => {
@@ -76,20 +79,24 @@ const UpdateUserDataForm = (props) => {
           <Select 
             options={getCountries()} 
             id="registrationCountry" 
-            defaultValue="Polska" 
+            defaultValue= {country}
             onChange={(e, data) => setCountry(data.value)} 
           />
         </Form.Field>
         <Form.Field>
-          <InputCity setErrorCity={setErrorCity} setCity={setCity} city={city} validateCity={validateCity} >
-              <ErrorMessage error={errorCity} message={"Wpisz nazwę miejscowości i wybierz jedną z podpowiedzi"} />
+          <InputCity 
+            city={city} 
+            setCity={setCity} 
+            error={errorCity} 
+            setError={setErrorCity} 
+            message={"Wpisz nazwę miejscowości i wybierz jedną z podpowiedzi"} 
+            validateCity={validateCity} >
           </InputCity>
         </Form.Field>
         <ButtonBasic content="Zatwierdź zmiany" />
       </Form>
       <Button onClick={deleteAccount}>Usuń konto</Button>
     </div>
-
   );
 };
 

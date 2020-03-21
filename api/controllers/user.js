@@ -110,7 +110,8 @@ const changeUserPasswordController = (userId, userPasswords) => {
 };
 
 const updateUserDetailsController = (userId, userDetails) => {
-    updateUserDetails(userId, userDetails);
+    return updateUserDetails(userId, userDetails)
+        .then(response => response.rowCount);
 };
 
 

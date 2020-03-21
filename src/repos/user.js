@@ -24,8 +24,8 @@ export const addUser = (user) => {
     });
 };
 
-export const updateUser = (id, userData, action) => {
-    return fetch(`${urlUser}${id}?action=${action}`, {
+export const updateUser = (id, userData) => {
+    return fetch(`${urlUser}${id}`, {
         method: 'PUT',
         body: JSON.stringify(userData),
         headers: {
