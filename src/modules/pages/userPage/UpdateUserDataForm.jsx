@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { ButtonBasic } from "../../button";
+import { ButtonBasic } from "./../../Button/Button";
 import { Form, Select, Label, Input, Button } from 'semantic-ui-react';
 import { deleteCookie } from "../../cookies/cookies";
 import { updateUser, removeUser } from "../../../repos/user";
 import { getCoords } from '../../../utils/geoLocation';
-import { coutriesListOptions } from '../registrationPage/coutriesListOptions';
-import InputCity from '../registrationPage/inputCity';
-import ErrorMessage from '../registrationPage/errorMessage';
+import { getCountries} from '../registrationPage/formRegistration/coutriesList';
+import InputCity from '../registrationPage/formRegistration/inputCity';
+import ErrorMessage from '../registrationPage/formRegistration/errorMessage';
 
 const IsUpdated = (props) => {
   const { updateSuccess } = props;
@@ -74,14 +74,13 @@ const UpdateUserDataForm = (props) => {
         <Form.Field>
           <Label>Państwo</Label>
           <Select 
-            options={coutriesListOptions()} 
+            options={getCountries()} 
             id="registrationCountry" 
             defaultValue="Polska" 
             onChange={(e, data) => setCountry(data.value)} 
           />
         </Form.Field>
         <Form.Field>
-          <Label>Miasto</Label>
           <InputCity setErrorCity={setErrorCity} setCity={setCity} city={city} validateCity={validateCity} >
               <ErrorMessage error={errorCity} message={"Wpisz nazwę miejscowości i wybierz jedną z podpowiedzi"} />
           </InputCity>
