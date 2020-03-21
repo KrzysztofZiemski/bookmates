@@ -4,7 +4,7 @@ import { getBook } from '../../../repos/book';
 import { Link } from 'react-router-dom';
 
 const BookPage = ({ match }) => {
-    let [book, setBook] = useState({});
+    let [book, setBook] = useState([]);
 
     useEffect(() => {
         getBook(match.params.id)
@@ -13,9 +13,8 @@ const BookPage = ({ match }) => {
         console.log(book);
     }, [getBook]);
 
-
-    return (
-        <div className="card-container">
+    return book !== undefined ?
+        (<div className="card-container">
             <img src={book.imageurl} alt=""/>
             <div className="desc">
                 <h2>{unescape(book.title)}</h2>
@@ -23,8 +22,7 @@ const BookPage = ({ match }) => {
                 <h4>{book.publishedYear}</h4>
                 <p>{unescape(book.description)}</p>
             </div>
-        </div>
-    );
+        </div>) : (<div>Book with id {match.params.id} does not exist</div>);
 };
 
 export default BookPage;
