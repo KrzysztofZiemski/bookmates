@@ -136,6 +136,7 @@ module.exports = {
     getUserByMail,
     getUser,
     removeUser,
+    updateUserDetails,
     insertBook,
     addToBookShelf,
     getAllUserBooks,

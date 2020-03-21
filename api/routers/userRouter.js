@@ -4,6 +4,7 @@ const {
     addUserController, 
     getUserController, 
     getUserSafeDetails, 
+    updateUserDetailsController,
     removeUserController, 
     insertBookToBookshelf, 
     getAllUserBooksController, 
@@ -40,23 +41,24 @@ const addUser = async (req, res) => {
         .catch(e => res.status(500).json('invalid data'));
 };
 
+const setResultStatus = (result, res) => {
+    if(result){
+        return res.status(204).end();
+    } else {
+        return res.status(404).end();
+    }
+}
+
 const removeUser = (req, res) => {
     removeUserController(req.params.id)
-        .then(result => {
-            if(result){
-                return res.status(204).end();
-            } else {
-                return res.status(404).end();
-            }
-        }
-        ).catch(
-            error => res.status(500).json(error)
-        )
+        .then(result => setResultStatus(result, res))
+        .catch(error => res.status(500).json(error));
 };
 
 const updateUser = (req, res) => {
-    //check if update user details or change password
-    //req.params.action - wybrać co dalej i odesłać do controllers
+    updateUserDetailsController(req.params.id, req.body)
+        .then(result => setResultStatus(result, res))
+        .catch(error => res.status(500).json(error));
 };
 
 const addUserBookToBookshelf = async (req, res) => {

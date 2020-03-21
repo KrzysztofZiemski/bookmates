@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ButtonBasic } from "./../../Button/Button";
+import { ButtonBasic } from "../../Button/Button";
 import UpdateUserDataForm from "./UpdateUserDataForm";
 import ChangePasswordForm from "./ChangePasswordForm";
 
