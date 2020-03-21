@@ -8,4 +8,8 @@ const getAllBooksFromDB = () => {
     return getAllBooks();
 };
 
-module.exports = { addBookToDB, getAllBooksFromDB };
+const getBookFromDB = id => {
+    return getBook(id);
+};
+
+module.exports = { addBookToDB, getAllBooksFromDB, getBookFromDB };

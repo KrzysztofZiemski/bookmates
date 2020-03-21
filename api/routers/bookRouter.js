@@ -1,12 +1,12 @@
-const express = require("express");
+const express = require('express');
 const bookRouter = express.Router();
-const { addBookToDB, getAllBooksFromDB } = require('../controllers/book');
+const { addBookToDB, getAllBooksFromDB, getBookFromDB } = require('../controllers/book');
 
 const getAllBooks = (req, res) => {
     getAllBooksFromDB()
         .catch(err => {
             console.log(err);
-            res.status(400).send(err)
+            res.status(400).send(err);
         })
         .then(result => res.send(result));
 };
@@ -16,12 +16,20 @@ const addBook = (req, res) => {
     addBookToDB(book)
         .catch(err => {
             console.log(err);
-            res.status(400).send(err)
+            res.status(400).send(err);
         })
         .then(result => res.send(result));
-}
+};
 
-const getSingleBook = () => { };
+const getSingleBook = (req, res) => {
+    const book = req.params.id;
+    getBookFromDB(book)
+        .catch(err => {
+            console.log(err);
+            res.status(400).send(err);
+        })
+        .then(result => res.send(result));
+};
 
 //localhost:3010/book
 bookRouter.get('/', getAllBooks);

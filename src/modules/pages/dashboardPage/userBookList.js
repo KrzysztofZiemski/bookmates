@@ -28,7 +28,7 @@ export const UserBookList = ({ id }) => {
         <div className="list">
             {userBooks.map((book, i) => (
                 <UserBookCard key={i} userBookId={i} image={book.imageUrl} title={book.title}
-                              author={book.authors} handleBookDelete={() => {
+                              author={book.authors} id={book.bookId} handleBookDelete={() => {
                     handleBookDelete(id, book);
                 }}/>
             ))}

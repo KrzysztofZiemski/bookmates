@@ -3,6 +3,7 @@ import getGoogleBooks from '../../../../utils/googleBooksApi';
 import { SearchArea } from './searchArea';
 import { BookList } from './bookList';
 import { addBook } from '../../../../repos/book';
+import { Link } from 'react-router-dom';
 
 
 export const AddBookSearch = (props) => {
@@ -22,6 +23,7 @@ export const AddBookSearch = (props) => {
             })
             .then(res => {
                 setBooks(res);
+                // Inserting results from Google Api to Postgres
                 res.map(b =>
                     addBook({
                         title: escape(b.title),
@@ -29,6 +31,7 @@ export const AddBookSearch = (props) => {
                         authors: b.authors.join(', '),
                         publishedYear: parseInt(b.publishedDate.split('-')[0]),
                         description: escape(b.description),
+                        // Check if industryIdentifier is composed of numbers if not give it a random id
                         isbn: /^[0-9]*$/.test(b.industryIdentifiers[0].identifier) ? b.industryIdentifiers[0].identifier : Math.floor(Math.random() * 10000)
                     }));
             });
