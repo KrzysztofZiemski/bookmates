@@ -249,3 +249,19 @@ export const coutriesList = [
     { name_pl: "Zimbabwe", name_en: "Zimbabwe", code: "ZW" },
     { name_pl: "Zjednoczone Emiraty Arabskie", name_en: "United Arab Emirates", code: "AE" }
 ]
+
+
+export const getCountries = () => {
+    const list = coutriesList.map(country => {
+        return (
+            {
+                key: country.code,
+                value: country.name_pl,
+                text: country.name_pl
+            }
+        )
+    })
+    return (
+        list
+    )
+}

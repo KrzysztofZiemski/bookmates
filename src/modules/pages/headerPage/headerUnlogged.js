@@ -2,30 +2,46 @@ import React from "react";
 import { auth } from '../../../repos/user';
 import { setCookie } from '../../cookies/cookies';
 import { Link } from "react-router-dom";
-import { ButtonBasic } from "../../button";
-import {
-  Container,
-  Menu
-} from 'semantic-ui-react'
+import { ButtonBasic } from "../../Button/Button";
+import { Container, Menu } from 'semantic-ui-react'
+import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
+import { Loader } from '../../Loader/Loader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const MainHeader = (props) => {
-  const { setLoginUser } = props;
+  const { setLoginUser,toggleMenu } = props;
+
   let [password, setPassword] = React.useState("");
   let [mail, setMail] = React.useState("");
+  let [errorMessage, setErrorMessage] = React.useState(null);
+  let [waiting, setWaiting] = React.useState(false);
 
+  const closeError = () => {
+    setErrorMessage(null)
+  }
   const handleLogin = (e) => {
     e.preventDefault();
-
+    setWaiting(true)
     auth({ mail, password })
       .then(user => {
+        setWaiting(false);
         setCookie(user.token);
-        setLoginUser(user)
+        setLoginUser(user);
+
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        setWaiting(false);
+        if (err.message === '401') return setErrorMessage('Niepoprawny login lub hasło');
+        if (err.message === '404') return setErrorMessage('Niepoprawny login');
+        setErrorMessage('Wystąpił problem logowania. Spróbuj jeszcze raz. Jeżeli problem nie ustąpi skontaktuj się z administratorem');
+      });
   }
 
   return (
-    <Menu className="navbar">
+    <Menu className="navbar" >
+
+      <button className="close" onClick={toggleMenu}><FontAwesomeIcon icon={faTimes} /></button>
       <Container>
         <Menu.Item as={Link} to={"/"} className="logo" active>
           BookMates
@@ -35,12 +51,15 @@ const MainHeader = (props) => {
         </Menu.Item>
         <Menu.Item position='right'>
           <form onSubmit={handleLogin}>
-            <label htmlFor="mail">Mail</label><input type="text" id="login" onChange={(e) => setMail(e.target.value)} />
-            <label htmlFor="password">Hasło</label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+            <label htmlFor="mail">E-mail </label><input type="text" id="mail" onChange={(e) => setMail(e.target.value)} />
+            <label htmlFor="password">Hasło </label><input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
             <ButtonBasic content="Zaloguj" />
           </form>
         </Menu.Item>
       </Container>
+      {errorMessage === null ? null : <ErrorMessage closeError={closeError} message={errorMessage} />}
+
+      {waiting ? <Loader /> : null}
     </Menu>
   );
 };

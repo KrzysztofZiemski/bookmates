@@ -1,15 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ButtonBasic } from "../../button";
+import { ButtonBasic } from "../../Button/Button";
 import { deleteCookie } from "../../cookies/cookies";
 import {
   Container,
   Menu
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
+
+import "./header.scss";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
 const LoggedHeader = (props) => {
-  const { loggedUser, setLoginUser } = props;
-  console.log(loggedUser);
+  const { loggedUser, setLoginUser,toggleMenu } = props;
+
   const logout = () => {
     deleteCookie("accessToken");
     setLoginUser(null);
@@ -18,7 +22,8 @@ const LoggedHeader = (props) => {
   // TODO: hamburger menu
 
   return (
-      <Menu className="navbar">
+    <Menu className="navbar">
+      <button className="close" onClick={toggleMenu}><FontAwesomeIcon icon={faTimes} /></button>
       <Container>
         <Menu.Item as={Link} to={"/"} active className="logo">
           BookMates
@@ -33,11 +38,11 @@ const LoggedHeader = (props) => {
           dodaj książkę
         </Menu.Item>
         <Menu.Item position='right'>
-            <ButtonBasic content="Wyloguj" handleClick={logout} />
+          <ButtonBasic content="Wyloguj" handleClick={logout} />
         </Menu.Item>
       </Container>
     </Menu>
-    );
+  );
 };
 
 export default LoggedHeader;

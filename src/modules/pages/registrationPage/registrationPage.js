@@ -1,19 +1,38 @@
 import React from "react";
 import "./registrationPage.scss";
-import { addUser } from '../../../repos/user'
-import FormRegistration from './formRegistration.js';
-import IsRegistered from "./isRegistered";
+import { addUser } from '../../../repos/user';
+import FormRegistration from './formRegistration/formRegistration';
+import { Loader } from '../../Loader/Loader';
+import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
 
 const RegistrationPage = () => {
   let [registrationSuccess, setRegistrationSuccess] = React.useState(null);
+  let [waiting, setWaiting] = React.useState(false);
+
+  const errorMessage = 'moze już istnieć użytkownik o podanej nazwie lub e-mailu';
 
   const sendRegistrationForm = (user) => {
-    addUser(user).then(response => setRegistrationSuccess(true))
+    setWaiting(true);
+    addUser(user).then(response => {
+      setWaiting(false);
+      if (response.status === 200) return setRegistrationSuccess(true);
+      setRegistrationSuccess(false);
+    })
+      .catch(err => {
+        setWaiting(false);
+        setRegistrationSuccess(false);
+      })
   }
-  return (
-    <div>
-      {registrationSuccess === null ? <FormRegistration sendRegistrationForm={sendRegistrationForm} /> : <IsRegistered registrationSuccess={registrationSuccess} />}
 
+  const closeError = () => {
+    setRegistrationSuccess(null);
+  }
+
+  return (
+    <div className="registrationPage">
+      <FormRegistration sendRegistrationForm={sendRegistrationForm} />
+      {registrationSuccess === false ? <ErrorMessage message={errorMessage} closeError={closeError} /> : null}
+      {waiting ? <Loader /> : null}
     </div >
 
   );

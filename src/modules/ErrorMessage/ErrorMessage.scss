@@ -1,0 +1,19 @@
+.containerError {
+    &.message {
+        position: fixed;
+        width: 80%;
+        text-align: center;
+        padding: 2%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+
+        .close {
+            &.icon {
+                font-size: 18px;
+                margin: 5px;
+            }
+        }
+    }
+}

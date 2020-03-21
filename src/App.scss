@@ -1,42 +1,28 @@
 @import "./style.scss";
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding: 0;
+}
 #root {
     display: flex;
     flex-direction: column;
     background-color: $colorWhiteish;
-    .navbar{
-        background-color: $colorOrange;
-        font-family: $fontHeader;
-
-        @media (min-width: 641px)and(max-width: 1024px) {
-            
-        }
-
-        @media (min-width: 1025px){
-
-        }
-        .logo{
-            font-family: $fontLogo;
-            font-size: 24px;
-            color: white;
-            transition: 0.4s;
-            &:hover{
-                color: $colorBlue;
-            }
-        }
-        a {
-            color: white;
-        }
-
+    min-height: 100vh;
+    @media (max-width: 640px){
+        padding-top: 60px;
     }
-    .buttonBasic{
-        background-color: $colorBlue;
-        font-family: $fontHeader;
-        border: solid 2px white;
-        transition: 0.4s;
-        &:hover{
-            border: solid 2px $colorBlue;
-            background-color: white;
-            color: $colorBlue;
+
+
+    .menuBurger{
+        position: absolute;
+        font-size: 25px;
+        margin:2%;
+        top:10px;
+        left:10px;
+        z-index: 900;
+        @media (min-width: 641px){
+           display: none;
         }
     }
 }
