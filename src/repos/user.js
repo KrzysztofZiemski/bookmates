@@ -62,7 +62,7 @@ export const getUserDetails = (accessToken) => {
             'Authorization': `Bearer ${accessToken}`
         }
     }).then(data => data.json())
-        .catch(e=>console.log(e))
+        .catch(e => console.log(e))
 };
 
 export const addBookToShelf = (book, id) => {
@@ -95,4 +95,26 @@ export const deleteUserBook = (userId, bookId) => {
         method: 'DELETE'
     })
         .then(res => res.json());
+};
+
+export const addMate = (mate) => {
+    let accessToken = getCookies().accessToken;
+    return fetch(`${urlUser}mate`, {
+        method: 'PUT',
+        body: JSON.stringify(mate),
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        }
+    });
+};
+
+export const getPublicUser = (id) => {
+    let accessToken = getCookies().accessToken;
+    return fetch(`${urlUser}public/${id}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
 };

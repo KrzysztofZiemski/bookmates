@@ -1,15 +1,17 @@
 const express = require('express');
 const userRouter = express.Router();
-const { 
-    addUserController, 
-    getUserController, 
-    getUserSafeDetails, 
+const {
+    addUserController,
+    getUserController,
+    getUserSafeDetails,
     updateUserDetailsController,
-    removeUserController, 
-    insertBookToBookshelf, 
-    getAllUserBooksController, 
+    removeUserController,
+    insertBookToBookshelf,
+    getAllUserBooksController,
     deleteUserBookController,
-    matchMatesController 
+    matchMatesController,
+    addMateController
+
 } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
@@ -42,7 +44,7 @@ const addUser = async (req, res) => {
 };
 
 const setResultStatus = (result, res) => {
-    if(result){
+    if (result) {
         return res.status(204).end();
     } else {
         return res.status(404).end();
@@ -104,24 +106,54 @@ const deleteUserBookFromBookShelf = async (req, res) => {
     }
 };
 
-const matchMates=(req,res)=>{
+const matchMates = (req, res) => {
     const id = req.body.id;
     matchMatesController(id)
-        .then(mates=>res.status(200).json(mates))
-        .catch(err=>res.status(500).json(err))
+        .then(mates => res.status(200).json(mates))
+        .catch(err => res.status(500).json(err))
 };
+
+const getPublicUser = (req, res) => {
+    const id = req.params.id;
+    getUserController(id)
+        .then(user => {
+            if (user.length === 0) res.status(404).json('not find user');
+            if (user.length > 1) res.status(400).json('bad request - matches more that one user');
+            const { id, email, name, country, city, books } = user[0];
+            const publicData = { id, email, name, country, city, books };
+            res.status(200).json(publicData);
+        })
+        .catch(err => res.status(500).json('server problem'));
+};
+
+const addMate = (req, res) => {
+    const id = req.token.sub;
+    const mate = req.body;
+    //TODO dalej
+    addMateController(id, mate)
+        .then(response => {
+            console.log(response)
+            res.status(200).json('ok')
+        })
+        .catch(err => {
+            if (err == 400) res.status(400).json('mate exist in user list')
+            res.status(500).json('err')
+        })
+}
 
 //localhost:3010/user
 userRouter.get('/', getAllUser);
 userRouter.get('/details', validateToken, getUserDetails);
 // userRouter.get('/match', validateToken, matchMates);
 userRouter.get('/match', matchMates);
+userRouter.get('/public/:id', getPublicUser);
 userRouter.get('/:id', validateToken, getUser);
 userRouter.post('/', addUser);
 userRouter.put('/books', addUserBookToBookshelf);
+userRouter.put('/mate', validateToken, addMate);
+userRouter.put('/:id', updateUser);
 userRouter.get('/books/:userId', getAllUserBooks);
 userRouter.delete('/books/:userId/:bookId', deleteUserBookFromBookShelf);
-userRouter.put('/:id', updateUser);
 userRouter.delete('/:id', removeUser);
 
 module.exports = userRouter;

@@ -41,37 +41,35 @@ function App() {
 
     return (
         <Router>
-            <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
+            <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars} /></div>
             <header className={menuVisibility ? 'headerUnlogged show' : 'headerUnlogged'}>
                 {loggedUser ?
-                    <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} toggleMenu={toggleMenu}/> :
-                    <MainHeader setLoginUser={setLoginUser} toggleMenu={toggleMenu}/>}
+                    <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} toggleMenu={toggleMenu} /> :
+                    <MainHeader setLoginUser={setLoginUser} toggleMenu={toggleMenu} />}
             </header>
             <main>
                 <Switch>
                     <Route exact path="/">
-                        <WelcomePage/>
+                        <WelcomePage />
                     </Route>
                     <Route path="/dashboard">
-                        {!loggedUser ? <Redirect to="/"/> : <Dashboard loggedUser={loggedUser}/>}
+                        {!loggedUser ? <Redirect to="/" /> : <Dashboard loggedUser={loggedUser} />}
                     </Route>
                     <Route path="/addbook">
-                        {!loggedUser ? <Redirect to="/"/> : <AddBookPage loggedUser={loggedUser}/>}
+                        {!loggedUser ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
                     </Route>
                     <Route path="/registration">
-                        {!loggedUser ? <RegistrationPage/> : <Redirect to="/dashboard"/>}
+                        {!loggedUser ? <RegistrationPage /> : <Redirect to="/dashboard" />}
                     </Route>
                     <Route path="/addbook">
-                        {!loggedUser ? <Redirect to="/"/> : <AddBookPage loggedUser={loggedUser}/>}
+                        {!loggedUser ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
                     </Route>
                     <Route exact path='/book/:id' component={BookPage}>
                     </Route>
-                    <Route path="/user">
-                        <UserPage></UserPage>
-                    </Route>
+                    <Route path="/user/:id" render={(props) => <UserPage {...props} loggedUser={loggedUser} />} />
                     <Route path="/profile/">
-                        {!loggedUser ? <Redirect to="/"/> :
-                            <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser}/>}
+                        {!loggedUser ? <Redirect to="/" /> :
+                            <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser} />}
                     </Route>
                     <Route>
                         <ErrorPage></ErrorPage>
