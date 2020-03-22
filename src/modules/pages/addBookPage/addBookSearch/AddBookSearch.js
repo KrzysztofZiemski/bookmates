@@ -3,10 +3,9 @@ import getGoogleBooks from '../../../../utils/googleBooksApi';
 import { SearchArea } from './searchArea';
 import { BookList } from './bookList';
 import { addBook } from '../../../../repos/book';
-import { Link } from 'react-router-dom';
 
 
-export const AddBookSearch = ({ loggedUser }) => {
+export const AddBookSearch = ({ loggedUser, match, history }) => {
 
     let [books, setBooks] = React.useState([]);
     let [searchField, setSearchField] = React.useState('');
@@ -56,7 +55,7 @@ export const AddBookSearch = ({ loggedUser }) => {
 
     return (
         <div>
-            <SearchArea handleSearch={handleSearch} searchBook={searchBook} id={loggedUser.id}/>
+            <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} id={loggedUser.id}/>
             <BookList books={sortedBooks} id={loggedUser.id} searchBook={() => getGoogleBooks(searchField)}/>
         </div>
     );

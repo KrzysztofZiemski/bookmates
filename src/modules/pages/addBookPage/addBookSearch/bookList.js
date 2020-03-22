@@ -3,34 +3,13 @@ import { BookCard } from './bookCard';
 import { addBookToShelf, deleteUserBook, getAllBooks } from '../../../../repos/user';
 import { UserBookCard } from '../../dashboardPage/userBookCard';
 
-
 export const BookList = ({ id, books, searchBook }) => {
-
     const [userBooks, setUserBooks] = useState([]);
-    const [searchBooks, setSearchBooks] = useState([...books]);
-
-    const mapBooks = () =>
-        searchBooks.map((book, i) => {
-                if (userBooks.map(obj => obj.bookId).indexOf(book.industryIdentifiers[0].identifier !== null ? book.industryIdentifiers[0].identifier : -1) === -1) {
-                    return (<BookCard key={i} image={book.imageLinks.thumbnail} title={book.title}
-                                      author={book.authors.join(', ')}
-                                      published={book.publishedDate} handleSubmit={() => handleSubmit(book)}
-                                      handleBookDelete={() => handleBookDelete(book)}
-                    />);
-                } else {
-                    return (<UserBookCard key={i} userBookId={i} image={book.imageLinks.thumbnail} title={book.title}
-                                          author={book.authors.join(', ')} id={book.industryIdentifiers[0].identifier}
-                                          handleBookDelete={() => handleBookDelete(book)}/>);
-                }
-            }
-        );
     useEffect(() => {
-        setSearchBooks(books);
         getAllBooks(id)
             .then(res => setUserBooks(res))
             .catch(err => console.log(err));
-    }, [getAllBooks, setSearchBooks, books, mapBooks]);
-
+    }, [getAllBooks]);
 
     const handleSubmit = ({ title, imageLinks, authors, industryIdentifiers, publishedDate, categories }) => {
         const book = {
@@ -43,9 +22,14 @@ export const BookList = ({ id, books, searchBook }) => {
         };
 
         addBookToShelf(book, id)
-            .then(data => console.log(data))
+            .then(data => {
+                setUserBooks(data);
+                getAllBooks(id)
+                    .then(res => setUserBooks(res))
+                    .catch(err => console.log(err));
+
+            })
             .catch(err => console.log(err));
-        mapBooks();
     };
 
     const handleBookDelete = (book) => {
@@ -63,7 +47,20 @@ export const BookList = ({ id, books, searchBook }) => {
 
     return (
         <div className="list">
-            {mapBooks()}
+            {books.map((book, i) => {
+                    if (userBooks.map(obj => obj.bookId).indexOf(book.industryIdentifiers[0].identifier !== null ? book.industryIdentifiers[0].identifier : -1) === -1) {
+                        return (<BookCard key={i} image={book.imageLinks.thumbnail} title={book.title}
+                                          author={book.authors.join(', ')}
+                                          published={book.publishedDate} handleSubmit={() => handleSubmit(book)}
+                                          handleBookDelete={() => handleBookDelete(book)}
+                        />);
+                    } else {
+                        return (<UserBookCard key={i} userBookId={i} image={book.imageLinks.thumbnail} title={book.title}
+                                              author={book.authors.join(', ')} id={book.industryIdentifiers[0].identifier}
+                                              handleBookDelete={() => handleBookDelete(book)}/>);
+                    }
+                }
+            )}
         </div>
     );
 };

@@ -20,6 +20,7 @@ import BookPage from './modules/pages/bookPage/bookPage';
 import UserPage from './modules/pages/userPage/userPage';
 import ErrorPage from './modules/pages/errorPage/errorPage';
 import ProfilePage from './modules/pages/profilePage/ProfilePage';
+import PrivateRoute from './modules/pages/routing/PrivateRoute';
 import { getCookies } from './modules/cookies/cookies';
 import { getUserDetails } from './repos/user';
 
@@ -41,35 +42,34 @@ function App() {
 
     return (
         <Router>
-            <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars} /></div>
+            <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
             <header className={menuVisibility ? 'headerUnlogged show' : 'headerUnlogged'}>
                 {loggedUser ?
-                    <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} toggleMenu={toggleMenu} /> :
-                    <MainHeader setLoginUser={setLoginUser} toggleMenu={toggleMenu} />}
+                    <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} toggleMenu={toggleMenu}/> :
+                    <MainHeader setLoginUser={setLoginUser} toggleMenu={toggleMenu}/>}
             </header>
             <main>
                 <Switch>
                     <Route exact path="/">
-                        <WelcomePage />
+                        <WelcomePage/>
                     </Route>
                     <Route path="/dashboard">
-                        {!loggedUser ? <Redirect to="/" /> : <Dashboard loggedUser={loggedUser} />}
+                        {!loggedUser ? <Redirect to="/"/> : <Dashboard loggedUser={loggedUser}/>}
                     </Route>
                     <Route path="/addbook">
-                        {!loggedUser ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
+                        {!loggedUser ? <Redirect to="/"/> : <AddBookPage loggedUser={loggedUser}/>}
                     </Route>
                     <Route path="/registration">
-                        {!loggedUser ? <RegistrationPage /> : <Redirect to="/dashboard" />}
+                        {!loggedUser ? <RegistrationPage/> : <Redirect to="/dashboard"/>}
                     </Route>
-                    <Route path="/addbook">
-                        {!loggedUser ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
-                    </Route>
+                    <PrivateRoute exact path="/addbook/:query" component={AddBookPage}>
+                    </PrivateRoute>
                     <Route exact path='/book/:id' component={BookPage}>
                     </Route>
-                    <Route path="/user/:id" render={(props) => <UserPage {...props} loggedUser={loggedUser} />} />
+                    <Route path="/user/:id" render={(props) => <UserPage {...props} loggedUser={loggedUser}/>}/>
                     <Route path="/profile/">
-                        {!loggedUser ? <Redirect to="/" /> :
-                            <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser} />}
+                        {!loggedUser ? <Redirect to="/"/> :
+                            <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser}/>}
                     </Route>
                     <Route>
                         <ErrorPage></ErrorPage>
