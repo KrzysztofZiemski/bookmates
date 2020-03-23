@@ -119,8 +119,8 @@ const getPublicUser = (req, res) => {
         .then(user => {
             if (user.length === 0) res.status(404).json('not find user');
             if (user.length > 1) res.status(400).json('bad request - matches more that one user');
-            const { id, email, name, country, city, books } = user[0];
-            const publicData = { id, email, name, country, city, books };
+            const { id, email, name, country, city, books, gender } = user[0];
+            const publicData = { id, email, name, country, city, books, gender };
             res.status(200).json(publicData);
         })
         .catch(err => res.status(500).json('server problem'));

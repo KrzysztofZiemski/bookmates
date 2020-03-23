@@ -2,7 +2,10 @@ import React from "react";
 import { getPublicUser, addMate } from '../../../repos/user';
 import { Loader } from '../../Loader/Loader';
 import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
-import Slider from '../../Slider/Slider';
+import { ButtonBasic } from '../../Button/Button';
+import BooksSliders from './booksSliders';
+import maleAvatar from '../../assets/male.png';
+import femaleAvatar from '../../assets/female.png';
 import './userPage.scss';
 
 const UserPage = (props) => {
@@ -14,7 +17,6 @@ const UserPage = (props) => {
   const closeError = () => {
     setError(false);
   }
-
   const getUser = (id) => {
     setWaiting(<Loader />)
     getPublicUser(id)
@@ -23,14 +25,10 @@ const UserPage = (props) => {
         if (response.status === 200) return response.json();
         throw new Error();
       })
-      .then(user => {
-        console.log('user', user)
-        setPublicUser(user);
-      })
+      .then(user => setPublicUser(user))
       .catch(err => {
         setWaiting(false)
         setError(<ErrorMessage message="Nie udało się pobrać użytkownika. Sprawdź poprawność adresu URL" closeError={closeError} />)
-        console.log(err)
       })
   };
 
@@ -40,7 +38,8 @@ const UserPage = (props) => {
     addMate({ id, email, name })
       .then(response => {
         setWaiting(false)
-        console.log(response)
+        if (response.status === 400) setError(<ErrorMessage message="Użytkownik już był dodawany do grupy znajomych" closeError={closeError} />);
+        if (response.status === 200) alert('Dodano do znajomych');
       })
       .catch(err => {
         setWaiting(false);
@@ -59,18 +58,30 @@ const UserPage = (props) => {
       {error}
       {publicUser === null ? <section className="userPage"></section> : <section className="userPage">
         <div className="userData">
-          <h1>{publicUser.name}</h1>
-          <p>{publicUser.email}</p>
-          <p>{publicUser.country}</p>
-          <p>{publicUser.city}</p>
-          {loggedUser ? <p><button onClick={handleAddMate}>Dodaj do znajomych</button></p> : null}
-        </div>
-        <div className="userBooksContainer">
-          <h2>Książki na półce</h2>
-          <div className="slider-container">
-            <Slider content={publicUser.books}></Slider>
+          <div className="avatar">
+            <img src={publicUser.gender === 'man' ? maleAvatar : femaleAvatar} alt={`${publicUser.name} avatar`} />
+          </div>
+          <div>
+            <div className="userData-element">
+              <p>Nazwa użytkownika</p>
+              <p>{publicUser.name}</p>
+            </div>
+            <div className="userData-element">
+              <p>Adres mailowy</p>
+              <p>{publicUser.email}</p>
+            </div>
+            <div className="userData-element">
+              <p>Kraj zamieszkania</p>
+              <p>{publicUser.country}</p>
+            </div>
+            <div className="userData-element">
+              <p>Miasto zamieszkania</p>
+              <p>{publicUser.city}</p>
+            </div>
+            {loggedUser ? <ButtonBasic handleClick={handleAddMate} content='Dodaj do znajomych' /> : null}
           </div>
         </div>
+        <BooksSliders publicUser={publicUser} />
       </section>
       }
     </>

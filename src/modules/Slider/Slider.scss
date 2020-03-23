@@ -5,15 +5,14 @@
     overflow: hidden;
     padding-top: 10px;
     margin: 0 5px 20px 5px;
-    background-color: rgba(0, 0, 0, .3);
+    background: linear-gradient(to left, #FFEFBA, #fff);
 
     .slide-element-data {
         display: flex;
         flex-direction: column;
         margin-bottom: 25px;
 
-        h3 {
-            width: 100%;
+        h4 {
             flex-grow: 1;
         }
     }
