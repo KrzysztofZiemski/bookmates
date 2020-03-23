@@ -1,19 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export const BookCard = props => {
 
-    const isAlreadyAdded = () => {
-
-    }
 
     return (
         <div className="card-container">
-            <img src={props.image} alt="" />
+            <img src={props.image} alt=""/>
             <div className="desc">
                 <h2>{props.title}</h2>
                 <h3>{props.author}</h3>
                 <p>Published: {props.published === '0000' ? 'unknown' : props.published.substring(0, 4)}</p>
-                <button onClick={props.handleSubmit}>Dodaj na półkę</button>
+                <button
+                    onClick={props.handleSubmit}>Dodaj na półkę</button>
             </div>
         </div>
     );

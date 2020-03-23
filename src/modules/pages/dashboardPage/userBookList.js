@@ -9,7 +9,7 @@ export const UserBookList = ({ id }) => {
         getAllBooks(id)
             .then(res => setUserBooks(res))
             .catch(err => console.log(err));
-    }, []);
+    }, [getAllBooks]);
 
     const handleBookDelete = (id, book) => {
         deleteUserBook(id, book.bookId)

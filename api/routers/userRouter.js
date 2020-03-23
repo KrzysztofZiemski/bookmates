@@ -49,7 +49,7 @@ const setResultStatus = (result, res) => {
     } else {
         return res.status(404).end();
     }
-}
+};
 
 const removeUser = (req, res) => {
     removeUserController(req.params.id)
@@ -71,7 +71,7 @@ const addUserBookToBookshelf = async (req, res) => {
         let bookArr = currentUserBooks.rows[0].bookdata || [];
         if (bookArr.map(b => b.bookId).indexOf(book.bookId) === -1) {
             let insertResult = await insertBookToBookshelf(book, userId);
-            return res.status(200).json(insertResult);
+            return res.status(200).json(bookArr);
         }
         throw new Error('book already exist in your library');
     } catch (err) {
@@ -110,7 +110,7 @@ const matchMates = (req, res) => {
     const id = req.body.id;
     matchMatesController(id)
         .then(mates => res.status(200).json(mates))
-        .catch(err => res.status(500).json(err))
+        .catch(err => res.status(500).json(err));
 };
 
 const getPublicUser = (req, res) => {
@@ -132,14 +132,14 @@ const addMate = (req, res) => {
     //TODO dalej
     addMateController(id, mate)
         .then(response => {
-            console.log(response)
-            res.status(200).json('ok')
+            console.log(response);
+            res.status(200).json('ok');
         })
         .catch(err => {
-            if (err == 400) return res.status(400).json('mate exist in user list')
-            res.status(500).json('err')
-        })
-}
+            if (err == 400) res.status(400).json('mate exist in user list');
+            res.status(500).json('err');
+        });
+};
 
 //localhost:3010/user
 userRouter.get('/', getAllUser);
