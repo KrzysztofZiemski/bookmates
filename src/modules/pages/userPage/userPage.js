@@ -1,65 +1,79 @@
 import React from "react";
-import { useLocation } from 'react-router-dom';
 import { getPublicUser, addMate } from '../../../repos/user';
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { Loader } from '../../Loader/Loader';
+import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
+import Slider from '../../Slider/Slider';
+import './userPage.scss';
 
 const UserPage = (props) => {
   let [publicUser, setPublicUser] = React.useState(null);
+  let [waiting, setWaiting] = React.useState(false);
+  let [error, setError] = React.useState(false);
   let { loggedUser, match } = props;
-  console.log(loggedUser, 'logged')
-  const getUser = () => {
-    const { id } = match.params;
+
+  const closeError = () => {
+    setError(false);
+  }
+
+  const getUser = (id) => {
+    setWaiting(<Loader />)
     getPublicUser(id)
-      .then(response => response.json())
+      .then(response => {
+        setWaiting(false);
+        if (response.status === 200) return response.json();
+        throw new Error();
+      })
       .then(user => {
+        console.log('user', user)
         setPublicUser(user);
-        console.log(publicUser);
-      });
+      })
+      .catch(err => {
+        setWaiting(false)
+        setError(<ErrorMessage message="Nie udało się pobrać użytkownika. Sprawdź poprawność adresu URL" closeError={closeError} />)
+        console.log(err)
+      })
   };
+
   const handleAddMate = () => {
     const { id, email, name } = publicUser;
-
+    setWaiting(<Loader />)
     addMate({ id, email, name })
-      .then(response => console.log(response))
-      .catch(err => console.log(err))
+      .then(response => {
+        setWaiting(false)
+        console.log(response)
+      })
+      .catch(err => {
+        setWaiting(false);
+      })
   };
 
-  const showBooks = () => {
-    return publicUser.books.map(book => {
-      //TODO bookauthors may be array
-      return (
-        <li key={book.bookId}>
-          <h3>{book.title}</h3>
-          <p>{book.authors}</p>
-          <p><img src={book.imageUrl} alt={`book ${book.title}`} /></p>
-          <p>{book.categories}</p>
-          <p>{book.publishedYear}</p>
-        </li>
-      )
 
-    })
-
-  }
   React.useEffect(() => {
-    getUser();
-
+    const { id } = match.params;
+    if (id) getUser(id);
   }, []);
 
   return (
-    <div>
-      <h1>{publicUser === null ? null : publicUser.name}</h1>
-      <p>{publicUser === null ? null : publicUser.email}</p>
-      <p>{publicUser === null ? null : publicUser.country}</p>
-      <p>{publicUser === null ? null : publicUser.city}</p>
-      {loggedUser ? <p><button onClick={handleAddMate}>Dodaj do znajomych</button></p> : null}
-      {publicUser === null ? null : <div>
-        <h2>Książki na półce</h2>
-        <ul>
-          {showBooks()}
-        </ul>
-      </div>}
-    </div>
-    // {publicUser ? <div><h1>{publicUser.name}</h1><p>{publicUser.email}</p><p>{publicUser.country}</p><p>{publicUser.city}</p><p>{publicUser.city}</p><h2>książki</h2></div> : <div></div>}
+    <>
+      {waiting}
+      {error}
+      {publicUser === null ? <section className="userPage"></section> : <section className="userPage">
+        <div className="userData">
+          <h1>{publicUser.name}</h1>
+          <p>{publicUser.email}</p>
+          <p>{publicUser.country}</p>
+          <p>{publicUser.city}</p>
+          {loggedUser ? <p><button onClick={handleAddMate}>Dodaj do znajomych</button></p> : null}
+        </div>
+        <div className="userBooksContainer">
+          <h2>Książki na półce</h2>
+          <div className="slider-container">
+            <Slider content={publicUser.books}></Slider>
+          </div>
+        </div>
+      </section>
+      }
+    </>
   )
 };
 

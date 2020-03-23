@@ -136,7 +136,7 @@ const addMate = (req, res) => {
             res.status(200).json('ok')
         })
         .catch(err => {
-            if (err == 400) res.status(400).json('mate exist in user list')
+            if (err == 400) return res.status(400).json('mate exist in user list')
             res.status(500).json('err')
         })
 }

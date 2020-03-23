@@ -7,7 +7,7 @@ export const UserBookCard = props => {
         <div className="card-container">
 
             <Link to={`/book/${props.id}`}>
-                <img src={props.image} alt=""/>
+                <img src={props.image} alt="" />
                 <div className="desc">
                     <h2>{unescape(props.title)}</h2>
                     <h3>{props.author}</h3>
