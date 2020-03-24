@@ -1,49 +1,60 @@
 import React, { useState } from "react";
 import { ButtonBasic } from "../../Button/Button";
-import { Form, Select, Label, Input, Button } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
+import { InputName } from './InputName.jsx';
+import { SelectField } from './../registrationPage/formRegistration/SelectField';
 import { deleteCookie } from "../../cookies/cookies";
 import { updateUser, removeUser } from "../../../repos/user";
 import { getCoords } from '../../../utils/geoLocation';
 import { getCountries} from '../registrationPage/formRegistration/coutriesList';
 import InputCity from '../registrationPage/formRegistration/inputCity';
 
-const IsUpdated = (result) => {
-    if (result === false){
-      alert("Nie udało się zaktualizować danych. Skontaktuj się z administratorem.");
-    } else {
-      alert("Dane zostały pomyślnie zaktualizowane.");
-    }
-}
-
-const IsDeleted = (result, props) => {
-  const { setLoginUser } = props;
-  if(result === false){
-    alert("Nie udało się usunąć konta. Skontaktuj się z administratorem");
-  } else {
-    deleteCookie("accessToken");
-    setLoginUser(null);
-    alert("Konto usunięte");
-  }
-}
-
 const UpdateUserDataForm = (props) => {
   const { loggedUser: { id: id, name: name, country: country, city: oldCity }} = props;
 
   let [ newName, setName ] = useState(name);
+  let [ nameError, setNameError ] = useState(null); 
   let [ newCountry, setCountry ] = useState(country);
+  let [ countryError, setCountryError ] = useState(null);
   let [ city, setCity ] = useState({ value: oldCity, picked: false });
-  let [ errorCity, setErrorCity ] = useState(null);
+  let [ cityError, setCityError ] = useState(null);
 
-  const validateCity = () => {
-    if (city.picked) return setErrorCity(false);
-    setErrorCity(true);
+  const errors = [ nameError, countryError, cityError ];
+
+  const validate = {
+    name: () => newName.length > 2 ? setNameError(false) : setNameError(true),
+    country: () => newCountry.length > 3 ? setCountryError(false) : setCountryError(true),
+    city: () => city.picked ? setCityError(false) : setCityError(true)
+  }
+
+  const IsUpdated = (result) => {
+      if (result === false){
+        alert("Nie udało się zaktualizować danych. Skontaktuj się z administratorem.");
+      } else {
+        alert("Dane zostały pomyślnie zaktualizowane.");
+      }
+  }
+
+  const IsDeleted = (result, props) => {
+    const { setLoginUser } = props;
+    if(result === false){
+      alert("Nie udało się usunąć konta. Skontaktuj się z administratorem");
+    } else {
+      deleteCookie("accessToken");
+      setLoginUser(null);
+      alert("Konto usunięte");
+    }
   }
 
   const handleUserDataUpdate = async (e) => {
     e.preventDefault();
-    let coords = await getCoords(`${country} ${city.value}`)
-      .catch(e => HTMLFormControlsCollection.log('nie udalo sie nanieść zmian'));
-    if (!coords) coords = null;
+    for (let fieldValidate in validate) {
+      validate[fieldValidate]()
+    }
+    for (let error in errors) {
+        if (errors[error] !== false) return
+    }
+    const coords = await getCoords(city);
     const newUser = { name: newName, country: newCountry, city: city.value, coords };
     updateUser(id, newUser).then(response => {
       if(response.status === 204){
@@ -65,36 +76,40 @@ const UpdateUserDataForm = (props) => {
     });
   }
 
-  // updateSuccess === true ? <IsUpdated updateSuccess={true} /> : <IsUpdated updateSuccess={false} />
-
   return (
     <div>
-      <Form onSubmit={handleUserDataUpdate}>
-        <Form.Field>
-          <Label>Użytkownik</Label>
-          <Input value={newName} onChange={e => setName(e.target.value)} />
-        </Form.Field>
-        <Form.Field>
-          <Label>Państwo</Label>
-          <Select 
-            options={getCountries()} 
-            id="registrationCountry" 
-            defaultValue= {country}
-            onChange={(e, data) => setCountry(data.value)} 
-          />
-        </Form.Field>
-        <Form.Field>
-          <InputCity 
-            city={city} 
-            setCity={setCity} 
-            error={errorCity} 
-            setError={setErrorCity} 
-            message={"Wpisz nazwę miejscowości i wybierz jedną z podpowiedzi"} 
-            validateCity={validateCity} >
-          </InputCity>
-        </Form.Field>
+      <form onSubmit={handleUserDataUpdate} className="updateUserDataForm">
+        <InputName
+          label="Użytkownik"
+          value={newName}
+          type="text"
+          setValue={setName}
+          validate={validate.name}
+          error={nameError}
+          errorMessage={"Nazwa użytkownika powinna posiadać minimum 3 znaki."} 
+        />
+        <SelectField
+          label="Państwo"
+          options={getCountries()} 
+          id="registrationCountry" 
+          defaultValue= {country}
+          setValue={setCountry}
+          error={countryError}
+          errorMessage={"Wybierz kraj."}
+          validate={validate.country}
+        />
+        <InputCity 
+          city={city} 
+          setCity={setCity} 
+          error={cityError} 
+          setError={setCityError} 
+          message={"Wybierz miasto z podpowiedzi"} 
+          validate={validate.city}
+        />
+      <Form.Field className="submitUserDataUpdateBtn">
         <ButtonBasic content="Zatwierdź zmiany" />
-      </Form>
+      </Form.Field>
+      </form>
       <Button onClick={deleteAccount}>Usuń konto</Button>
     </div>
   );

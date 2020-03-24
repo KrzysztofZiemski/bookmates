@@ -46,7 +46,7 @@ const ChangePasswordForm = (props) => {
   }
 
   return (
-    <Form onSubmit={changePassword}>
+    <Form onSubmit={changePassword} className="updateUserForm">
       <InputField
         setValue={setOldPassword}
         label="Stare hasło"
@@ -71,7 +71,10 @@ const ChangePasswordForm = (props) => {
         errorMessage={'Hasła różnią się od siebie'}
         validate={validate.confirmPassword}
       />
-      <ButtonBasic content="Zatwierdź nowe hasło" />
+      <Form.Field className="submitUserDataUpdateBtn">
+        <ButtonBasic content="Zatwierdź nowe hasło" />
+      </Form.Field>
+      
     </Form>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./profilePage.scss";
 import { ButtonBasic } from "../../Button/Button";
 import UpdateUserDataForm from "./UpdateUserDataForm";
 import ChangePasswordForm from "./ChangePasswordForm";
@@ -14,7 +15,7 @@ const ProfilePage = (props) => {
     }
 
     return (
-        <div>
+        <div className="profilePage">
             <ButtonBasic handleClick={handleClick}
                content = {activeForm === changePasswordForm ? changePasswordForm : updateDataForm}
             />
