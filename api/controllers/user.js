@@ -7,9 +7,11 @@ const {
     deleteUserBook,
     removeFromBookShelf,
     getByCoordsBetween,
-    updateUserDetails, 
+    updateUserDetails,
+    updateUserPassword,
     removeUser 
 } = require('../db/models/userModel');
+const { checkPassword, hashPassword } = require('./../db/utils/passwordEncryption');
 const { addBookToDB } = require('./book');
 
 const addUserController = (user) => {
@@ -104,16 +106,29 @@ const matchMatesController=async(id)=>{
 };
 
 const changeUserPasswordController = (userId, userPasswords) => {
-    //walidacja starego hasła
-    //jeśli jest ok, to dla nowego hasła wygenerować hash i salt i skorzystać z userModel żeby wypchnąć do db
-
+    return getUser(userId)
+        .then(userList => {
+            let user = userList[0];
+            let isPasswordOk = checkPassword(user, userPasswords.oldPassword);
+            if (isPasswordOk) {
+                user.password = userPasswords.newPassword;
+                let hashPasswordResult = hashPassword(user)
+                    .then(hashedPassword => {
+                        let updatePasswordResult = updateUserPassword(userId, hashedPassword.salt, hashedPassword.password)
+                            .then(response => {
+                                return response.rowCount;
+                            });
+                        return updatePasswordResult;
+                    })
+                return hashPasswordResult;
+            }
+        })
 };
 
 const updateUserDetailsController = (userId, userDetails) => {
     return updateUserDetails(userId, userDetails)
         .then(response => response.rowCount);
 };
-
 
 const removeUserController = (userId) => {
     return removeUser(userId)

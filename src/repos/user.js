@@ -34,6 +34,16 @@ export const updateUser = (id, userData) => {
     })
 };
 
+export const changeUserPassword = (id, passwords) => {
+    return fetch(`${urlUser}${id}/password`, {
+        method: 'PUT',
+        body: JSON.stringify(passwords),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+}
+
 export const removeUser = id => {
     return fetch(`${urlUser}${id}`, {
         method: 'DELETE',

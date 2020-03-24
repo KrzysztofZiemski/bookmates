@@ -5,6 +5,7 @@ const {
     getUserController, 
     getUserSafeDetails, 
     updateUserDetailsController,
+    changeUserPasswordController,
     removeUserController, 
     insertBookToBookshelf, 
     getAllUserBooksController, 
@@ -57,6 +58,12 @@ const removeUser = (req, res) => {
 
 const updateUser = (req, res) => {
     updateUserDetailsController(req.params.id, req.body)
+        .then(result => setResultStatus(result, res))
+        .catch(error => res.status(500).json(error));
+};
+
+const changeUserPassword = (req, res) => {
+    changeUserPasswordController(req.params.id, req.body)
         .then(result => setResultStatus(result, res))
         .catch(error => res.status(500).json(error));
 };
@@ -122,6 +129,7 @@ userRouter.put('/books', addUserBookToBookshelf);
 userRouter.get('/books/:userId', getAllUserBooks);
 userRouter.delete('/books/:userId/:bookId', deleteUserBookFromBookShelf);
 userRouter.put('/:id', updateUser);
+userRouter.put('/:id/password', changeUserPassword);
 userRouter.delete('/:id', removeUser);
 
 module.exports = userRouter;

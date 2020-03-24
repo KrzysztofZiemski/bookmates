@@ -1,71 +1,76 @@
 import React, { useState } from "react";
+import { changeUserPassword } from "../../../repos/user";
 import { ButtonBasic } from "../../Button/Button";
-import { Form, Label, Input } from 'semantic-ui-react';
-import ErrorMessage from '../registrationPage/formRegistration/errorMessage';
+import { InputField } from './../registrationPage/formRegistration/InputField';
+import { Form } from 'semantic-ui-react';
 
 const ChangePasswordForm = (props) => {
-  const { loggedUser: { mail: mail }} = props;
+  const { loggedUser: { id: id }} = props;
 
   let [oldPassword, setOldPassword] = useState("")
   let [newPassword, setNewPassword] = useState("");
-  let [errorNewPassword, setErrorNewPassword] = useState(null);
+  let [newPasswordError, setNewPasswordError] = useState(null);
   let [confirmPassword, setConfirmPassword] = useState("");
-  let [errorConfirmPassword, setErrorConfirmPassword] = useState(null);
+  let [confirmPasswordError, setConfirmPasswordError] = useState(null);
+  const errors = [newPasswordError, confirmPasswordError];
 
-  const validateNewPassword = () => {
-    var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
-    if (!newPassword.match(regex)) return setErrorNewPassword(true);
-    setErrorNewPassword(false);
-  }
-  const validateConfirmPassword = () => {
-    if (confirmPassword !== newPassword) return setErrorConfirmPassword(true);
-    setErrorConfirmPassword(false);
+  const validate = {
+    newPassword: () => ((newPassword.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/)) && (newPassword !== oldPassword)) ? setNewPasswordError(false) : setNewPasswordError(true),
+    confirmPassword: () => confirmPassword === newPassword ? setConfirmPasswordError(false) : setConfirmPasswordError(true)
   }
 
-  const handleUserDataUpdate = async (e) => {
+  const IsChanged = (result) => {
+    if (result === false){
+      alert("Nie udało się zmienić hasła. Skontaktuj się z administratorem.");
+    } else {
+      alert("Hasło zostało pomyślnie zaktualizowane.");
+    }
+  }
+
+  const changePassword = (e) => {
     e.preventDefault();
-    console.log();
+    for (let fieldValidate in validate) {
+      validate[fieldValidate]()
+    }
+    for (let error in errors) {
+        if (errors[error] !== false) return
+    }
+    let passwords = { oldPassword, newPassword };
+    changeUserPassword(id, passwords).then(response => {
+      if(response.status === 204){
+        IsChanged(true);
+      } else {
+        IsChanged(false);
+      }
+    });
   }
-
-  const changePassword = () => {
-    
-  }
-
 
   return (
-    <Form onSubmit={handleUserDataUpdate}>
-      <Form.Field>
-        <Label>Wpisz stare hasło</Label>
-        <Input
-          type="password" 
-          id="password" 
-          onChange={(e) => setOldPassword(e.target.value)}
-        />
-      </Form.Field>
-      <Form.Field className={errorNewPassword ? 'errorElementRegistration' : null}>
-        <Label htmlFor="registrationPassword">Wpisz nowe hasło</Label>
-        <Input 
-          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" 
-          type="password" 
-          id="registrationPassword" 
-          onBlur={validateNewPassword} 
-          onChange={(e, data) => setNewPassword(data.value)} 
-        />
-        <ErrorMessage 
-          error={errorNewPassword} 
-          message={'Hasło musi zawierać przynajmniej 8 znaków. Muszą się w nim znaleźć małe i duże litery oraz cyfra'} 
-        />
-      </Form.Field>
-      <Form.Field className={errorConfirmPassword ? 'errorElementRegistration' : null}>
-        <Label htmlFor="registrationPasswordConfirm">Powtórz nowe hasło</Label>
-        <Input 
-          type="password" 
-          id="registrationPasswordConfirm" 
-          onBlur={validateConfirmPassword} 
-          onChange={(e, data) => setConfirmPassword(data.value)}
-        />
-        <ErrorMessage error={errorConfirmPassword} message={'Hasła różnią się od siebie'} />
-      </Form.Field>
+    <Form onSubmit={changePassword}>
+      <InputField
+        setValue={setOldPassword}
+        label="Stare hasło"
+        type="password" 
+        id="password" 
+      />
+      <InputField
+        setValue={setNewPassword}
+        label="Nowe hasło"
+        type="password" 
+        id="registrationPassword"
+        error={newPasswordError} 
+        errorMessage={'Sprawdź hasło: musi zawierać przynajmniej 8 znaków, małe i duże litery oraz cyfrę i nie może być identyczne jak stare hasło'} 
+        validate={validate.newPassword}
+      />
+      <InputField 
+        setValue={setConfirmPassword}
+        label="Powtórz nowe hasło"
+        type="password" 
+        id="registrationPasswordConfirm" 
+        error={confirmPasswordError} 
+        errorMessage={'Hasła różnią się od siebie'}
+        validate={validate.confirmPassword}
+      />
       <ButtonBasic content="Zatwierdź nowe hasło" />
     </Form>
   );
