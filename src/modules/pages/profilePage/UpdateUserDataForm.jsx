@@ -66,18 +66,21 @@ const UpdateUserDataForm = (props) => {
   }
 
   const deleteAccount = () => {
-    removeUser(id).then(response => {
-      console.log(response.status);
-      if (response.status === 204){
-        IsDeleted(true, props);
-      } else {
-        IsDeleted(false, props);
-      } 
-    });
+    const confirmation = window.confirm("Czy jesteś pewien, że chcesz usunąć konto?");
+    if(confirmation === true){
+      removeUser(id).then(response => {
+        console.log(response.status);
+        if (response.status === 204){
+          IsDeleted(true, props);
+        } else {
+          IsDeleted(false, props);
+        } 
+      });
+    }
   }
 
   return (
-    <div>
+    <>
       <form onSubmit={handleUserDataUpdate} className="updateUserDataForm">
         <InputName
           label="Użytkownik"
@@ -106,12 +109,12 @@ const UpdateUserDataForm = (props) => {
           message={"Wybierz miasto z podpowiedzi"} 
           validate={validate.city}
         />
-      <Form.Field className="submitUserDataUpdateBtn">
-        <ButtonBasic content="Zatwierdź zmiany" />
-      </Form.Field>
+        <Form.Field className="submitUserDataUpdateBtn">
+          <ButtonBasic content="Zatwierdź zmiany" />
+        </Form.Field>
       </form>
-      <Button onClick={deleteAccount}>Usuń konto</Button>
-    </div>
+      <Button className="deleteAccountBtn" onClick={deleteAccount}>Usuń konto</Button>
+    </>
   );
 };
 

@@ -46,7 +46,7 @@ const ChangePasswordForm = (props) => {
   }
 
   return (
-    <Form onSubmit={changePassword} className="updateUserForm">
+    <form onSubmit={changePassword} className="updateUserDataForm">
       <InputField
         setValue={setOldPassword}
         label="Stare hasło"
@@ -59,7 +59,7 @@ const ChangePasswordForm = (props) => {
         type="password" 
         id="registrationPassword"
         error={newPasswordError} 
-        errorMessage={'Sprawdź hasło: musi zawierać przynajmniej 8 znaków, małe i duże litery oraz cyfrę i nie może być identyczne jak stare hasło'} 
+        errorMessage={'Sprawdź hasło: musi zawierać przynajmniej 8 znaków, małe i duże litery, cyfrę oraz nie może być identyczne jak stare hasło.'} 
         validate={validate.newPassword}
       />
       <InputField 
@@ -68,14 +68,13 @@ const ChangePasswordForm = (props) => {
         type="password" 
         id="registrationPasswordConfirm" 
         error={confirmPasswordError} 
-        errorMessage={'Hasła różnią się od siebie'}
+        errorMessage={'Hasła różnią się od siebie.'}
         validate={validate.confirmPassword}
       />
       <Form.Field className="submitUserDataUpdateBtn">
         <ButtonBasic content="Zatwierdź nowe hasło" />
       </Form.Field>
-      
-    </Form>
+    </form>
   );
 };
 

@@ -1,14 +1,16 @@
 @import '../../style.scss';
 
 .buttonBasic.button.secondary {
-      background-color: $colorBlue;
-      font-family: $fontHeader;
-      border: solid 2px white;
-      transition: 0.4s;
-
-      &:hover {
-        border: solid 2px $colorBlue;
-        background-color: white;
-        color: $colorBlue;
+  background-color: $colorBlue;
+  font-family: $fontHeader;
+  border: solid 2px white;
+  transition: 0.4s;
+  &:focus {
+    background-color: $colorBlue;
+  }
+  &:hover {
+    border: solid 2px $colorBlue;
+    background-color: white;
+    color: $colorBlue;
   }
 }

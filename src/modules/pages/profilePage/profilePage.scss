@@ -1,6 +1,7 @@
 @import '../../../style.scss';
 
 .profilePage {
+    margin-top: 15px;;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -114,6 +115,20 @@
                 font-size: 14px;
                 color: red;
             }
+        }
+    }
+    .deleteAccountBtn{
+        background-color: $colorWhiteish;
+        font-family: $fontHeader;
+        border: solid 2px rgba(0,0,0,.6);
+        transition: 0.4s;
+        &:focus{
+            background-color: $colorWhiteish;
+        }
+        &:hover {
+            border: solid 2px $colorWhiteish;
+            background-color: rgba(0,0,0,.6);
+            color: $colorWhiteish;
         }
     }
 }
