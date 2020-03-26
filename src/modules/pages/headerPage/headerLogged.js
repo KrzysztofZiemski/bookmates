@@ -8,11 +8,11 @@ import {
 } from 'semantic-ui-react';
 
 import "./header.scss";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const LoggedHeader = (props) => {
-  const { loggedUser, setLoginUser,toggleMenu } = props;
+  const { loggedUser, setLoginUser, toggleMenu } = props;
 
   const logout = () => {
     deleteCookie("accessToken");
@@ -36,6 +36,9 @@ const LoggedHeader = (props) => {
         </Menu.Item>
         <Menu.Item as={Link} to={"/addbook"}>
           dodaj książkę
+        </Menu.Item>
+        <Menu.Item as={Link} to={"/mates"}>
+          znajomi
         </Menu.Item>
         <Menu.Item position='right'>
           <ButtonBasic content="Wyloguj" handleClick={logout} />

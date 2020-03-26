@@ -1,0 +1,86 @@
+@import '../../../style.scss';
+
+$sizeMark:10px;
+
+.matesPage {
+    margin: 0 auto;
+    display: flex;
+    width: 50%;
+    padding: 30px;
+
+    .mateList {
+        width: 70%;
+        flex-grow: 1;
+        padding-right: 10%;
+
+        .mate {
+            display: flex;
+            margin: 10px 0;
+
+            a {
+                display: block;
+                width: 100%;
+                padding: 10px 5px;
+                background-color: $colorBlue;
+                text-transform: capitalize;
+                margin-right: 3px;
+                transition: .3s;
+
+                &:hover {
+                    color: $colorOrange;
+                    padding-left: 10px;
+                }
+            }
+
+            button {
+                border: 2px solid $colorBlue;
+            }
+        }
+    }
+
+    .suggestionMateList {
+        width: 30%;
+        border-left: 10px solid $colorOrange;
+        padding-left: 20px;
+        height: 100vh;
+        overflow-y: auto;
+
+        h1 {
+            font-size: 1.3rem;
+        }
+
+        .suggestionMate {
+            a {
+                display: block;
+                position: relative;
+                text-transform: capitalize;
+                padding: 2px 5px;
+                margin: 5px 0;
+                transition: .3s;
+                padding-left: 15px;
+                overflow: hidden;
+
+                &::before {
+                    position: absolute;
+                    content: "";
+                    display: block;
+                    width: $sizeMark;
+                    height: $sizeMark;
+                    top: 50%;
+                    left: -$sizeMark - 2;
+                    transform: rotate(45deg) translate(-50%, -50%);
+                    background-color: red;
+                    transition: .3s;
+                }
+
+                &:hover {
+                    color: $colorOrange;
+
+                    &::before {
+                        left: -$sizeMark/2;
+                    }
+                }
+            }
+        }
+    }
+}

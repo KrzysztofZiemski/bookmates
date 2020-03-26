@@ -41,7 +41,6 @@ export const removeUser = id => {
 };
 
 export const auth = (data) => {
-    console.log(data);
     return fetch(urlAuth, {
         method: 'POST',
         body: JSON.stringify(data),
@@ -61,8 +60,11 @@ export const getUserDetails = (accessToken) => {
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
-    }).then(data => data.json())
-        .catch(e => console.log(e))
+    }).then(res => {
+        console.log('res', res)
+        if (res.status !== 200) throw new Error(res.status);
+        return res.json();
+    })
 };
 
 export const addBookToShelf = (book, id) => {
@@ -74,11 +76,7 @@ export const addBookToShelf = (book, id) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ book, userId: id })
-    }).then(res => {
-        console.log(res);
-        if (res.status !== 200) throw new Error(res.status);
-        return res.json();
-    });
+    }).then(res => res.json());
 };
 
 export const getAllBooks = (id) => {
@@ -98,10 +96,22 @@ export const deleteUserBook = (userId, bookId) => {
 };
 
 export const addMate = (mate) => {
+    //TODO PO DODANIU, TRZEBA ODŚWIERZYĆ WIDOK ZNAJOMYCH
     let accessToken = getCookies().accessToken;
     return fetch(`${urlUser}mate`, {
         method: 'PUT',
         body: JSON.stringify(mate),
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        }
+    });
+};
+export const deleteMate = (mateID) => {
+    console.log(mateID)
+    let accessToken = getCookies().accessToken;
+    return fetch(`${urlUser}mate/${mateID}`, {
+        method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json'
@@ -117,4 +127,17 @@ export const getPublicUser = (id) => {
             'Authorization': `Bearer ${accessToken}`
         }
     });
+
 };
+export const getSuggestionMates = () => {
+    let accessToken = getCookies().accessToken;
+    return fetch(`${urlUser}match`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    }).then(response => {
+        if (response.status === 200) return response.json();
+        throw new Error(response.status)
+    })
+}

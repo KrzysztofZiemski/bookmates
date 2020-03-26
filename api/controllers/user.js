@@ -8,7 +8,8 @@ const {
     getByCoordsBetween,
     updateUserDetails,
     removeUser,
-    addMateDB
+    addMateDB,
+    removeMateDB
 } = require('../db/models/userModel');
 
 const addUserController = (user) => {
@@ -197,8 +198,15 @@ const addMateController = async (id, newMate) => {
     }
 
 }
-
+const removeMateController = async (id, idMate) => {
+    const user = await getUser(id).then(users => users[0]);
+    let matesToStay = user.mates.filter(mate => {
+        return mate.id !== idMate;
+    });
+    return removeMateDB(id, matesToStay)
+}
 module.exports = {
+    removeMateController,
     matchMatesController,
     addUserController,
     getUserByMailController,

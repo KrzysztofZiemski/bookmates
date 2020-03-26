@@ -145,6 +145,13 @@ const getByCoordsBetween = (x, y, startDistance, endDistance) => {
     `;
     return connection.query(sql).then((response) => response.rows.map(userModel));
 };
+const removeMateDB = (userId, matesToStay) => {
+    const sql = `
+    UPDATE users
+    SET mates = '${JSON.stringify(matesToStay)}'::jsonb
+    WHERE id = ${userId}`;
+    return connection.query(sql);
+}
 
 module.exports = {
     insertUser,
@@ -157,5 +164,6 @@ module.exports = {
     getAllUserBooks,
     removeFromBookShelf,
     getByCoordsBetween,
-    addMateDB
+    addMateDB,
+    removeMateDB
 };
