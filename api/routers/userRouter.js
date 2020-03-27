@@ -6,12 +6,14 @@ const {
     getUserSafeDetails,
     updateUserDetailsController,
     changeUserPasswordController,
-    removeUserController, 
-    insertBookToBookshelf, 
+    removeUserController,
+    insertBookToBookshelf,
     getAllUserBooksController,
     deleteUserBookController,
     matchMatesController,
-    addMateController
+    addMateController,
+    removeMateController
+
 } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
@@ -113,7 +115,7 @@ const deleteUserBookFromBookShelf = async (req, res) => {
 };
 
 const matchMates = (req, res) => {
-    const id = req.body.id;
+    const id = req.token.sub;
     matchMatesController(id)
         .then(mates => res.status(200).json(mates))
         .catch(err => res.status(500).json(err));
@@ -135,7 +137,8 @@ const getPublicUser = (req, res) => {
 const addMate = (req, res) => {
     const id = req.token.sub;
     const mate = req.body;
-    //TODO dalej
+    console.log('FFF')
+    //TODO dalej 
     addMateController(id, mate)
         .then(response => {
             console.log(response);
@@ -146,17 +149,38 @@ const addMate = (req, res) => {
             res.status(500).json('err');
         });
 };
+const removeMate = (req, res) => {
+    const id = req.token.sub;
+    const idMate = req.params.idMate;
+    removeMateController(id, Number(idMate))
+        .then(response => res.status(200).json(response))
+        .catch(err => res.status(500).json(err))
+    // const id = req.token.sub;
+    // const mate = req.body;
+    // console.log('id')
+    // //TODO dalej
+    // removeMateController(id, mate)
+    //     .then(response => {
+    //         console.log(response);
+    //         res.status(200).json('ok');
+    //     })
+    //     .catch(err => {
+    //         if (err == 400) res.status(400).json('mate exist in user list');
+    //         res.status(500).json('err');
+    //     });
+};
 
 //localhost:3010/user
 userRouter.get('/', getAllUser);
 userRouter.get('/details', validateToken, getUserDetails);
 // userRouter.get('/match', validateToken, matchMates);
-userRouter.get('/match', matchMates);
+userRouter.get('/match', validateToken, matchMates);
 userRouter.get('/public/:id', getPublicUser);
 userRouter.get('/:id', validateToken, getUser);
 userRouter.post('/', addUser);
 userRouter.put('/books', addUserBookToBookshelf);
 userRouter.put('/mate', validateToken, addMate);
+userRouter.delete('/mate/:idMate', validateToken, removeMate);
 userRouter.put('/:id', updateUser);
 userRouter.put('/:id/password', changeUserPassword);
 userRouter.delete('/:id', removeUser);

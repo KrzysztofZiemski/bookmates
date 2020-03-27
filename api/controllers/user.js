@@ -9,7 +9,8 @@ const {
     updateUserDetails,
     updateUserPassword,
     removeUser,
-    addMateDB
+    addMateDB,
+    removeMateDB
 } = require('../db/models/userModel');
 const { checkPassword, hashPassword } = require('./../db/utils/passwordEncryption');
 const { addBookToDB } = require('./book');
@@ -90,7 +91,17 @@ const matchMatesController = async (id) => {
             user.points = 0;
             return user
         }));
-    let mates = [...mates50, ...mates100, ...matesMoreThan100];
+    //filtrujemy wyniki, aby nie pokazywać już dodanych przyjaciół i siebie samego
+    let mates = [...mates50, ...mates100, ...matesMoreThan100].filter(mate => {
+        if (mate.id === user.id) return false;
+
+        let repeated = false;
+        user.mates.forEach(element => {
+            if (element.id === mate.id) return repeated = true;
+        });
+        return !repeated
+    })
+    console.log(mates)
     mates = mates.map(mate => _addPoints(mate, user))
         .sort((a, b) => a.points >= b.points)
         .slice(0, 20);
@@ -213,8 +224,15 @@ const addMateController = async (id, newMate) => {
     }
 
 }
-
+const removeMateController = async (id, idMate) => {
+    const user = await getUser(id).then(users => users[0]);
+    let matesToStay = user.mates.filter(mate => {
+        return mate.id !== idMate;
+    });
+    return removeMateDB(id, matesToStay)
+}
 module.exports = {
+    removeMateController,
     matchMatesController,
     addUserController,
     getUserByMailController,
