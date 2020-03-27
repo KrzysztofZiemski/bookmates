@@ -19,7 +19,7 @@ const ProfilePage = (props) => {
             <ButtonBasic handleClick={handleClick}
                content = {activeForm === changePasswordForm ? changePasswordForm : updateDataForm}
             />
-            {activeForm === changePasswordForm ? <ChangePasswordForm {...props} /> : <UpdateUserDataForm {...props} />}      
+            {activeForm === changePasswordForm ? <ChangePasswordForm {...props} /> : <UpdateUserDataForm {...props} />}              
         </div>
     );
 };

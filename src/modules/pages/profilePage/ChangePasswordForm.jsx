@@ -3,28 +3,26 @@ import { changeUserPassword } from "../../../repos/user";
 import { ButtonBasic } from "../../Button/Button";
 import { InputField } from './../registrationPage/formRegistration/InputField';
 import { Form } from 'semantic-ui-react';
+import { ErrorMessage } from "./../../ErrorMessage/ErrorMessage";
+import { SuccessMessage } from "./../../successMessage/SuccessMessage";
 
 const ChangePasswordForm = (props) => {
   const { loggedUser: { id: id }} = props;
+  const successMessage = "Hasło zostało pomyślnie zaktualizowane.";
+  const noSuccessMessage = "Nie udało się zmienić hasła. Skontaktuj się z administratorem.";
 
+  let [ updateSuccess, setUpdateSuccess ] = useState(null);
   let [oldPassword, setOldPassword] = useState("")
   let [newPassword, setNewPassword] = useState("");
   let [newPasswordError, setNewPasswordError] = useState(null);
   let [confirmPassword, setConfirmPassword] = useState("");
   let [confirmPasswordError, setConfirmPasswordError] = useState(null);
+
   const errors = [newPasswordError, confirmPasswordError];
 
   const validate = {
     newPassword: () => ((newPassword.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/)) && (newPassword !== oldPassword)) ? setNewPasswordError(false) : setNewPasswordError(true),
     confirmPassword: () => confirmPassword === newPassword ? setConfirmPasswordError(false) : setConfirmPasswordError(true)
-  }
-
-  const IsChanged = (result) => {
-    if (result === false){
-      alert("Nie udało się zmienić hasła. Skontaktuj się z administratorem.");
-    } else {
-      alert("Hasło zostało pomyślnie zaktualizowane.");
-    }
   }
 
   const changePassword = (e) => {
@@ -38,11 +36,15 @@ const ChangePasswordForm = (props) => {
     let passwords = { oldPassword, newPassword };
     changeUserPassword(id, passwords).then(response => {
       if(response.status === 204){
-        IsChanged(true);
+        setUpdateSuccess(true);
       } else {
-        IsChanged(false);
+        setUpdateSuccess(false);
       }
     });
+  }
+
+  const closeError = () => {
+    setUpdateSuccess(null);
   }
 
   return (
@@ -72,7 +74,11 @@ const ChangePasswordForm = (props) => {
         validate={validate.confirmPassword}
       />
       <Form.Field className="submitUserDataUpdateBtn">
-        <ButtonBasic content="Zatwierdź nowe hasło" />
+        <ButtonBasic 
+          content="Zatwierdź nowe hasło" 
+        />
+        { updateSuccess === true ? <SuccessMessage message={successMessage} closeError={closeError} /> : ''}
+        { updateSuccess === false ? <ErrorMessage message={noSuccessMessage} closeError={closeError} /> : ''}
       </Form.Field>
     </form>
   );

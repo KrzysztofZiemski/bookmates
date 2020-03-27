@@ -8,10 +8,15 @@ import { updateUser, removeUser } from "../../../repos/user";
 import { getCoords } from '../../../utils/geoLocation';
 import { getCountries} from '../registrationPage/formRegistration/coutriesList';
 import InputCity from '../registrationPage/formRegistration/inputCity';
+import { ErrorMessage } from "./../../ErrorMessage/ErrorMessage";
+import { SuccessMessage } from "./../../successMessage/SuccessMessage";
 
 const UpdateUserDataForm = (props) => {
   const { loggedUser: { id: id, name: name, country: country, city: oldCity }} = props;
+  const successMessage = "Dane zostały pomyślnie zaktualizowane.";
+  const noSuccessMessage = "Nie udało się zaktualizować danych. Skontaktuj się z administratorem.";
 
+  let [ updateSuccess, setUpdateSuccess ] = useState(null);
   let [ newName, setName ] = useState(name);
   let [ nameError, setNameError ] = useState(null); 
   let [ newCountry, setCountry ] = useState(country);
@@ -27,22 +32,14 @@ const UpdateUserDataForm = (props) => {
     city: () => city.picked ? setCityError(false) : setCityError(true)
   }
 
-  const IsUpdated = (result) => {
-      if (result === false){
-        alert("Nie udało się zaktualizować danych. Skontaktuj się z administratorem.");
-      } else {
-        alert("Dane zostały pomyślnie zaktualizowane.");
-      }
-  }
-
   const IsDeleted = (result, props) => {
     const { setLoginUser } = props;
     if(result === false){
-      alert("Nie udało się usunąć konta. Skontaktuj się z administratorem");
+      alert("Nie udało się usunąć konta. Skontaktuj się z administratorem.");
     } else {
       deleteCookie("accessToken");
       setLoginUser(null);
-      alert("Konto usunięte");
+      alert("Konto usunięte.");
     }
   }
 
@@ -58,9 +55,9 @@ const UpdateUserDataForm = (props) => {
     const newUser = { name: newName, country: newCountry, city: city.value, coords };
     updateUser(id, newUser).then(response => {
       if(response.status === 204){
-        IsUpdated(true);
+        setUpdateSuccess(true);
       } else {
-        IsUpdated(false);
+        setUpdateSuccess(false);
       }
     }); 
   }
@@ -77,6 +74,10 @@ const UpdateUserDataForm = (props) => {
         } 
       });
     }
+  }
+
+  const closeError = () => {
+    setUpdateSuccess(null);
   }
 
   return (
@@ -111,6 +112,8 @@ const UpdateUserDataForm = (props) => {
         />
         <Form.Field className="submitUserDataUpdateBtn">
           <ButtonBasic content="Zatwierdź zmiany" />
+          { updateSuccess === true ? <SuccessMessage message={successMessage} closeError={closeError} /> : ''}
+          { updateSuccess === false ? <ErrorMessage message={noSuccessMessage} closeError={closeError} /> : ''}
         </Form.Field>
       </form>
       <Button className="deleteAccountBtn" onClick={deleteAccount}>Usuń konto</Button>
