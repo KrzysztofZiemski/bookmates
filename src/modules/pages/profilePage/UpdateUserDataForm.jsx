@@ -21,7 +21,7 @@ const UpdateUserDataForm = (props) => {
   let [ nameError, setNameError ] = useState(null); 
   let [ newCountry, setCountry ] = useState(country);
   let [ countryError, setCountryError ] = useState(null);
-  let [ city, setCity ] = useState({ value: oldCity, picked: false });
+  let [ city, setCity ] = useState({ value: oldCity, picked: true });
   let [ cityError, setCityError ] = useState(null);
 
   const errors = [ nameError, countryError, cityError ];
@@ -49,7 +49,9 @@ const UpdateUserDataForm = (props) => {
       validate[fieldValidate]()
     }
     for (let error in errors) {
-        if (errors[error] !== false) return
+        if (errors[error]) {
+          return
+        }
     }
     const coords = await getCoords(city);
     const newUser = { name: newName, country: newCountry, city: city.value, coords };
