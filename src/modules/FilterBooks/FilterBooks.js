@@ -1,8 +1,8 @@
 import React from 'react';
 import './FilterBooks.scss';
-import Slider from '../Slider/Slider';
+import Slider from './Slider/Slider';
 
-export const FilterBooks = ({ books, filterBy }) => {
+export const FilterBooks = ({ books, filterBy, onClick, id }) => {
     const options = {};
     books.forEach(book => {
         //todo 2 autorów
@@ -23,7 +23,7 @@ export const FilterBooks = ({ books, filterBy }) => {
         output.push(
             <div className="single-slider" key={option}>
                 <h3>{option === 'not found' ? 'Brak kategorii' : option}</h3>
-                <div className="slider-books"> <Slider content={options[option]}></Slider></div>
+                <div className="slider-books"> <Slider content={options[option]} onClick={onClick} id={id}></Slider></div>
             </div>
         )
     }

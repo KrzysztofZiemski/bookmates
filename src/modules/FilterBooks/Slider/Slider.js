@@ -2,29 +2,31 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import noBookImage from '../assets/book-not-found.png';
-
+import { ButtonBasic } from '../../Button/Button';
+import noBookImage from '../../assets/book-not-found.png';
 import './Slider.scss';
 
-const Slider = ({ content }) => {
-
+const Slider = ({ content, onClick, id }) => {
     const renderSlideElements = () => {
         return content.map(element => {
             return (
-                <Link to={`/book/${element.bookId}`} key={element.bookId}>
-
-                    < div className="slide-element" >
-                        <img src={element.imageUrl && element.imageUrl !== 'http://vrephotels.com/images/NoImageFound.png' ? element.imageUrl : noBookImage} alt={`book ${unescape(element.title)} `} />
-                        <div className="slide-element-data">
-                            <h4>{unescape(element.title)}</h4>
-                            <div>
-                                <p>{element.authors}</p>
-                                <p>{element.categories}</p>
-                                <p>{element.publishedYear}</p>
+                < div className="slideElement" key={element.bookId}>
+                    <div>
+                        <Link to={`/book/${element.bookId}`} >
+                            <img src={element.imageUrl && element.imageUrl !== 'http://vrephotels.com/images/NoImageFound.png' ? element.imageUrl : noBookImage} alt={`book ${unescape(element.title)} `} />
+                            <div className="slideElementData">
+                                <h4>{unescape(element.title)}</h4>
+                                <div>
+                                    <p>{element.authors}</p>
+                                    <p>{element.categories}</p>
+                                    <p>{element.publishedYear}</p>
+                                </div>
                             </div>
-                        </div>
-                    </div >
-                </Link >
+                        </Link >
+                    </div>
+                    {onClick ? <ButtonBasic handleClick={() => onClick(id, element)} content={'Usuń książkę'} /> : null}
+                </div >
+
             )
         })
     }
