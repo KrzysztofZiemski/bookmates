@@ -36,12 +36,15 @@ function App() {
         setMenuVisibility(false);
     };
     //TODO - NIE CHCIAŁO SIĘ USTAWIAĆ setLoginUser(false) w then funkcji getUserDetails(trzeba ustawić też błąd pobierania danych usera(niepoprawny token))
-
-    useEffect(() => {
+    const refreshUser = () => {
         if (!getCookies().accessToken) return setLoginUser(false)
         getUserDetails(getCookies().accessToken).then(user => {
             setLoginUser(user);
         }).catch(err => console.log('err'))
+    }
+
+    useEffect(() => {
+        refreshUser();
     }, []);
 
     return (
@@ -70,14 +73,14 @@ function App() {
                     </PrivateRoute>
                     <Route exact path='/book/:id' component={BookPage}>
                     </Route>
-                    <Route path="/user/:id" render={(props) => <UserPage {...props} loggedUser={loggedUser} />} />
+                    <Route path="/user/:id" render={(props) => <UserPage {...props} loggedUser={loggedUser} refreshUser={refreshUser} />} />
                     <Route path="/profile/">
                         {loggedUser === false ? <Redirect to="/" /> :
                             <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser} />}
                     </Route>
                     <Route path="/mates">
                         {loggedUser === false ? <Redirect to="/" /> :
-                            <Mates loggedUser={loggedUser} />}
+                            <Mates loggedUser={loggedUser} refreshUser={refreshUser} />}
                     </Route>
                     <Route>
                         <ErrorPage></ErrorPage>

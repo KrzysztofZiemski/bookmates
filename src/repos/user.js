@@ -61,7 +61,6 @@ export const getUserDetails = (accessToken) => {
             'Authorization': `Bearer ${accessToken}`
         }
     }).then(res => {
-        console.log('res', res)
         if (res.status !== 200) throw new Error(res.status);
         return res.json();
     })
@@ -108,7 +107,6 @@ export const addMate = (mate) => {
     });
 };
 export const deleteMate = (mateID) => {
-    console.log(mateID)
     let accessToken = getCookies().accessToken;
     return fetch(`${urlUser}mate/${mateID}`, {
         method: 'DELETE',

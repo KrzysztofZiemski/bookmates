@@ -12,7 +12,7 @@ const UserPage = (props) => {
   let [publicUser, setPublicUser] = React.useState(null);
   let [waiting, setWaiting] = React.useState(false);
   let [error, setError] = React.useState(false);
-  let { loggedUser, match } = props;
+  let { loggedUser, match, refreshUser } = props;
 
   const closeError = () => {
     setError(false);
@@ -39,7 +39,10 @@ const UserPage = (props) => {
       .then(response => {
         setWaiting(false)
         if (response.status === 400) setError(<ErrorMessage message="Użytkownik już był dodawany do grupy znajomych" closeError={closeError} />);
-        if (response.status === 200) alert('Dodano do znajomych');
+        if (response.status === 200) {
+          alert('Dodano do znajomych');
+          refreshUser();
+        };
       })
       .catch(err => {
         setWaiting(false);

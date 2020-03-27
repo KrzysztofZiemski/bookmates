@@ -63,7 +63,7 @@ const insertUser = (user) => {
         INSERT INTO ${tableName}
         VALUES (
             DEFAULT, '${user.mail}', '${user.salt}', '${user.password}', '${user.name}', '${user.country}', '${user.city}',
-             POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}', '[]'::jsonb
+             POINT(${user.coords.lat}, ${user.coords.lng}), '${user.gender}','${user.birth}', '[]'::jsonb, '[]'::jsonb
     )`;
 
     return connection.query(sql);

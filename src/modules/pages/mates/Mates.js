@@ -6,7 +6,7 @@ import { List } from 'semantic-ui-react';
 import { ButtonBasic } from '../../Button/Button';
 import { setCookie, getCookies } from '../../cookies/cookies';
 
-const Mates = ({ loggedUser }) => {
+const Mates = ({ loggedUser, refreshUser }) => {
     let [suggestionMates, setSuggestionMates] = React.useState([]);
 
     const setSugestionMatesList = () => {
@@ -27,9 +27,9 @@ const Mates = ({ loggedUser }) => {
 
     const handleDeleteMate = (mate) => {
         deleteMate(mate.id).then(response => {
-            if (response.status === 200) {
-                //todo zrobić usunięcie znajomego z pobranych danych zalogowanego
-            }
+            refreshUser();
+            //todo zrobić usunięcie znajomego z pobranych danych zalogowanego
+
         })
     }
 
