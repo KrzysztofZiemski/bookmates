@@ -1,11 +1,13 @@
 import React from 'react';
 import { UserBookList } from './userBookList';
 
-const Dashboard = ({ loggedUser: { id } }) => {
+const Dashboard = ({ loggedUser }) => {
+    console.log(loggedUser)
+    const output = loggedUser ? <UserBookList id={loggedUser.id} /> : null;
 
     return (
         <div>
-            <UserBookList id={id}/>
+            {output}
         </div>
     );
 };

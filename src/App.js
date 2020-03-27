@@ -15,6 +15,7 @@ import LoggedHeader from './modules/pages/headerPage/headerLogged';
 import WelcomePage from './modules/pages/welcomePage/welcomePage';
 import Dashboard from './modules/pages/dashboardPage/dashboardPage';
 import RegistrationPage from './modules/pages/registrationPage/registrationPage';
+import Mates from './modules/pages/mates/Mates';
 import AddBookPage from './modules/pages/addBookPage/addBookPage';
 import BookPage from './modules/pages/bookPage/bookPage';
 import UserPage from './modules/pages/userPage/userPage';
@@ -34,42 +35,52 @@ function App() {
         if (!menuVisibility) return setMenuVisibility(true);
         setMenuVisibility(false);
     };
-    useEffect(() => {
+    //TODO - NIE CHCIAŁO SIĘ USTAWIAĆ setLoginUser(false) w then funkcji getUserDetails(trzeba ustawić też błąd pobierania danych usera(niepoprawny token))
+    const refreshUser = () => {
+        if (!getCookies().accessToken) return setLoginUser(false)
         getUserDetails(getCookies().accessToken).then(user => {
             setLoginUser(user);
-        });
+        }).catch(err => console.log('err'))
+    }
+
+    useEffect(() => {
+        refreshUser();
     }, []);
 
     return (
         <Router>
-            <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
+            <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars} /></div>
             <header className={menuVisibility ? 'headerUnlogged show' : 'headerUnlogged'}>
                 {loggedUser ?
-                    <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} toggleMenu={toggleMenu}/> :
-                    <MainHeader setLoginUser={setLoginUser} toggleMenu={toggleMenu}/>}
+                    <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} toggleMenu={toggleMenu} /> :
+                    <MainHeader setLoginUser={setLoginUser} toggleMenu={toggleMenu} />}
             </header>
             <main>
                 <Switch>
                     <Route exact path="/">
-                        <WelcomePage/>
+                        <WelcomePage />
                     </Route>
                     <Route path="/dashboard">
-                        {!loggedUser ? <Redirect to="/"/> : <Dashboard loggedUser={loggedUser}/>}
+                        {loggedUser === false ? <Redirect to="/" /> : <Dashboard loggedUser={loggedUser} />}
                     </Route>
                     <Route path="/addbook">
-                        {!loggedUser ? <Redirect to="/"/> : <AddBookPage loggedUser={loggedUser}/>}
+                        {loggedUser === false ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
                     </Route>
                     <Route path="/registration">
-                        {!loggedUser ? <RegistrationPage/> : <Redirect to="/dashboard"/>}
+                        {loggedUser === false ? <RegistrationPage /> : <Redirect to="/dashboard" />}
                     </Route>
                     <PrivateRoute exact path="/addbook/:query" component={AddBookPage}>
                     </PrivateRoute>
                     <Route exact path='/book/:id' component={BookPage}>
                     </Route>
-                    <Route path="/user/:id" render={(props) => <UserPage {...props} loggedUser={loggedUser}/>}/>
+                    <Route path="/user/:id" render={(props) => <UserPage {...props} loggedUser={loggedUser} refreshUser={refreshUser} />} />
                     <Route path="/profile/">
-                        {!loggedUser ? <Redirect to="/"/> :
-                            <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser}/>}
+                        {loggedUser === false ? <Redirect to="/" /> :
+                            <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser} />}
+                    </Route>
+                    <Route path="/mates">
+                        {loggedUser === false ? <Redirect to="/" /> :
+                            <Mates loggedUser={loggedUser} refreshUser={refreshUser} />}
                     </Route>
                     <Route>
                         <ErrorPage></ErrorPage>
