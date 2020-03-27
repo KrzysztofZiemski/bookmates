@@ -1,0 +1,30 @@
+@import './../../../style.scss';
+
+.welcomePage{
+    background-image: url("./../../assets/backcut.jpg"); 
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding-top: 9vw;
+        .logo{
+            font-family: $fontLogo;
+            color: $colorOrange;
+            font-size: 5vw;
+        }
+        .companyMessage{
+            font-family: $fontHeader;
+            color: white;
+            font-size: 2.5vw;
+        }
+    }
+
+}
