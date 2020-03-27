@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { UserBookCard } from './userBookCard';
 import { getAllBooks, deleteUserBook } from './../../../repos/user';
+import { FilterBooks } from '../../FilterBooks/FilterBooks';
 
 export const UserBookList = ({ id }) => {
     let [userBooks, setUserBooks] = useState([]);
@@ -26,12 +27,13 @@ export const UserBookList = ({ id }) => {
 
     return (
         <div className="list">
-            {userBooks.map((book, i) => (
+            <FilterBooks books={userBooks} filterBy={'authors'} onClick={handleBookDelete} id={id} />
+            {/* {userBooks.map((book, i) => (
                 <UserBookCard key={i} userBookId={i} image={book.imageUrl} title={book.title}
-                              author={book.authors} id={book.bookId} handleBookDelete={() => {
-                    handleBookDelete(id, book);
-                }}/>
-            ))}
+                    author={book.authors} id={book.bookId} handleBookDelete={() => {
+                        handleBookDelete(id, book);
+                    }} />
+            ))} */}
         </div>
     );
 };

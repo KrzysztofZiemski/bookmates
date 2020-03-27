@@ -1,5 +1,6 @@
-.slide-element {
+.slideElement {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     height: 100%;
     overflow: hidden;
@@ -7,10 +8,21 @@
     margin: 0 5px 20px 5px;
     background: linear-gradient(to left, #FFEFBA, #fff);
 
-    .slide-element-data {
+    &>div {
+        width: 100%;
+        height: 85%;
+        overflow-y: auto;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .slideElementData {
         display: flex;
         flex-direction: column;
         margin-bottom: 25px;
+        flex-grow: 1;
 
         h4 {
             flex-grow: 1;
