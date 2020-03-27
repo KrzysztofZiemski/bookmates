@@ -1,0 +1,24 @@
+.slide-element {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    overflow: hidden;
+    padding-top: 10px;
+    margin: 0 5px 20px 5px;
+    background: linear-gradient(to left, #FFEFBA, #fff);
+
+    .slide-element-data {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 25px;
+
+        h4 {
+            flex-grow: 1;
+        }
+    }
+
+    img {
+        height: 100px;
+        margin: 0 15px;
+    }
+}

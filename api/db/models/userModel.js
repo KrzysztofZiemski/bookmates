@@ -18,8 +18,23 @@ const userModel = (row) => ({
     coordinates: row.coordinates,
     gender: row.gender,
     birth: row.birth,
-    books: row.bookdata
+    books: row.bookdata,
+    mates: row.mates
 });
+
+const addMateDB = (id, mates) => {
+    console.log('mates', mates)
+    console.log('id', id)
+    const sql = `
+    UPDATE users
+    SET mates = (CASE
+        WHEN mates IS NULL THEN '[]'::jsonb
+        ELSE mates
+    END
+) ||  '${JSON.stringify(mates)}'::jsonb
+    WHERE id = ${id}`;
+    return connection.query(sql);
+}
 
 const updateUserDetails = (userId, userDetails) => {
     const sql = `
@@ -121,7 +136,7 @@ const getAllUserBooks = (userId) => {
     return connection.query(sql);
 };
 
-const getByCoordsBetween=(x,y,startDistance,endDistance)=>{
+const getByCoordsBetween = (x, y, startDistance, endDistance) => {
     const sql = `
     SELECT * FROM users
         WHERE (circle(coordinates,1) <-> circle '((${x},${y}),1)' < ${endDistance}) AND (circle(coordinates,1) <-> circle '((${x},${y}),1)' >= ${startDistance})
@@ -142,5 +157,6 @@ module.exports = {
     addToBookShelf,
     getAllUserBooks,
     removeFromBookShelf,
-    getByCoordsBetween
+    getByCoordsBetween,
+    addMateDB
 };

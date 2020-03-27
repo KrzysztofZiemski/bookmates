@@ -5,8 +5,7 @@ import { BookList } from './bookList';
 import { addBook } from '../../../../repos/book';
 
 
-export const AddBookSearch = (props) => {
-    const { loggedUser } = props;
+export const AddBookSearch = ({ loggedUser, match, history }) => {
 
     let [books, setBooks] = React.useState([]);
     let [searchField, setSearchField] = React.useState('');
@@ -22,6 +21,7 @@ export const AddBookSearch = (props) => {
             })
             .then(res => {
                 setBooks(res);
+                // Inserting results from Google Api to Postgres
                 res.map(b =>
                     addBook({
                         title: escape(b.title),
@@ -29,6 +29,7 @@ export const AddBookSearch = (props) => {
                         authors: b.authors.join(', '),
                         publishedYear: parseInt(b.publishedDate.split('-')[0]),
                         description: escape(b.description),
+                        // Check if industryIdentifier is composed of numbers if not give it a random id
                         isbn: /^[0-9]*$/.test(b.industryIdentifiers[0].identifier) ? b.industryIdentifiers[0].identifier : Math.floor(Math.random() * 10000)
                     }));
             });
@@ -55,7 +56,7 @@ export const AddBookSearch = (props) => {
     return (
         <div>
             <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} id={loggedUser.id}/>
-            <BookList books={sortedBooks} id={loggedUser.id}/>
+            <BookList books={sortedBooks} id={loggedUser.id} searchBook={() => getGoogleBooks(searchField)}/>
         </div>
     );
 };

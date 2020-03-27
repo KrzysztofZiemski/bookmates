@@ -1,9 +1,14 @@
 import { BACKEND_URL } from '../const';
 
-const urlBook = `${BACKEND_URL}/book/`;
+const urlBook = `${BACKEND_URL}/book`;
 
 export const getBook = id => {
-    //return...  fetch(url, {})
+    return fetch(`${urlBook}/${id}`)
+        .then(res => {
+            if (res.status !== 200) throw new Error(res.status);
+            console.log(res);
+            return res.json();
+        });
 };
 
 export const addBook = (book) => {

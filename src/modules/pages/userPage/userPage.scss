@@ -1,0 +1,93 @@
+.userPage {
+    .userData {
+        display: flex;
+
+        @media(max-width: 640px) {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .avatar {
+            @media(max-width: 640px) {
+                width: 200px;
+            }
+
+            img {
+                @media(max-width: 640px) {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+
+        &>div {
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+
+            @media(max-width: 640px) {
+                width: 95%;
+            }
+
+            .userData-element {
+                display: flex;
+
+                @media(max-width: 640px) {}
+
+                p:first-child {
+                    width: 200px;
+
+                    @media(max-width: 640px) {
+                        width: 160px;
+                    }
+                }
+            }
+
+            .button {
+                @media(max-width: 640px) {
+                    margin-top: 50px;
+                }
+            }
+        }
+
+
+    }
+
+    .userBooksContainer {
+        padding-top: 40px;
+
+        h2 {
+            text-align: center;
+            font-size: 2.3rem;
+        }
+
+        .sliders-container {
+            border-top: 3px solid black;
+            margin: 20px 0;
+
+            .single-slider {
+                margin: 40px 0;
+
+                h3 {
+                    text-align: center;
+                    font-size: 1.5rem;
+                    padding: 5px;
+                }
+
+                .slider-books {
+                    $margin: 19px;
+                    position: relative;
+                    margin: 10px 0;
+                    padding-top: $margin;
+                    padding-bottom: $margin;
+                    background-image: url("../../assets//wood-gradient.jpg");
+
+                    h4 {
+                        font-size: 1rem;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
