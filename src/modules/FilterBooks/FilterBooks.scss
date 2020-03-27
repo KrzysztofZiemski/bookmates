@@ -1,0 +1,28 @@
+.slidersContainer {
+    border-top: 3px solid black;
+    margin: 20px 0;
+
+    .single-slider {
+        margin: 40px 0;
+
+        h3 {
+            text-align: center;
+            font-size: 1.5rem;
+            padding: 5px;
+        }
+
+        .slider-books {
+            $margin: 19px;
+            position: relative;
+            margin: 10px 0;
+            padding-top: $margin;
+            padding-bottom: $margin;
+            background-image: url("../assets//wood-gradient.jpg");
+
+            h4 {
+                font-size: 1rem;
+                text-align: center;
+            }
+        }
+    }
+}
