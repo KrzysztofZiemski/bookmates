@@ -52,25 +52,28 @@ const FormRegistration = (props) => {
         const coords = await getCoords(city);
 
         const user = { name, mail, country, city: city.value, gender, birth, password, coords };
-
         sendRegistrationForm(user);
     }
     const countries = getCountries();
 
     return (
-        <form className="registrationForm" onSubmit={handleRegistration}>
-            <InputField setValue={setName} label="Użytkownik" error={nameError} type="text" errorMessage={'nazwa użytkownika powinna posiadać minimum 3 znaki'} validate={validate.name} />
-            <InputField setValue={setMail} label="E-mail" type="email" error={mailError} errorMessage={'podaj poprawny adres mailowy'} validate={validate.mail} />
-            <SelectField setValue={setCountry} label="Państwo" options={countries} defaultValue="Polska" error={countryError} errorMessage={'wybierz kraj'} validate={validate.country} />
-            <InputCity city={city} setCity={setCity} error={cityError} setError={setCityError} errorMessage={'wybierz misto z podpowiedzi'} validate={validate.city} />
-            <SelectField setValue={setGender} label="Płeć" options={genderList} error={genderError} errorMessage={'wybierz płeć'} validate={validate.gender} />
-            <InputField setValue={setBirth} label="Data urodzenia" type="date" error={birthError} errorMessage={'podaj poprawną datę urodzenia'} validate={validate.birth} />
-            <InputField setValue={setPassword} label="Hasło" type="password" error={passwordError} errorMessage={'Hasło powinno składać się z conajmniej 8 małych i dużych liter oraz cyfr'} validate={validate.password} />
-            <InputField setValue={setConfirmPassword} label="Powtórz hasło" type="password" error={confirmPasswordError} errorMessage={'hasła różnią się od siebie'} validate={validate.confirmPassword} />
-            <Form.Field className="submitRegistrationBtn">
-                <ButtonBasic content={"Zarejestruj"} />
-            </Form.Field>
-        </form>
+        <>
+            <h1>Zarejestruj się</h1>
+            <form className="registrationForm" onSubmit={handleRegistration}>
+                <InputField setValue={setName} label="Użytkownik" error={nameError} type="text" errorMessage={'nazwa użytkownika powinna posiadać minimum 3 znaki'} validate={validate.name} />
+                <InputField setValue={setMail} label="E-mail" type="email" error={mailError} errorMessage={'podaj poprawny adres mailowy'} validate={validate.mail} />
+                <SelectField setValue={setCountry} label="Państwo" options={countries} defaultValue="Polska" error={countryError} errorMessage={'wybierz kraj'} validate={validate.country} />
+                <InputCity city={city} setCity={setCity} error={cityError} setError={setCityError} errorMessage={'wybierz misto z podpowiedzi'} validate={validate.city} />
+                <SelectField setValue={setGender} label="Płeć" options={genderList} error={genderError} errorMessage={'wybierz płeć'} validate={validate.gender} />
+                <InputField setValue={setBirth} label="Data urodzenia" type="date" error={birthError} errorMessage={'podaj poprawną datę urodzenia'} validate={validate.birth} />
+                <InputField setValue={setPassword} label="Hasło" type="password" error={passwordError} errorMessage={'Hasło powinno składać się z conajmniej 8 małych i dużych liter oraz cyfr'} validate={validate.password} />
+                <InputField setValue={setConfirmPassword} label="Powtórz hasło" type="password" error={confirmPasswordError} errorMessage={'hasła różnią się od siebie'} validate={validate.confirmPassword} />
+                <Form.Field className="submitRegistrationBtn">
+                    <ButtonBasic content={"Zarejestruj"} />
+                </Form.Field>
+
+            </form>
+        </>
 
     )
 }

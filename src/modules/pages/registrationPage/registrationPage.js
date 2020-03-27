@@ -15,6 +15,7 @@ const RegistrationPage = () => {
     setWaiting(true);
     addUser(user).then(response => {
       setWaiting(false);
+      console.log(response)
       if (response.status === 200) return setRegistrationSuccess(true);
       setRegistrationSuccess(false);
     })
@@ -30,7 +31,8 @@ const RegistrationPage = () => {
 
   return (
     <div className="registrationPage">
-      <FormRegistration sendRegistrationForm={sendRegistrationForm} />
+      {registrationSuccess ? (<div className="messageSucces"><p>Dziękujemy za rejestrację</p></div>) : null}
+      {!registrationSuccess ? <FormRegistration sendRegistrationForm={sendRegistrationForm} registrationSuccess={registrationSuccess} /> : null}
       {registrationSuccess === false ? <ErrorMessage message={errorMessage} closeError={closeError} /> : null}
       {waiting ? <Loader /> : null}
     </div >

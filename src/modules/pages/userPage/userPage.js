@@ -6,6 +6,7 @@ import { ButtonBasic } from '../../Button/Button';
 import BooksSliders from './booksSliders';
 import maleAvatar from '../../assets/male.png';
 import femaleAvatar from '../../assets/female.png';
+import nogenderAvatar from '../../assets/nogender.png';
 import './userPage.scss';
 
 const UserPage = (props) => {
@@ -48,7 +49,16 @@ const UserPage = (props) => {
         setWaiting(false);
       })
   };
-
+  const avatar = () => {
+    switch (publicUser.gender) {
+      case 'man':
+        return maleAvatar;
+      case 'woman':
+        return femaleAvatar;
+      default:
+        return nogenderAvatar
+    }
+  }
 
   React.useEffect(() => {
     const { id } = match.params;
@@ -62,7 +72,7 @@ const UserPage = (props) => {
       {publicUser === null ? <section className="userPage"></section> : <section className="userPage">
         <div className="userData">
           <div className="avatar">
-            <img src={publicUser.gender === 'man' ? maleAvatar : femaleAvatar} alt={`${publicUser.name} avatar`} />
+            <img src={avatar()} alt={`${publicUser.name} avatar`} />
           </div>
           <div>
             <div className="userData-element">
