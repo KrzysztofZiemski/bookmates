@@ -17,9 +17,9 @@ const Slider = ({ content, onClick, id }) => {
                             <div className="slideElementData">
                                 <h4>{unescape(element.title)}</h4>
                                 <div>
-                                    <p>{element.authors}</p>
+                                    <p>{element.authors === 'not found' ? null : element.authors}</p>
                                     <p>{element.categories}</p>
-                                    <p>{element.publishedYear}</p>
+                                    <p>{element.publishedYear === '0000' ? null : element.publishedYear}</p>
                                 </div>
                             </div>
                         </Link >

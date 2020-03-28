@@ -7,11 +7,21 @@ $sizeMark:10px;
     display: flex;
     width: 50%;
     padding: 30px;
+    flex-wrap: wrap;
+
+    @media (max-width: 1024px) {
+        width: 100%;
+    }
 
     .mateList {
         width: 70%;
         flex-grow: 1;
         padding-right: 10%;
+
+        @media (max-width: 800px) {
+            width: 100%;
+            padding-right: 0;
+        }
 
         .mate {
             display: flex;
@@ -44,6 +54,14 @@ $sizeMark:10px;
         padding-left: 20px;
         height: 100vh;
         overflow-y: auto;
+
+        @media (max-width: 800px) {
+            padding-top: 15px;
+            border-top: 10px solid $colorOrange;
+            margin-top: 40px;
+            width: 100%;
+            height: auto;
+        }
 
         h1 {
             font-size: 1.3rem;

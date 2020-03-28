@@ -20,9 +20,10 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
 
     const output = [];
     for (let option in options) {
+        console.log(option === 'undefined')
         output.push(
             <div className="single-slider" key={option}>
-                <h3>{option === 'not found' ? 'Brak kategorii' : option}</h3>
+                <h3>{option === 'not found' || option === 'undefined' ? 'Inne' : option}</h3>
                 <div className="slider-books"> <Slider content={options[option]} onClick={onClick} id={id}></Slider></div>
             </div>
         )
