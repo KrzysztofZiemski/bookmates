@@ -58,7 +58,7 @@ function App() {
             <main>
                 <Switch>
                     <Route exact path="/">
-                        <WelcomePage />
+                        <WelcomePage loggedUser={loggedUser} />
                     </Route>
                     <Route path="/dashboard">
                         {loggedUser === false ? <Redirect to="/" /> : <Dashboard loggedUser={loggedUser} />}

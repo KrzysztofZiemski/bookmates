@@ -46,9 +46,6 @@ const MainHeader = (props) => {
         <Menu.Item as={Link} to={"/"} className="logo" active>
           BookMates
         </Menu.Item>
-        <Menu.Item as={Link} to={"/registration"}>
-          registration
-        </Menu.Item>
         <Menu.Item position='right'>
           <form onSubmit={handleLogin}>
             <label htmlFor="mail">E-mail </label><input type="text" id="mail" onChange={(e) => setMail(e.target.value)} />
