@@ -4,6 +4,12 @@ import { BACKEND_URL } from '../const';
 const urlUser = `${BACKEND_URL}/user/`;
 const urlAuth = `${BACKEND_URL}/auth/`;
 
+export const getAllUsers = () => {
+    return fetch(urlUser, {
+        method: 'GET'
+    })
+}
+
 export const getUser = (id) => {
     let accessToken = getCookies().accessToken;
     return fetch(`${urlUser}${id}`, {

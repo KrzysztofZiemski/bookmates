@@ -4,7 +4,7 @@ import { Form, Button } from 'semantic-ui-react';
 import { InputName } from './InputName.jsx';
 import { SelectField } from './../registrationPage/formRegistration/SelectField';
 import { deleteCookie } from "../../cookies/cookies";
-import { updateUser, removeUser } from "../../../repos/user";
+import { updateUser, removeUser, getAllUsers } from "../../../repos/user";
 import { getCoords } from '../../../utils/geoLocation';
 import { getCountries} from '../registrationPage/formRegistration/coutriesList';
 import InputCity from '../registrationPage/formRegistration/inputCity';
@@ -27,10 +27,31 @@ const UpdateUserDataForm = (props) => {
   const errors = [ nameError, countryError, cityError ];
 
   const validate = {
-    name: () => newName.length > 2 ? setNameError(false) : setNameError(true),
+    name: () => validateName(newName),
     country: () => newCountry.length > 3 ? setCountryError(false) : setCountryError(true),
     city: () => city.picked ? setCityError(false) : setCityError(true)
-  }
+  };
+
+  const validateName = (newName) => {
+    return getAllUsers().then(response => {
+      return response.json()
+        .then(allUsers => {
+          if (newName === name) {
+            setNameError(false);
+            return;
+          }
+          if (newName.length < 3) {
+            setNameError(true);
+            return;
+          };
+          if (allUsers.find(n => n.name === newName)) {
+            setNameError(true);
+            return;
+          };
+        setNameError(false);
+      })
+    })
+  };
 
   const IsDeleted = (result, props) => {
     const { setLoginUser } = props;
@@ -41,7 +62,7 @@ const UpdateUserDataForm = (props) => {
       setLoginUser(null);
       alert("Konto usunięte.");
     }
-  }
+  };
 
   const handleUserDataUpdate = async (e) => {
     e.preventDefault();
@@ -62,7 +83,7 @@ const UpdateUserDataForm = (props) => {
         setUpdateSuccess(false);
       }
     }); 
-  }
+  };
 
   const deleteAccount = () => {
     const confirmation = window.confirm("Czy jesteś pewien, że chcesz usunąć konto?");
@@ -76,11 +97,11 @@ const UpdateUserDataForm = (props) => {
         } 
       });
     }
-  }
+  };
 
   const closeError = () => {
     setUpdateSuccess(null);
-  }
+  };
 
   return (
     <>
@@ -92,7 +113,7 @@ const UpdateUserDataForm = (props) => {
           setValue={setName}
           validate={validate.name}
           error={nameError}
-          errorMessage={"Nazwa użytkownika powinna posiadać minimum 3 znaki."} 
+          errorMessage={"Nazwa użytkownika powinna posiadać minimum 3 znaki i być unikalna."} 
         />
         <SelectField
           label="Państwo"

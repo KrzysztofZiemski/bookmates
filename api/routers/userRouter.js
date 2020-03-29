@@ -1,6 +1,7 @@
 const express = require('express');
 const userRouter = express.Router();
 const {
+    getAllUsersController,
     addUserController,
     getUserController,
     getUserSafeDetails,
@@ -13,14 +14,17 @@ const {
     matchMatesController,
     addMateController,
     removeMateController
-
 } = require('../controllers/user');
 const { hashPassword } = require('../db/utils/passwordEncryption');
 const { validateToken } = require('../db/utils/token');
 
-//TODO
-const getAllUser = (req, res) => {
-
+const getAllUsers = (req, res) => {
+    return getAllUsersController()
+    .catch(err => {
+        console.log(err);
+        res.status(400).send(err);
+    })
+    .then(result => res.status(200).json(result));
 };
 
 const getUser = (req, res) => {
@@ -33,7 +37,7 @@ const getUserDetails = (req, res) => {
 
 const addUser = async (req, res) => {
     const user = req.body;
-    if (!user.name || !user.mail || !user.password || !user.coords) return res.status(400).json('not enought informations');
+    if (!user.name || !user.mail || !user.password || !user.coords) return res.status(400).json('not enough information');
     const { salt, password } = await hashPassword(user);
     user.salt = salt;
     user.password = password;
@@ -169,7 +173,7 @@ const removeMate = (req, res) => {
 };
 
 //localhost:3010/user
-userRouter.get('/', getAllUser);
+
 userRouter.get('/details', validateToken, getUserDetails);
 // userRouter.get('/match', validateToken, matchMates);
 userRouter.get('/match', validateToken, matchMates);
@@ -184,5 +188,7 @@ userRouter.put('/:id/password', changeUserPassword);
 userRouter.delete('/:id', removeUser);
 userRouter.get('/books/:userId', getAllUserBooks);
 userRouter.delete('/books/:userId/:bookId', deleteUserBookFromBookShelf);
+userRouter.get('/', getAllUsers);
+
 
 module.exports = userRouter;

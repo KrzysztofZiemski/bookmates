@@ -1,4 +1,5 @@
 const {
+    getAllUsersNames,
     insertUser,
     getUserByMail,
     getUser,
@@ -14,6 +15,10 @@ const {
 } = require('../db/models/userModel');
 const { checkPassword, hashPassword } = require('./../db/utils/passwordEncryption');
 const { addBookToDB } = require('./book');
+
+const getAllUsersController = () => {
+    return getAllUsersNames();
+}
 
 const addUserController = (user) => {
     return insertUser(user);
@@ -62,7 +67,6 @@ const getAllUserBooksController = (userId) => {
 };
 
 const deleteUserBookController = (booksToStay, userId) => {
-
     return removeFromBookShelf(booksToStay, userId);
 };
 
@@ -232,6 +236,7 @@ const removeMateController = async (id, idMate) => {
     return removeMateDB(id, matesToStay)
 }
 module.exports = {
+    getAllUsersController,
     removeMateController,
     matchMatesController,
     addUserController,
