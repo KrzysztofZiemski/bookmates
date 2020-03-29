@@ -94,7 +94,8 @@ const getAllUserBooks = (req, res) => {
             res.status(400).send(err);
         })
         .then(result => {
-            res.json(result.rows[0].bookdata || []);
+            if (result.rows.length > 0) return res.json(result.rows[0].bookdata || []);
+            res.json([]);
         });
 };
 

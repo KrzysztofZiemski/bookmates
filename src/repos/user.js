@@ -94,7 +94,8 @@ export const getAllBooks = (id) => {
             if (res.status !== 200) throw new Error(res.status);
             console.log(res);
             return res.json();
-        });
+        })
+        .catch(err => console.log(err));;
 };
 
 export const deleteUserBook = (userId, bookId) => {

@@ -15,20 +15,21 @@ export const UserBookList = ({ id }) => {
         getAllBooks(id)
             .then(res => setUserBooks(res))
             .catch(err => console.log(err));
-    }, [getAllBooks]);
+        return getAllBooks
+    }, [id]);
 
-    const handleBookDelete = (id, book) => {
-        deleteUserBook(id, book.bookId)
-            .then(data => {
-                setUserBooks(data);
-                getAllBooks(id)
-                    .then(res => setUserBooks(res))
-                    .catch(err => console.log(err));
+    // const handleBookDelete = (id, book) => {
+    //     deleteUserBook(id, book.bookId)
+    //         .then(data => {
+    //             setUserBooks(data);
+    //             getAllBooks(id)
+    //                 .then(res => setUserBooks(res))
+    //                 .catch(err => console.log(err));
 
-            })
-            .catch(err => console.log(err)
-            );
-    };
+    //         })
+    //         .catch(err => console.log(err)
+    //         );
+    // };
 
     return (
         <>
