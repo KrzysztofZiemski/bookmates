@@ -4,7 +4,7 @@ import { addUser } from '../../../repos/user';
 import FormRegistration from './formRegistration/formRegistration';
 import { Loader } from '../../Loader/Loader';
 import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
-
+import { SuccessMessage } from '../../successMessage/SuccessMessage';
 const RegistrationPage = () => {
   let [registrationSuccess, setRegistrationSuccess] = React.useState(null);
   let [waiting, setWaiting] = React.useState(false);
@@ -31,7 +31,7 @@ const RegistrationPage = () => {
 
   return (
     <div className="registrationPage">
-      {registrationSuccess ? (<div className="messageSucces"><p>Dziękujemy za rejestrację</p></div>) : null}
+      {registrationSuccess ? <SuccessMessage closeError={closeError} /> : null}
       {!registrationSuccess ? <FormRegistration sendRegistrationForm={sendRegistrationForm} registrationSuccess={registrationSuccess} /> : null}
       {registrationSuccess === false ? <ErrorMessage message={errorMessage} closeError={closeError} /> : null}
       {waiting ? <Loader /> : null}

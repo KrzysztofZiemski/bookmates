@@ -3,7 +3,7 @@ import { getPublicUser, addMate } from '../../../repos/user';
 import { Loader } from '../../Loader/Loader';
 import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
 import { ButtonBasic } from '../../Button/Button';
-import BooksSliders from './booksSliders';
+import { FilterBooks } from '../../FilterBooks/FilterBooks';
 import maleAvatar from '../../assets/male.png';
 import femaleAvatar from '../../assets/female.png';
 import nogenderAvatar from '../../assets/nogender.png';
@@ -94,7 +94,7 @@ const UserPage = (props) => {
             {loggedUser ? <ButtonBasic handleClick={handleAddMate} content='Dodaj do znajomych' /> : null}
           </div>
         </div>
-        <BooksSliders publicUser={publicUser} />
+        <FilterBooks books={publicUser.books} filterBy={'authors'} />
       </section>
       }
     </>
