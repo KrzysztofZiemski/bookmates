@@ -34,9 +34,20 @@ const UpdateUserDataForm = (props) => {
 
   const validateName = (newName) => {
     return getAllUsers().then(response => {
-      return response.json().then(allUsers => {
-        if (newName.length < 3) {setNameError(true); return};
-        if (allUsers.find(n => n.name === newName)) {setNameError(true); return};
+      return response.json()
+        .then(allUsers => {
+          if (newName === name) {
+            setNameError(false);
+            return;
+          }
+          if (newName.length < 3) {
+            setNameError(true);
+            return;
+          };
+          if (allUsers.find(n => n.name === newName)) {
+            setNameError(true);
+            return;
+          };
         setNameError(false);
       })
     })
