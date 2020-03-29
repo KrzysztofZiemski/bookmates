@@ -24,7 +24,7 @@ const getAllUsers = (req, res) => {
         console.log(err);
         res.status(400).send(err);
     })
-    .then(result => res.send(result));
+    .then(result => res.status(200).json(result));
 };
 
 const getUser = (req, res) => {
