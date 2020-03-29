@@ -36,6 +36,13 @@ const addMateDB = (id, mates) => {
     return connection.query(sql);
 }
 
+const getAllUsersNames = () => {
+    const sql = `
+    SELECT name FROM ${tableName};
+    `
+    return connection.query(sql).then((response) => response.rows);
+};
+
 const updateUserDetails = (userId, userDetails) => {
     const sql = `
         UPDATE ${tableName}
@@ -84,7 +91,7 @@ const addToBookShelf = (bookData, userId) => {
 const removeFromBookShelf = (bookData, userId) => {
     const sql = `
     UPDATE users
-   SET bookdata = '${JSON.stringify(bookData)}'::jsonb
+    SET bookdata = '${JSON.stringify(bookData)}'::jsonb
     WHERE id = ${userId}`;
     return connection.query(sql);
 };
@@ -154,6 +161,7 @@ const removeMateDB = (userId, matesToStay) => {
 }
 
 module.exports = {
+    getAllUsersNames,
     insertUser,
     getUserByMail,
     getUser,
