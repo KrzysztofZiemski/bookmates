@@ -9,7 +9,6 @@ import './Slider.scss';
 const Slider = ({ content, onClick, id }) => {
     const renderSlideElements = () => {
         return content.map(element => {
-            console.log(element.title)
             return (
                 < div className="slideElement" key={element.bookId}>
                     <div>

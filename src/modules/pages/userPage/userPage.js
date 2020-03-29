@@ -2,8 +2,10 @@ import React from "react";
 import { getPublicUser, addMate } from '../../../repos/user';
 import { Loader } from '../../Loader/Loader';
 import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
+import { SuccessMessage } from '../../successMessage/SuccessMessage';
 import { ButtonBasic } from '../../Button/Button';
 import { FilterBooks } from '../../FilterBooks/FilterBooks';
+import SearchBook from '../../FilterBooks/SearchBook/SearchBook';
 import OptionFilterBook from '../../FilterBooks/OptionFilterBook/OptionFilterBook';
 import maleAvatar from '../../assets/male.png';
 import femaleAvatar from '../../assets/female.png';
@@ -13,12 +15,12 @@ import './userPage.scss';
 const UserPage = (props) => {
   let [publicUser, setPublicUser] = React.useState(null);
   let [waiting, setWaiting] = React.useState(false);
-  let [error, setError] = React.useState(false);
+  let [message, setMessage] = React.useState(false);
   let [filter, setFilter] = React.useState('categories')
   let { loggedUser, match, refreshUser } = props;
 
-  const closeError = () => {
-    setError(false);
+  const closeMessage = () => {
+    setMessage(false);
   }
   const getUser = (id) => {
     setWaiting(<Loader />)
@@ -31,7 +33,7 @@ const UserPage = (props) => {
       .then(user => setPublicUser(user))
       .catch(err => {
         setWaiting(false)
-        setError(<ErrorMessage message="Nie udało się pobrać użytkownika. Sprawdź poprawność adresu URL" closeError={closeError} />)
+        setMessage(<ErrorMessage message="Nie udało się pobrać użytkownika. Sprawdź poprawność adresu URL" closeError={closeMessage} />)
       })
   };
 
@@ -41,9 +43,9 @@ const UserPage = (props) => {
     addMate({ id, email, name })
       .then(response => {
         setWaiting(false)
-        if (response.status === 400) setError(<ErrorMessage message="Użytkownik już był dodawany do grupy znajomych" closeError={closeError} />);
+        if (response.status === 400) setMessage(<ErrorMessage message="Użytkownik już był dodawany do grupy znajomych" closeError={closeMessage} />);
         if (response.status === 200) {
-          alert('Dodano do znajomych');
+          setMessage(<SuccessMessage message="Użytkownik już był dodawany do grupy znajomych" closeError={closeMessage} />)
           refreshUser();
         };
       })
@@ -70,7 +72,7 @@ const UserPage = (props) => {
   return (
     <>
       {waiting}
-      {error}
+      {message}
       {publicUser === null ? <section className="userPage"></section> : <section className="userPage">
         <div className="userData">
           <div className="avatar">
@@ -97,6 +99,7 @@ const UserPage = (props) => {
           </div>
         </div>
         <OptionFilterBook setFilter={setFilter} value={filter} />
+        {/* <SearchBook /> */}
         <FilterBooks books={publicUser.books} filterBy={filter} />
       </section>
       }

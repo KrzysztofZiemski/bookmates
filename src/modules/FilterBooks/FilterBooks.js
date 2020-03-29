@@ -1,6 +1,7 @@
 import React from 'react';
 import './FilterBooks.scss';
 import Slider from './Slider/Slider';
+import _ from 'lodash';
 
 export const FilterBooks = ({ books, filterBy, onClick, id }) => {
     const options = {};
@@ -17,58 +18,25 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
             options.hasOwnProperty(book[filterBy]) ? options[book[filterBy]].push(book) : options[book[filterBy]] = [book];
         }
     })
-
-    let output = [];
+    //zmiana obiektu na tablicę podwójnie zagnieżdżoną w celu możliwości sortowania po kluczu obiektu
+    let optionsArr = [];
     for (let option in options) {
-        console.log(option === 'undefined')
-        output.push(
-            <div className="single-slider" key={option}>
-                <h3>{option === 'not found' || option === 'undefined' ? 'Inne' : option}</h3>
-                <div className="slider-books"> <Slider content={options[option]} onClick={onClick} id={id}></Slider></div>
+        optionsArr.push([option, options[option]]);
+    }
+    optionsArr.sort((a, b) => {
+        if (a[0] > b[0]) return 1;
+        return -1;
+    });
+
+    const output = optionsArr.map(option => {
+        return (
+            <div className="single-slider" key={option[0]}>
+                <h3>{option[0] === 'not found' || option[0] === 'undefined' || option[0] === '0000' ? 'Brak' : option[0]}</h3>
+                <div className="slider-books"> <Slider content={option[1]} onClick={onClick} id={id}></Slider></div>
             </div>
         )
-    }
-    //todo
-    output = output.sort()
+    });
     return (
         <div className='slidersContainer'>{output}</div>
     )
 }
-
-
-
-// const BooksSliders = ({ publicUser }) => {
-
-//     const getByCategories = () => {
-//         const categories = {};
-//         if (!publicUser) return;
-//         if (!Array.isArray(publicUser.books)) return;
-//         publicUser.books.forEach(book => {
-//             if (book.hasOwnProperty('categories')) {
-//                 book.categories.forEach(category => {
-//                     categories.hasOwnProperty(category) ? categories[category].push(book) : categories[category] = [book];
-//                 })
-//             };
-//         });
-//         const output = [];
-//         for (let category in categories) {
-//             output.push(
-//                 <div className="single-slider" key={category}>
-//                     <h3>{category}</h3>
-//                     <div className="slider-books"> <Slider content={categories[category]}></Slider></div>
-//                 </div>
-//             )
-//         }
-//         return output;
-//     }
-//     const booksByCategories = getByCategories();
-
-//     return (
-//         <div className="userBooksContainer">
-//             <h2>Książki na półce</h2>
-//             <div className="sliders-container">
-//                 {booksByCategories}
-//             </div>
-//         </div>
-//     )
-// };

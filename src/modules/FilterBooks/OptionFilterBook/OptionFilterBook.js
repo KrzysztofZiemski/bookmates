@@ -33,6 +33,7 @@ const OptionFilterBook = ({ setFilter, value }) => {
 
     return (
         <div>
+            <h3>Sortuj książki po: </h3>
             <Form>
                 {showOptions()}
                 {/* <Form.Group inline>
