@@ -29,16 +29,16 @@ const LoggedHeader = (props) => {
           BookMates
         </Menu.Item>
         <Menu.Item as={Link} to={"/profile"}>
-          profile
+          Profile
         </Menu.Item>
         <Menu.Item as={Link} to={"/dashboard"}>
-          dashboard
+          Biblioteczka
         </Menu.Item>
         <Menu.Item as={Link} to={"/addbook"}>
-          dodaj książkę
+          Dodaj książkę
         </Menu.Item>
         <Menu.Item as={Link} to={"/mates"}>
-          znajomi
+          Znajomi
         </Menu.Item>
         <Menu.Item position='right'>
           <ButtonBasic content="Wyloguj" handleClick={logout} />

@@ -13,13 +13,13 @@ const Slider = ({ content, onClick, id }) => {
                 < div className="slideElement" key={element.bookId}>
                     <div>
                         <Link to={`/book/${element.bookId}`} >
-                            <img src={element.imageUrl && element.imageUrl !== 'http://vrephotels.com/images/NoImageFound.png' ? element.imageUrl : noBookImage} alt={`book ${unescape(element.title)} `} />
+                            <img src={element.imageUrl && element.imageUrl !== 'http://vrephotels.com/images/NoImageFound.png' ? element.imageUrl : noBookImage} alt={`book ${element.title ? unescape(element.title) : 'Brak'} `} />
                             <div className="slideElementData">
                                 <h4>{unescape(element.title)}</h4>
                                 <div>
-                                    <p>{element.authors}</p>
-                                    <p>{element.categories}</p>
-                                    <p>{element.publishedYear}</p>
+                                    <p>{element.authors === 'not found' ? null : element.authors}</p>
+                                    <p>{element.categories ? 'Brak określonej kategorii' : element.categories}</p>
+                                    <p>{element.publishedYear === '0000' ? null : element.publishedYear}</p>
                                 </div>
                             </div>
                         </Link >
