@@ -32,33 +32,11 @@ const OptionFilterBook = ({ setFilter, value }) => {
     }
 
     return (
-        <div>
-            <h3>Sortuj książki po: </h3>
-            <Form>
-                {showOptions()}
-                {/* <Form.Group inline>
-                    <label>Grupuj po</label>
-                    <Form.Radio
-                        label='Autorzy'
-                        value='sm'
-                        checked={value === 'sm'}
-                        onChange={this.handleChange}
-                    />
-                    <Form.Radio
-                        label='Kategorie'
-                        value='md'
-                        checked={value === 'md'}
-                    // onChange={this.handleChange}
-                    />
-                    <Form.Radio
-                        label='Rok wydania'
-                        value='lg'
-                        checked={value === 'lg'}
-                    // onChange={this.handleChange}
-                    />
-                </Form.Group> */}
-            </Form>
-        </div >
+
+        <Form>
+            {showOptions()}
+        </Form>
+
     )
 }
 export default OptionFilterBook;

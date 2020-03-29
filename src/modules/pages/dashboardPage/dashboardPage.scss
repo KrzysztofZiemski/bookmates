@@ -1,0 +1,19 @@
+@import '../../../style.scss';
+
+.dashboardPage {
+
+    &>* {
+        padding: 20px;
+    }
+
+    h1 {
+        border-bottom: 3px solid $colorOrange;
+        font-size: 22px;
+    }
+
+    .panelBooks {
+        .searchBar {
+            margin: 15px;
+        }
+    }
+}

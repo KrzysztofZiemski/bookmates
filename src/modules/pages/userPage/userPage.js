@@ -5,8 +5,9 @@ import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
 import { SuccessMessage } from '../../successMessage/SuccessMessage';
 import { ButtonBasic } from '../../Button/Button';
 import { FilterBooks } from '../../FilterBooks/FilterBooks';
-import SearchBook from '../../FilterBooks/SearchBook/SearchBook';
 import OptionFilterBook from '../../FilterBooks/OptionFilterBook/OptionFilterBook';
+import searchBooks from '../../searchBooks/searchBooks';
+import SearchInput from '../../SearchInput/SearchInput';
 import maleAvatar from '../../assets/male.png';
 import femaleAvatar from '../../assets/female.png';
 import nogenderAvatar from '../../assets/nogender.png';
@@ -16,7 +17,8 @@ const UserPage = (props) => {
   let [publicUser, setPublicUser] = React.useState(null);
   let [waiting, setWaiting] = React.useState(false);
   let [message, setMessage] = React.useState(false);
-  let [filter, setFilter] = React.useState('categories')
+  let [filter, setFilter] = React.useState('categories');
+  let [search, setSearch] = React.useState('');
   let { loggedUser, match, refreshUser } = props;
 
   const closeMessage = () => {
@@ -45,12 +47,14 @@ const UserPage = (props) => {
         setWaiting(false)
         if (response.status === 400) setMessage(<ErrorMessage message="Użytkownik już był dodawany do grupy znajomych" closeError={closeMessage} />);
         if (response.status === 200) {
-          setMessage(<SuccessMessage message="Użytkownik już był dodawany do grupy znajomych" closeError={closeMessage} />)
+          console.log('weszlo')
+          setMessage(<SuccessMessage message="Dodano użytkownika do znajomych" closeError={closeMessage} />)
           refreshUser();
         };
       })
       .catch(err => {
         setWaiting(false);
+        setMessage(<ErrorMessage message="Wystąpił błąd. Jeżeli sytuacja będzie się powtarzać skontaktuj się z administratorem" closeError={closeMessage} />)
       })
   };
   const avatar = () => {
@@ -73,7 +77,9 @@ const UserPage = (props) => {
     <>
       {waiting}
       {message}
+
       {publicUser === null ? <section className="userPage"></section> : <section className="userPage">
+        <h1>Użytkownik</h1>
         <div className="userData">
           <div className="avatar">
             <img src={avatar()} alt={`${publicUser.name} avatar`} />
@@ -98,9 +104,12 @@ const UserPage = (props) => {
             {loggedUser ? <ButtonBasic handleClick={handleAddMate} content='Dodaj do znajomych' /> : null}
           </div>
         </div>
-        <OptionFilterBook setFilter={setFilter} value={filter} />
-        {/* <SearchBook /> */}
-        <FilterBooks books={publicUser.books} filterBy={filter} />
+        <h2>Biblioteczka</h2>
+        <div className="panelBooks">
+          <OptionFilterBook setFilter={setFilter} value={filter} />
+          <SearchInput setValue={setSearch} />
+        </div>
+        <FilterBooks books={search.length > 2 ? searchBooks(search, publicUser.books) : publicUser.books} filterBy={filter} />
       </section>
       }
     </>
