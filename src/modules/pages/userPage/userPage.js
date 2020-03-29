@@ -4,6 +4,7 @@ import { Loader } from '../../Loader/Loader';
 import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
 import { ButtonBasic } from '../../Button/Button';
 import { FilterBooks } from '../../FilterBooks/FilterBooks';
+import OptionFilterBook from '../../FilterBooks/OptionFilterBook/OptionFilterBook';
 import maleAvatar from '../../assets/male.png';
 import femaleAvatar from '../../assets/female.png';
 import nogenderAvatar from '../../assets/nogender.png';
@@ -13,6 +14,7 @@ const UserPage = (props) => {
   let [publicUser, setPublicUser] = React.useState(null);
   let [waiting, setWaiting] = React.useState(false);
   let [error, setError] = React.useState(false);
+  let [filter, setFilter] = React.useState('categories')
   let { loggedUser, match, refreshUser } = props;
 
   const closeError = () => {
@@ -94,7 +96,8 @@ const UserPage = (props) => {
             {loggedUser ? <ButtonBasic handleClick={handleAddMate} content='Dodaj do znajomych' /> : null}
           </div>
         </div>
-        <FilterBooks books={publicUser.books} filterBy={'authors'} />
+        <OptionFilterBook setFilter={setFilter} value={filter} />
+        <FilterBooks books={publicUser.books} filterBy={filter} />
       </section>
       }
     </>

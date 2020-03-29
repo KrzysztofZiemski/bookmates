@@ -18,7 +18,7 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
         }
     })
 
-    const output = [];
+    let output = [];
     for (let option in options) {
         console.log(option === 'undefined')
         output.push(
@@ -28,7 +28,8 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
             </div>
         )
     }
-
+    //todo
+    output = output.sort()
     return (
         <div className='slidersContainer'>{output}</div>
     )
