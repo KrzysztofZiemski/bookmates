@@ -38,7 +38,8 @@ const addMateDB = (id, mates) => {
 
 const getAllUsersNames = () => {
     const sql = `
-    SELECT name FROM ${tableName};
+    SELECT id, name
+    FROM ${tableName};
     `
     return connection.query(sql).then((response) => response.rows);
 };

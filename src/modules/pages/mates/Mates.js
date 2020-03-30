@@ -1,5 +1,6 @@
 import React from 'react';
 import './Mates.scss';
+import { UsersSearchBar } from "./../usersSearchBar/usersSearchBar";
 import { getSuggestionMates, deleteMate } from '../../../repos/user';
 import { Link } from 'react-router-dom';
 import { List } from 'semantic-ui-react';
@@ -67,10 +68,11 @@ const Mates = ({ loggedUser, refreshUser }) => {
         <section className="matesPage">
             <main className="mateList">
                 <h1>Znajomi</h1>
+                <UsersSearchBar />
                 <List>{matesList}</List>
             </main>
             <aside className="suggestionMateList">
-                <h1>Propozycję</h1>
+                <h1>Propozycje</h1>
                 <List> {suggestionMateList}</List>
             </aside>
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./welcomePage.scss";
+import { usersSearchBar, UsersSearchBar } from "./../usersSearchBar/usersSearchBar";
 import { ButtonBasic } from "./../../Button/Button";
 import { Redirect } from "react-router-dom";
 
@@ -22,6 +23,7 @@ const WelcomePage = (props) => {
         <h1 className="logo">BookMates</h1>
         <p className="companyMessage">książki łączą ludzi</p>
         { registationButton() }
+        <UsersSearchBar />
       </div>
     </div>
   );
