@@ -19,9 +19,8 @@ const UsersSearchBar = () => {
             )
     };
 
-    loadUsers();
-
     useEffect(() => {
+        loadUsers();
         const results = allUsers.filter(user =>
           user.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
