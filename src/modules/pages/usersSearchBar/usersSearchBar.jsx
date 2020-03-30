@@ -23,7 +23,7 @@ const UsersSearchBar = () => {
 
     useEffect(() => {
         const results = allUsers.filter(user =>
-          user.name.toLowerCase().includes(searchTerm)
+          user.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setSearchResults(results);
     }, [searchTerm]);
