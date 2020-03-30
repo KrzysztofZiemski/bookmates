@@ -25,11 +25,24 @@ import PrivateRoute from './modules/pages/routing/PrivateRoute';
 import { getCookies } from './modules/cookies/cookies';
 import { getUserDetails } from './repos/user';
 
-//TODO SWITCH HIDE MENU
-function App() {
-    let [loggedUser, setLoginUser] = useState(null);
-    let [menuVisibility, setMenuVisibility] = useState(false);
+const structureLoggedUser = {
+    id: 0,
+    email: '',
+    name: '',
+    country: '',
+    city: '',
+    postal_code: '',
+    coordinates: { x: 0, y: 0 },
+    gender: '',
+    birth: 'RRR-MM-DD',
+    books: [],
+    mates: [],
 
+}
+function App() {
+    let [loggedUser, setLoginUser] = useState(structureLoggedUser);
+    let [menuVisibility, setMenuVisibility] = useState(false);
+    console.log(loggedUser)
     const toggleMenu = () => {
         console.log('dupa');
         if (!menuVisibility) return setMenuVisibility(true);
