@@ -4,11 +4,12 @@ const connection = require('../connection');
 const tableName = 'books';
 
 const insertBook = (book) => {
-    const { isbn, title, authors, publishedYear, imageUrl, description } = book;
+    const { isbn, title, authors, publishedYear, imageUrl, description, category } = book;
     console.log(book);
-    const sql = `INSERT INTO ${tableName} (id, isbn, title, authors, "publishedYear", imageurl, description) VALUES (
-           DEFAULT, ${isbn}, '${title}', ARRAY [${authors.map(s => `'${s.trim()}'`)}], ${publishedYear}, '${imageUrl ? imageUrl : null}', '${description ? description : null}'
+    const sql = `INSERT INTO ${tableName} (id, isbn, title, authors, "publishedYear", imageurl, description, category) VALUES (
+           DEFAULT, '${isbn}', '${title}', ARRAY [${authors.map(s => `'${s.trim()}'`)}], ${publishedYear}, '${imageUrl ? imageUrl : null}', '${description ? description : null}',  ARRAY [${category ? category.map(s => `'${s.trim()}'`) : []}]::varchar[]
         )
+        RETURNING *
     `;
 
     return connection.query(sql);
@@ -16,7 +17,7 @@ const insertBook = (book) => {
 
 const getBook = (id) => {
     const sql = `
-        SELECT * FROM ${tableName} WHERE isbn = ${id};
+        SELECT * FROM ${tableName} WHERE isbn = '${id}';
     `;
     return connection.query(sql).then(response => response.rows);
 };
@@ -26,6 +27,21 @@ const getAllBooks = () => {
         SELECT * FROM ${tableName};
     `;
     return connection.query(sql).then(response => response.rows);
+};
+
+const updateUserBookMetaData = (userId, bookId) => {
+
+    const sql = `
+        UPDATE ${tableName}
+        SET inuserbookshelf = (CASE
+        WHEN inuserbookshelf IS NULL THEN '[]'::jsonb
+        ELSE inuserbookshelf
+    END
+) ||  '${JSON.stringify(userId)}'::jsonb
+        WHERE id = ${bookId};
+    `;
+    return connection.query(sql).then(response => response.rows);
+
 };
 
 module.exports = {
