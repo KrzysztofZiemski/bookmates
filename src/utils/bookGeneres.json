@@ -1,0 +1,113 @@
+[
+  {
+    "key": 1,
+    "text": "Art",
+    "value": "Art"
+  },
+  {
+    "key": 2,
+    "text": "Fikcja",
+    "value": "Fiction"
+  },
+  {
+    "key": 3,
+    "text": "Literatura Faktu",
+    "value": "Nonfiction"
+  },
+  {
+    "key": 4,
+    "text": "Health & Fitness",
+    "value": "Health&Fitness"
+  },
+  {
+    "key": 5,
+    "text": "Biography & Autobiography",
+    "value": "Biography&Autobiography"
+  },
+  {
+    "key": 6,
+    "text": "Business & Economics",
+    "value": "Business&Economics"
+  },
+  {
+    "key": 7,
+    "text": "Comics & Graphic Novels",
+    "value": "Comics&GraphicNovels"
+  },
+  {
+    "key": 8,
+    "text": "Computers",
+    "value": "Computers"
+  },
+  {
+    "key": 9,
+    "text": "Drama",
+    "value": "Drama"
+  },
+  {
+    "key": 12,
+    "value": "horror",
+    "text": "Horror"
+  },
+  {
+    "key": 13,
+    "value": "thriller",
+    "text": "Triller"
+  },
+  {
+    "key": 14,
+    "value": "comedy",
+    "text": "Komedia"
+  },
+  {
+    "key": 15,
+    "value": "action ",
+    "text": "Akcja"
+  },
+  {
+    "key": 16,
+    "value": "fantasy",
+    "text": "Fantastyka"
+  },
+  {
+    "key": 17,
+    "value": "sfi",
+    "text": "Sfi"
+  },
+  {
+    "key": 18,
+    "value": "adventure",
+    "text": "Przygoda"
+  },
+  {
+    "key": 19,
+    "value": "crime",
+    "text": "Kryminał"
+  },
+  {
+    "key": 20,
+    "value": "drama",
+    "text": "Dramat"
+  },
+  {
+    "key": 21,
+    "value": "Biographical",
+    "text": "Biograficzna"
+  },
+  {
+    "key": 22,
+    "value": "romance",
+    "text": "Romans"
+  },
+  {
+    "key": 23,
+    "value": "history",
+    "text": "Historia"
+  },
+  {
+    "key": 24,
+    "value": "Juvenile Fiction",
+    "text": "Literatura młodzieżowa"
+  }
+]
+

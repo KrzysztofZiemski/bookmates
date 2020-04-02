@@ -3,6 +3,9 @@ import { Form, Input, Label } from 'semantic-ui-react';
 import ErrorMessage from './errorMessage';
 import { ButtonBasic } from '../../Button/Button';
 import './addBookPage.scss';
+import { Select } from 'semantic-ui-react';
+
+import categories from '../../../utils/bookGeneres';
 
 const AddBookForm = props => {
     const { addBookForm } = props;
@@ -21,7 +24,7 @@ const AddBookForm = props => {
     let [errorImageUrl, setErrorImageUrl] = React.useState(null);
     let [errorDescription, setErrorDescription] = React.useState(null);
     let [errorMissingFields, setErrorMissingFields] = React.useState(null);
-
+    let [category, setCategory] = React.useState([]);
 
     const validateISBN = () => {
         if (isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
@@ -118,6 +121,14 @@ const AddBookForm = props => {
                     message={'Rok publikacji powinien mieć 4 cyfry'}
                 />
             </Form.Field>
+            <Form.Field
+                className={errorDescription ? 'errorElementRegistration' : null}
+            >
+                <Label htmlFor="formCategory">Kategoria: </Label>
+                <Select placeholder='select category' options={categories}
+                        onChange={(e, data) => setCategory(data.value)} value={category}/>
+            </Form.Field>
+
             <Form.Field className={errorImageUrl ? 'errorElementRegistration' : null}>
                 <Label htmlFor="formImageURL">URL obrazka: </Label>
                 <Input

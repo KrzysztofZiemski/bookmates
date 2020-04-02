@@ -9,15 +9,17 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
         //todo 2 autorów
         if (!Array.isArray(books)) throw new Error('no Array type');
         if (Array.isArray(book[filterBy])) {
+            console.log(book[filterBy]);
+
             book[filterBy].forEach(property => {
                 options.hasOwnProperty(property) ? options[property].push(book) : options[property] = [book];
-            })
-        }
-        else {
+            });
+        } else {
 
             options.hasOwnProperty(book[filterBy]) ? options[book[filterBy]].push(book) : options[book[filterBy]] = [book];
         }
-    })
+    });
+    console.log(options);
     //zmiana obiektu na tablicę podwójnie zagnieżdżoną w celu możliwości sortowania po kluczu obiektu
     let optionsArr = [];
     for (let option in options) {
@@ -32,11 +34,11 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
         return (
             <div className="single-slider" key={option[0]}>
                 <h3>{option[0] === 'not found' || option[0] === 'undefined' || option[0] === '0000' ? 'Brak' : option[0]}</h3>
-                <div className="slider-books"> <Slider content={option[1]} onClick={onClick} id={id}></Slider></div>
+                <div className="slider-books"><Slider content={option[1]} onClick={onClick} id={id}></Slider></div>
             </div>
-        )
+        );
     });
     return (
         <div className='slidersContainer'>{output}</div>
-    )
-}
+    );
+};

@@ -13,7 +13,7 @@ export const BookList = ({ id, books, searchBook }) => {
 
     const handleSubmit = ({ title, imageLinks, authors, industryIdentifiers, publishedDate, categories }) => {
         const book = {
-            bookId: industryIdentifiers[0].identifier !== null ? industryIdentifiers[0].identifier : JSON.stringify(Math.floor(Math.random() * 10000)),
+            bookId: industryIdentifiers[0].identifier,
             title: escape(title),
             imageUrl: imageLinks.thumbnail,
             authors: authors.join(', '),
@@ -48,11 +48,12 @@ export const BookList = ({ id, books, searchBook }) => {
     return (
         <div className="list">
             {books.map((book, i) => {
-                    if (userBooks.map(obj => obj.bookId).indexOf(book.industryIdentifiers[0].identifier !== null ? book.industryIdentifiers[0].identifier : -1) === -1) {
+                    if (userBooks.map(obj => obj.bookId).indexOf(book.industryIdentifiers[0].identifier) === -1) {
                         return (<BookCard key={i} image={book.imageLinks.thumbnail} title={book.title}
                                           author={book.authors.join(', ')}
                                           published={book.publishedDate} handleSubmit={() => handleSubmit(book)}
                                           handleBookDelete={() => handleBookDelete(book)}
+                                          id={book.industryIdentifiers[0].identifier}
                         />);
                     } else {
                         return (<UserBookCard key={i} userBookId={i} image={book.imageLinks.thumbnail} title={book.title}

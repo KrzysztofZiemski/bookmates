@@ -22,16 +22,18 @@ export const AddBookSearch = ({ loggedUser, match, history }) => {
             .then(res => {
                 setBooks(res);
                 // Inserting results from Google Api to Postgres
-                res.map(b =>
+                res.map(b => {
+                    console.log(b.categories);
                     addBook({
                         title: escape(b.title),
                         imageUrl: b.imageLinks.thumbnail,
                         authors: b.authors.join(', '),
                         publishedYear: parseInt(b.publishedDate.split('-')[0]),
                         description: escape(b.description),
-                        // Check if industryIdentifier is composed of numbers if not give it a random id
-                        isbn: /^[0-9]*$/.test(b.industryIdentifiers[0].identifier) ? b.industryIdentifiers[0].identifier : Math.floor(Math.random() * 10000)
-                    }));
+                        isbn: b.industryIdentifiers[0].identifier,
+                        category: b.hasOwnProperty('categories') ? b.categories : []
+                    });
+                });
             });
     };
 

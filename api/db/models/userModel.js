@@ -23,8 +23,8 @@ const userModel = (row) => ({
 });
 
 const addMateDB = (id, mates) => {
-    console.log('mates', mates)
-    console.log('id', id)
+    console.log('mates', mates);
+    console.log('id', id);
     const sql = `
     UPDATE users
     SET mates = (CASE
@@ -34,13 +34,13 @@ const addMateDB = (id, mates) => {
 ) ||  '${JSON.stringify(mates)}'::jsonb
     WHERE id = ${id}`;
     return connection.query(sql);
-}
+};
 
 const getAllUsersNames = () => {
     const sql = `
     SELECT id, name
     FROM ${tableName};
-    `
+    `;
     return connection.query(sql).then((response) => response.rows);
 };
 
@@ -52,7 +52,7 @@ const updateUserDetails = (userId, userDetails) => {
             city = '${userDetails.city}',
             coordinates = POINT(${userDetails.coords.lat}, ${userDetails.coords.lng})
         WHERE id = ${userId};
-    `
+    `;
     return connection.query(sql);
 };
 
@@ -62,7 +62,7 @@ const updateUserPassword = (userId, salt, hash) => {
         SET password_salt = '${salt}',
             password_hash = '${hash}'
         WHERE id = ${userId};
-    `
+    `;
     return connection.query(sql);
 };
 
@@ -78,6 +78,7 @@ const insertUser = (user) => {
 };
 
 const addToBookShelf = (bookData, userId) => {
+    console.log(bookData);
     const sql = `
     UPDATE users
     SET bookdata = (CASE
@@ -124,7 +125,7 @@ const removeUser = (id) => {
     const sql = `
         DELETE FROM ${tableName}
         WHERE id = ${id};
-        `
+        `;
     return connection.query(sql);
 };
 
@@ -159,7 +160,7 @@ const removeMateDB = (userId, matesToStay) => {
     SET mates = '${JSON.stringify(matesToStay)}'::jsonb
     WHERE id = ${userId}`;
     return connection.query(sql);
-}
+};
 
 module.exports = {
     getAllUsersNames,

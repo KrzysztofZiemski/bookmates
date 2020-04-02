@@ -29,23 +29,43 @@ const getAllBooks = () => {
     return connection.query(sql).then(response => response.rows);
 };
 
-const updateUserBookMetaData = (userId, bookId) => {
+const updateUserBookMetaDataDB = (bookId, metaData) => {
+    console.log(bookId, metaData);
 
     const sql = `
         UPDATE ${tableName}
-        SET inuserbookshelf = (CASE
-        WHEN inuserbookshelf IS NULL THEN '[]'::jsonb
-        ELSE inuserbookshelf
+        SET userbookmetadata = (CASE
+        WHEN userbookmetadata IS NULL THEN '[]'::jsonb
+        ELSE userbookmetadata
     END
-) ||  '${JSON.stringify(userId)}'::jsonb
+) ||  '${JSON.stringify(metaData)}'::jsonb
         WHERE id = ${bookId};
     `;
     return connection.query(sql).then(response => response.rows);
+};
 
+
+const removeFromUserMetadata = (metaData, bookId) => {
+    const sql = `
+    UPDATE ${tableName}
+    SET userbookmetadata = '${JSON.stringify(metaData)}'::jsonb
+    WHERE id = ${bookId}`;
+    return connection.query(sql);
+};
+
+const getAllBookUserMetadata = (bookId) => {
+    const sql = `SELECT userbookmetadata
+  FROM ${tableName} WHERE id=${bookId}
+    `;
+    return connection.query(sql)
+        .then(response => response.rows);
 };
 
 module.exports = {
     insertBook,
     getBook,
-    getAllBooks
+    getAllBooks,
+    updateUserBookMetaDataDB,
+    getAllBookUserMetadata,
+    removeFromUserMetadata
 };

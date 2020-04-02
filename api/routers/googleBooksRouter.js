@@ -1,6 +1,7 @@
 const express = require('express');
 const googleBooksRouter = express.Router();
 const axios = require('axios');
+const hash = require('object-hash');
 
 const cleanData = (data) => {
     return data.items.map((book) => {
@@ -14,8 +15,12 @@ const cleanData = (data) => {
             book.volumeInfo['authors'] = ['not found'];
         }
         if (!book.volumeInfo.hasOwnProperty('industryIdentifiers')) {
-            book.volumeInfo['industryIdentifiers'] = [{ identifier: null }];
+            book.volumeInfo['industryIdentifiers'] = [{ identifier: hash(book.volumeInfo.infoLink) }];
         }
+        if (book.volumeInfo.industryIdentifiers[0].type === 'OTHER') {
+            book.volumeInfo['industryIdentifiers'] = [{ identifier: hash(book.volumeInfo.infoLink) }];
+        }
+
         return book.volumeInfo;
     });
 };
