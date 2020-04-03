@@ -4,8 +4,11 @@ import ErrorMessage from './errorMessage';
 import { ButtonBasic } from '../../Button/Button';
 import './addBookPage.scss';
 import { Select } from 'semantic-ui-react';
+import { getGoogleBooksQuery } from './googleBookSearchAutocomplete';
+import hash from 'object-hash';
 
 import categories from '../../../utils/bookGeneres';
+import { Link } from 'react-router-dom';
 
 const AddBookForm = props => {
     const { addBookForm } = props;
@@ -13,7 +16,7 @@ const AddBookForm = props => {
     let [isbn, setISBN] = React.useState(0);
     let [title, setTitle] = React.useState('');
     let [authors, setAuthors] = React.useState('');
-    let [publishedYear, setPublishedYear] = React.useState(0);
+    let [publishedYear, setPublishedYear] = React.useState();
     let [imageUrl, setImageUrl] = React.useState('');
     let [description, setDescription] = React.useState('');
 
@@ -24,7 +27,26 @@ const AddBookForm = props => {
     let [errorImageUrl, setErrorImageUrl] = React.useState(null);
     let [errorDescription, setErrorDescription] = React.useState(null);
     let [errorMissingFields, setErrorMissingFields] = React.useState(null);
-    let [category, setCategory] = React.useState([]);
+    let [category, setCategory] = React.useState('');
+    let [searchTerm, setSearchTerm] = React.useState({
+        isbn: '',
+        title: '',
+        authors: '',
+        publishedYear: 0
+    });
+
+    const [searchResults, setSearchResult] = React.useState([]);
+    const [showDropdown, setShowDropdoown] = React.useState(true);
+
+    const handeChange = (name) => {
+        getGoogleBooksQuery(`{name}`, name)
+            .then(res => {
+                if (res.hasOwnProperty('items')) {
+                    return setSearchResult(res.items);
+                }
+                return setSearchResult([]);
+            });
+    };
 
     const validateISBN = () => {
         if (isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
@@ -68,13 +90,37 @@ const AddBookForm = props => {
     return (
         <form className="addBookForm" onSubmit={handleAddBook}>
             <Form.Field className={errorISBN ? 'errorElementRegistration' : null}>
-                <Label htmlFor="formISBN">ISBN: </Label>
-                <Input
-                    type="number"
-                    id="formISBN"
-                    onBlur={validateISBN}
-                    onChange={(e, data) => setISBN(data.value)}
-                />
+                <Label className="itemLabel" htmlFor="formISBN">ISBN: </Label>
+                <div className="searchBar">
+                    <Input
+                        type="number"
+                        id="formISBN"
+                        onBlur={validateISBN}
+                        onChange={(e, data) => {
+                            setISBN(data.value);
+                            setShowDropdoown(true);
+                            data.value.length > 8 && getGoogleBooksQuery('isbn', data.value)
+                                .then(res => {
+                                    if (res.hasOwnProperty('items')) {
+                                        console.log(res.items);
+                                        setSearchResult(res.items);
+                                    } else setSearchResult([]);
+                                });
+                        }}
+                    />
+                    <div>
+                        {showDropdown && isbn.length > 9 ? searchResults.map((book, i) => {
+                            console.log(searchResults);
+                            return (<div className="dropdownItem" key={i}
+                                         onClick={() => {
+                                             setTitle(book.volumeInfo.title);
+                                             setAuthors(book.volumeInfo.authors.join(', '));
+                                             setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                             setShowDropdoown(false);
+                                         }}>{book.volumeInfo.title}</div>);
+                        }) : ''}
+                    </div>
+                </div>
                 <ErrorMessage
                     error={errorISBN}
                     message={'ISBN powinien mieć 10 lub 13 znaków'}
@@ -87,6 +133,7 @@ const AddBookForm = props => {
                     id="formTitle"
                     onChange={(e, data) => setTitle(data.value)}
                     onBlur={validateTitle}
+                    value={title}
                 />
                 <ErrorMessage
                     error={errorTitle}
@@ -100,6 +147,7 @@ const AddBookForm = props => {
                     id="formAuthors"
                     onChange={(e, data) => setAuthors(data.value)}
                     onBlur={validateAuthors}
+                    value={authors}
                 />
                 <ErrorMessage
                     error={errorAuthors}
@@ -115,6 +163,7 @@ const AddBookForm = props => {
                     id="formPublishedYear"
                     onBlur={validatePublishedYear}
                     onChange={(e, data) => setPublishedYear(data.value)}
+                    value={publishedYear}
                 />
                 <ErrorMessage
                     error={errorPublishedYear}

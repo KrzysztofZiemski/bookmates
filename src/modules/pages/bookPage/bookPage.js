@@ -10,26 +10,26 @@ const BookPage = ({ match, loggedUser }) => {
 
 
     useEffect(() => {
-        getBookUserMetadata(1045)
+
+        getBook(match.params.id)
             .then(res => {
-                console.log(loggedUser.id);
-                console.log(res);
-                const indexOfCurrUser = res.map(user => parseInt(user.userId)).indexOf(loggedUser.id);
-                console.log(indexOfCurrUser);
-                if (indexOfCurrUser === -1) {
-                    return setOtherUserBooks(res);
-                }
-                return setOtherUserBooks(res.splice(indexOfCurrUser, 1));
-                console.log(otherUserBooks);
+                setBook(res[0]);
+                getBookUserMetadata(res[0].id)
+                    .then(res => {
+                        const indexOfCurrUser = res.map(user => parseInt(user.userId)).indexOf(loggedUser.id);
+                        console.log(indexOfCurrUser);
+                        if (indexOfCurrUser === -1) {
+                            setOtherUserBooks(res);
+                        } else setOtherUserBooks(res.splice(indexOfCurrUser, 1));
+                        console.log(otherUserBooks);
+                    })
+                    .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
-        getBook(match.params.id)
-            .then(res => setBook(res[0]))
-            .catch(err => console.log(err));
-        console.log(book);
         getAllBooks(loggedUser.id)
             .then(res => setUserBooks(res))
             .catch(err => console.log(err));
+
     }, [getBook, getAllBooks, getBookUserMetadata]);
     console.log(book);
 
@@ -88,7 +88,7 @@ const BookPage = ({ match, loggedUser }) => {
             </div>
             <aside className="matesThatHaveBook">
                 <h1>Użytkownicy, którzy mają tę książkę</h1>
-                <List> {otherUserBooks.map(user => <li>{user.userName}</li>)}</List>
+                <List> {otherUserBooks.map((user, i) => <li key={i}>{user.userName}</li>)}</List>
             </aside>
 
 
