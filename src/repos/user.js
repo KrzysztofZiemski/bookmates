@@ -152,6 +152,7 @@ export const getSuggestionMates = () => {
             'Authorization': `Bearer ${accessToken}`
         }
     }).then(response => {
+        console.log('match', response)
         if (response.status === 200) return response.json();
         throw new Error(response.status)
     })

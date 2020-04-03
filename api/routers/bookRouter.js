@@ -5,7 +5,6 @@ const { addBookToDB, getAllBooksFromDB, getBookFromDB, updateBookMetaDataControl
 const getAllBooks = (req, res) => {
     getAllBooksFromDB()
         .catch(err => {
-            console.log(err);
             res.status(400).send(err);
         })
         .then(result => res.send(result));
@@ -15,7 +14,6 @@ const addBook = (req, res) => {
     const book = req.body;
     addBookToDB(book)
         .catch(err => {
-            console.log(err);
             res.status(400).send(err);
         })
         .then(result => res.send(result));
@@ -25,7 +23,6 @@ const getSingleBook = (req, res) => {
     const book = req.params.id;
     getBookFromDB(book)
         .catch(err => {
-            console.log(err);
             res.status(400).send(err);
         })
         .then(result => res.send(result));
@@ -60,7 +57,6 @@ const deleteUserMetadata = async (req, res) => {
         let currentUserMetadata = await getAllBookUserMetadataController(bookId);
         let metadataArr = currentUserMetadata[0].userbookmetadata || [];
         let metadataToStay = metadataArr.filter(b => b.userId !== userId);
-        console.log(metadataToStay.length);
         await removeUserMetadataController(metadataToStay, bookId);
         let newMetadataArray = await getAllBookUserMetadataController(bookId) || [];
         return res.status(200).json(newMetadataArray);
@@ -72,7 +68,6 @@ const deleteUserMetadata = async (req, res) => {
 const getAllBookUserMetadata = (req, res) => {
     getAllBookUserMetadataController(req.params.bookId)
         .catch(err => {
-            console.log(err);
             res.status(400).send(err);
         })
         .then(result => {
