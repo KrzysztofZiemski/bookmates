@@ -44,7 +44,6 @@ const getUserSafeDetails = (req) => {
 
 const insertBookToBookshelf = (book, userId) => {
     //todo
-    console.log('book', book);
     const { bookId, title, imageUrl, authors, publishedYear } = book;
     const arrAuthors = authors.split(',');
     let intYear = publishedYear.split('-')[0];
@@ -80,6 +79,7 @@ const deleteUserBookController = (booksToStay, userId) => {
 //do 5 książek z tej samej kategorii +5pkt,pow 10 +10pkt
 const matchMatesController = async (id) => {
     const user = await getUser(id).then(user => user[0]);
+
     const mates50 = await getByCoordsBetween(user.coordinates.x, user.coordinates.y, 0, 50)
         .then(users => users.map(user => {
             user.points = 10;
@@ -105,7 +105,6 @@ const matchMatesController = async (id) => {
         });
         return !repeated
     })
-    console.log(mates)
     mates = mates.map(mate => _addPoints(mate, user))
         .sort((a, b) => a.points >= b.points)
         .slice(0, 20);
@@ -194,12 +193,13 @@ const _addPointsByCategory = (userBooks, mateBooks) => {
     const userFavoriteCategory = _getFavoriteCategory(userBooks);
     let countBookByCategory = 0;
     mateBooks.forEach(book => {
-        if (book.hasOwnProperty('categories')) {
+        if (book.hasOwnProperty('categories') && book['categories']) {
             book.categories.forEach(category => {
                 if (category === userFavoriteCategory) countBookByCategory++
             })
         }
     })
+
     if (countBookByCategory >= 10) return 10;
     if (countBookByCategory >= 5) return 5;
     return 0;
@@ -208,8 +208,11 @@ const _addPointsByCategory = (userBooks, mateBooks) => {
 const _addPoints = (mate, user) => {
     let birthPoints = _addPointsByAge(user.birth, mate.birth);
     let bookPoints = _addPointsByBook(user.books, mate.books);
+
     let categoryPoints = _addPointsByCategory(user.books, mate.books);
+    console.log(categoryPoints)
     mate.points += birthPoints + bookPoints + categoryPoints;
+
     return mate;
 
 };

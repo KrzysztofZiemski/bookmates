@@ -27,7 +27,6 @@ const cleanData = (data) => {
 
 const getGoogleBooks = (req, res) => {
     const book = req.params.googleBook;
-    console.log(book);
     const link = encodeURI(`https://www.googleapis.com/books/v1/volumes?q=${book}&maxResults=20`);
     axios.get(link)
         .then(response => {
@@ -35,7 +34,6 @@ const getGoogleBooks = (req, res) => {
             res.json(cleanData(response.data));
         })
         .catch(e => {
-            console.log('error', e);
             res.status(500).json(e);
         });
 };

@@ -20,11 +20,10 @@ const { validateToken } = require('../db/utils/token');
 
 const getAllUsers = (req, res) => {
     return getAllUsersController()
-    .catch(err => {
-        console.log(err);
-        res.status(400).send(err);
-    })
-    .then(result => res.status(200).json(result));
+        .catch(err => {
+            res.status(400).send(err);
+        })
+        .then(result => res.status(200).json(result));
 };
 
 const getUser = (req, res) => {
@@ -94,7 +93,6 @@ const addUserBookToBookshelf = async (req, res) => {
 const getAllUserBooks = (req, res) => {
     getAllUserBooksController(req.params.userId)
         .catch(err => {
-            console.log(err);
             res.status(400).send(err);
         })
         .then(result => {
@@ -110,7 +108,6 @@ const deleteUserBookFromBookShelf = async (req, res) => {
         let currentUserBooks = await getAllUserBooksController(userId);
         let bookArr = currentUserBooks.rows[0].bookdata || [];
         let booksToStay = bookArr.filter(b => b.bookId !== bookId);
-        console.log(booksToStay);
         await deleteUserBookController(booksToStay, userId);
         let newBookArray = await currentUserBooks.rows[0].bookdata || [];
         return res.status(200).json(newBookArray);

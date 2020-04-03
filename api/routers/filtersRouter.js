@@ -12,7 +12,6 @@ const autocompleteGoogle = (req, res) => {
             res.json(response.data.predictions)
         })
         .catch(e => {
-            console.log('error', e)
             res.status(500).json(e)
         })
 }
