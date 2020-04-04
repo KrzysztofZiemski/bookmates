@@ -13,7 +13,11 @@ const AddBookPage = (props) => {
     const addBookForm = (book) => {
         addBook(book)
             .then(response => {
-                if (response.status !== 200) return response.json();
+                if (response.status !== 200) {
+                    setAddBookSuccess(true);
+                    return response.json();
+                }
+
                 return setAddBookSuccess(true);
             })
             .then(data => {
