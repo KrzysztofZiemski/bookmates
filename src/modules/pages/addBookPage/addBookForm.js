@@ -27,7 +27,7 @@ const AddBookForm = props => {
     let [errorImageUrl, setErrorImageUrl] = React.useState(null);
     let [errorDescription, setErrorDescription] = React.useState(null);
     let [errorMissingFields, setErrorMissingFields] = React.useState(null);
-    let [category, setCategory] = React.useState('');
+    let [category, setCategory] = React.useState([]);
     let [searchTerm, setSearchTerm] = React.useState({
         isbn: '',
         title: '',
@@ -115,16 +115,18 @@ const AddBookForm = props => {
                         }}
                     />
                     <div>
-                        {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
-                            return (<div className="dropdownItem" key={i}
-                                         onClick={() => {
-                                             setTitle(book.volumeInfo.title);
-                                             setAuthors(book.volumeInfo.authors.join(', '));
-                                             setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
-                                             setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                             setShowDropdoown(false);
-                                         }}>{book.volumeInfo.title}</div>);
-                        }) : ''}
+                        <div className="dropdownListContainer">
+                            {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
+                                return (<div className="dropdownItem" key={i}
+                                             onClick={() => {
+                                                 setTitle(book.volumeInfo.title);
+                                                 setAuthors(book.volumeInfo.authors.join(', '));
+                                                 setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                                 setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                                 setShowDropdoown(false);
+                                             }}>{book.volumeInfo.title}</div>);
+                            }) : ''}
+                        </div>
                     </div>
                 </div>
                 <ErrorMessage
@@ -161,6 +163,7 @@ const AddBookForm = props => {
                                                  setAuthors(book.volumeInfo.authors.join(', '));
                                                  setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
                                                  setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                                 setTitle(book.volumeInfo.title);
                                                  setShowDropdoown(false);
                                              }}>{book.volumeInfo.title}</div>);
                             }) : ''}
@@ -208,7 +211,7 @@ const AddBookForm = props => {
             >
                 <Label htmlFor="formCategory">Kategoria: </Label>
                 <Select placeholder='select category' options={categories}
-                        onChange={(e, data) => setCategory(data.value)} value={category}/>
+                        onChange={(e, data) => setCategory([data.value])} value={category[0]}/>
             </Form.Field>
 
             <Form.Field className={errorImageUrl ? 'errorElementRegistration' : null}>

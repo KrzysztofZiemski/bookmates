@@ -17,7 +17,7 @@ const AddBookPage = (props) => {
                 return setAddBookSuccess(true);
             })
             .then(data => {
-                if (data.code === '23505') {
+                if (data !== undefined && data.hasOwnProperty('code') && data.code === '23505') {
                     setErrorMessage('Ta książka jest już w twojej biblioteczce!');
                     return setAddBookSuccess(true);
                 }
