@@ -151,7 +151,12 @@ const AddBookForm = props => {
                                     } else setSearchResult([]);
                                 });
                         }}
-                        onBlur={validateTitle}
+                        onBlur={() => {
+                            validateTitle();
+                            setTimeout(() => {
+                                setShowDropdoown(false);
+                            }, 300);
+                        }}
                         value={title}
                     />
                     <div>
