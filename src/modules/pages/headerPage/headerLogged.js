@@ -43,10 +43,9 @@ const LoggedHeader = (props) => {
                 <Menu.Item position='right'>
                     <ButtonBasic content="Wyloguj" handleClick={logout}/>
                 </Menu.Item>
-
             </Container>
-            < /Menu>
-                );
-                };
+        </Menu>
+    );
+};
 
-                export default LoggedHeader;
+export default LoggedHeader;
