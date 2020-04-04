@@ -160,8 +160,8 @@ const AddBookForm = props => {
                                 return (<div className="dropdownItem" key={i}
                                              onClick={() => {
                                                  setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
-                                                 setAuthors(book.volumeInfo.authors.join(', '));
-                                                 setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                                 setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
+                                                 setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
                                                  setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
                                                  setTitle(book.volumeInfo.title);
                                                  setShowDropdoown(false);

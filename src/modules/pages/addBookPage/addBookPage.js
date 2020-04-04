@@ -21,6 +21,9 @@ const AddBookPage = (props) => {
                     setErrorMessage('Ta książka jest już w twojej biblioteczce!');
                     return setAddBookSuccess(true);
                 }
+                if (data === undefined) {
+                    return setAddBookSuccess(true);
+                }
                 return setAddBookSuccess(false);
             });
         addBookToShelf({ bookId: book.isbn, ...book }, loggedUser.id)
