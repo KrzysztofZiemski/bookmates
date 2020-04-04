@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 const AddBookForm = props => {
     const { addBookForm } = props;
 
-    let [isbn, setISBN] = React.useState(0);
+    let [isbn, setISBN] = React.useState(null);
     let [title, setTitle] = React.useState('');
     let [authors, setAuthors] = React.useState('');
     let [publishedYear, setPublishedYear] = React.useState();
@@ -49,7 +49,7 @@ const AddBookForm = props => {
     };
 
     const validateISBN = () => {
-        if (isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
+        if (isbn !== null && isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
         setErrorISBN(false);
     };
     const validateTitle = () => {
@@ -78,8 +78,8 @@ const AddBookForm = props => {
 
     const handleAddBook = async e => {
         e.preventDefault();
-        const book = { isbn, title, authors, publishedYear, imageUrl, description };
-        if (isbn === 0 || (isbn.length !== 10 && isbn.length !== 13) || title === '' || authors === '' || publishedYear === 0) {
+        const book = { isbn, title, authors, publishedYear, category, imageUrl, description };
+        if (isbn === null || (isbn.length !== 10 && isbn.length !== 13) || title === '' || authors === '' || publishedYear === 0) {
             return setErrorMissingFields(false);
         }
 
@@ -95,7 +95,13 @@ const AddBookForm = props => {
                     <Input
                         type="number"
                         id="formISBN"
-                        onBlur={validateISBN}
+                        value={isbn}
+                        onBlur={() => {
+                            validateISBN();
+                            setTimeout(() => {
+                                setShowDropdoown(false);
+                            }, 300);
+                        }}
                         onChange={(e, data) => {
                             setISBN(data.value);
                             setShowDropdoown(true);
@@ -109,13 +115,13 @@ const AddBookForm = props => {
                         }}
                     />
                     <div>
-                        {showDropdown && isbn.length > 9 ? searchResults.map((book, i) => {
-                            console.log(searchResults);
+                        {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
                             return (<div className="dropdownItem" key={i}
                                          onClick={() => {
                                              setTitle(book.volumeInfo.title);
                                              setAuthors(book.volumeInfo.authors.join(', '));
                                              setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                             setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
                                              setShowDropdoown(false);
                                          }}>{book.volumeInfo.title}</div>);
                         }) : ''}
@@ -128,13 +134,40 @@ const AddBookForm = props => {
             </Form.Field>
             <Form.Field className={errorTitle ? 'errorElementRegistration' : null}>
                 <Label htmlFor="formTitle">Tytuł: </Label>
-                <Input
-                    type="text"
-                    id="formTitle"
-                    onChange={(e, data) => setTitle(data.value)}
-                    onBlur={validateTitle}
-                    value={title}
-                />
+                <div className="searchBar">
+                    <Input
+                        type="text"
+                        id="formTitle"
+                        onChange={(e, data) => {
+                            setTitle(data.value);
+                            setShowDropdoown(true);
+                            data.value.length > 1 && getGoogleBooksQuery('title', data.value)
+                                .then(res => {
+                                    if (res.hasOwnProperty('items')) {
+                                        console.log(res.items);
+                                        setSearchResult(res.items);
+                                    } else setSearchResult([]);
+                                });
+                        }}
+                        onBlur={validateTitle}
+                        value={title}
+                    />
+                    <div>
+                        <div className="dropdownListContainer">
+                            {showDropdown && title.length > 1 ? searchResults.map((book, i) => {
+                                return (<div className="dropdownItem" key={i}
+                                             onClick={() => {
+                                                 setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
+                                                 setAuthors(book.volumeInfo.authors.join(', '));
+                                                 setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                                 setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                                 setShowDropdoown(false);
+                                             }}>{book.volumeInfo.title}</div>);
+                            }) : ''}
+                        </div>
+                    </div>
+                </div>
+
                 <ErrorMessage
                     error={errorTitle}
                     message={'Podaj poprawny tytuł książki'}
@@ -183,6 +216,7 @@ const AddBookForm = props => {
                 <Input
                     type="url"
                     id="formImageURL"
+                    value={imageUrl}
                     onChange={(e, data) => setImageUrl(data.value)}
                     onBlur={validateImageURL}
                 />

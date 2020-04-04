@@ -8,18 +8,25 @@ import { AddBookSearch } from './addBookSearch/AddBookSearch';
 
 const AddBookPage = (props) => {
     let [addBookSuccess, setAddBookSuccess] = React.useState(null);
+    const [errorMessage, setErrorMessage] = React.useState('');
     const { loggedUser } = props;
     const addBookForm = (book) => {
-        addBook(book).then(response => {
-            if (response.status !== 200) {
+        addBook(book)
+            .then(response => {
+                if (response.status !== 200) return response.json();
+                return setAddBookSuccess(true);
+            })
+            .then(data => {
+                if (data.code === '23505') {
+                    setErrorMessage('Ta książka jest już w twojej biblioteczce!');
+                    return setAddBookSuccess(true);
+                }
                 return setAddBookSuccess(false);
-            }
-            setAddBookSuccess(true);
-            addBookToShelf({ bookId: book.isbn, ...book }, loggedUser.id)
-                .then(data => console.log(data))
-                .catch(err => console.log(err));
-
-        });
+            });
+        addBookToShelf({ bookId: book.isbn, ...book }, loggedUser.id)
+            .then(data => {
+                console.log(data);
+            });
 
     };
 

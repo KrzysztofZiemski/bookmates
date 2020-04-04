@@ -81,12 +81,12 @@ const addUserBookToBookshelf = async (req, res) => {
         let currentUserBooks = await getAllUserBooksController(userId);
         let bookArr = currentUserBooks.rows[0].bookdata || [];
         if (bookArr.map(b => b.bookId).indexOf(book.bookId) === -1) {
-            let insertResult = await insertBookToBookshelf(book, userId);
+            await insertBookToBookshelf(book, userId);
             return res.status(200).json(bookArr);
         }
         throw new Error('book already exist in your library');
     } catch (err) {
-        return res.status(400).json(err);
+        return res.status(400).json({ msg: err.toString() });
     }
 };
 
@@ -153,7 +153,7 @@ const removeMate = (req, res) => {
     const idMate = req.params.idMate;
     removeMateController(id, Number(idMate))
         .then(response => res.status(200).json(response))
-        .catch(err => res.status(500).json(err))
+        .catch(err => res.status(500).json(err));
     // const id = req.token.sub;
     // const mate = req.body;
     // console.log('id')
