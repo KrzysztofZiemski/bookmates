@@ -1,7 +1,6 @@
 const searchBooks = (value, arr) => {
     if (!Array.isArray(arr)) return false;
     return arr.filter(item => {
-        console.log(item)
         const searchTxt = value.toUpperCase();
 
         if (item.title.toUpperCase().includes(searchTxt)) {

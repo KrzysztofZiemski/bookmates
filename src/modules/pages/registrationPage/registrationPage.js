@@ -15,7 +15,6 @@ const RegistrationPage = () => {
     setWaiting(true);
     addUser(user).then(response => {
       setWaiting(false);
-      console.log(response)
       if (response.status === 200) return setRegistrationSuccess(true);
       setRegistrationSuccess(false);
     })

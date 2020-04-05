@@ -17,11 +17,9 @@ const BookPage = ({ match, loggedUser }) => {
                 getBookUserMetadata(res[0].id)
                     .then(res => {
                         const indexOfCurrUser = res.map(user => parseInt(user.userId)).indexOf(loggedUser.id);
-                        console.log(indexOfCurrUser);
                         if (indexOfCurrUser === -1) {
                             setOtherUserBooks(res);
                         } else setOtherUserBooks(res.splice(indexOfCurrUser, 1));
-                        console.log(otherUserBooks);
                     })
                     .catch(err => console.log(err));
             })
@@ -31,7 +29,6 @@ const BookPage = ({ match, loggedUser }) => {
             .catch(err => console.log(err));
 
     }, [getBook, getAllBooks, getBookUserMetadata]);
-    console.log(book);
 
     const handleAdd = () => {
         const userBook = {
@@ -42,10 +39,8 @@ const BookPage = ({ match, loggedUser }) => {
             publishedYear: book.publishedYear.toString(),
             categories: book.category
         };
-        console.log(userBook);
         addBookToShelf(userBook, loggedUser.id)
             .then(data => {
-                console.log(data);
                 getAllBooks(loggedUser.id)
                     .then(res => setUserBooks(res))
                     .catch(err => console.log(err));
@@ -76,7 +71,7 @@ const BookPage = ({ match, loggedUser }) => {
     };
     return book !== undefined ?
         (<div className="card-container">
-            <img src={book.imageurl} alt=""/>
+            <img src={book.imageurl} alt="" />
             <div className="desc">
                 <h2>{unescape(book.title)}</h2>
                 <h3>{book.authors}</h3>

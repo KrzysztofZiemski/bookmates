@@ -83,7 +83,6 @@ export const getUserDetails = (accessToken) => {
 };
 
 export const addBookToShelf = (book, id) => {
-    console.log(JSON.stringify(book), id);
     return fetch(`${urlUser}books`, {
         method: 'PUT',
         headers: {
@@ -98,7 +97,6 @@ export const getAllBooks = (id) => {
     return fetch(`${urlUser}books/${id}`)
         .then(res => {
             if (res.status !== 200) throw new Error(res.status);
-            console.log(res);
             return res.json();
         })
         .catch(err => console.log(err));;
@@ -152,7 +150,6 @@ export const getSuggestionMates = () => {
             'Authorization': `Bearer ${accessToken}`
         }
     }).then(response => {
-        console.log('match', response)
         if (response.status === 200) return response.json();
         throw new Error(response.status)
     })

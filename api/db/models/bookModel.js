@@ -5,7 +5,6 @@ const tableName = 'books';
 
 const insertBook = (book) => {
     const { isbn, title, authors, publishedYear, imageUrl, description, category } = book;
-    console.log(book);
     const sql = `INSERT INTO ${tableName} (id, isbn, title, authors, "publishedYear", imageurl, description, category) VALUES (
            DEFAULT, '${isbn}', '${title}', ARRAY [${authors.map(s => `'${s.trim()}'`)}], ${publishedYear}, '${imageUrl ? imageUrl : null}', '${description ? description : null}',  ARRAY [${category ? category.map(s => `'${s.trim()}'`) : []}]::varchar[]
         )
@@ -30,7 +29,6 @@ const getAllBooks = () => {
 };
 
 const updateUserBookMetaDataDB = (bookId, metaData) => {
-    console.log(bookId, metaData);
 
     const sql = `
         UPDATE ${tableName}

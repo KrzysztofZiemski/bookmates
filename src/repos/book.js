@@ -6,7 +6,6 @@ export const getBook = id => {
     return fetch(`${urlBook}/${id}`)
         .then(res => {
             if (res.status !== 200) throw new Error(res.status);
-            console.log(res);
             return res.json();
         });
 };
@@ -15,7 +14,6 @@ export const getBookUserMetadata = bookId => {
     return fetch(`${urlBook}/${bookId}/metadata`)
         .then(res => {
             if (res.status !== 200) throw new Error(res.status);
-            console.log(res);
             return res.json();
         });
 };

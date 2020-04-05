@@ -28,7 +28,6 @@ const AddBookPage = (props) => {
             });
         addBookToShelf({ bookId: book.isbn, ...book }, loggedUser.id)
             .then(data => {
-                console.log(data);
             });
 
     };
@@ -37,8 +36,8 @@ const AddBookPage = (props) => {
     return (
         <div>
             <AddBookSearch loggedUser={loggedUser}></AddBookSearch>
-            {addBookSuccess === null ? <AddBookForm addBookForm={addBookForm}/> :
-                <IsBookAdded addBookSuccess={addBookSuccess}/>}
+            {addBookSuccess === null ? <AddBookForm addBookForm={addBookForm} /> :
+                <IsBookAdded addBookSuccess={addBookSuccess} />}
         </div>
 
     );

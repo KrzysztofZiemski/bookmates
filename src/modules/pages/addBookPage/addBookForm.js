@@ -108,7 +108,6 @@ const AddBookForm = props => {
                             data.value.length > 8 && getGoogleBooksQuery('isbn', data.value)
                                 .then(res => {
                                     if (res.hasOwnProperty('items')) {
-                                        console.log(res.items);
                                         setSearchResult(res.items);
                                     } else setSearchResult([]);
                                 });
@@ -118,13 +117,13 @@ const AddBookForm = props => {
                         <div className="dropdownListContainer">
                             {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
                                 return (<div className="dropdownItem" key={i}
-                                             onClick={() => {
-                                                 setTitle(book.volumeInfo.title);
-                                                 setAuthors(book.volumeInfo.authors.join(', '));
-                                                 setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
-                                                 setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                                 setShowDropdoown(false);
-                                             }}>{book.volumeInfo.title}</div>);
+                                    onClick={() => {
+                                        setTitle(book.volumeInfo.title);
+                                        setAuthors(book.volumeInfo.authors.join(', '));
+                                        setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                        setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                        setShowDropdoown(false);
+                                    }}>{book.volumeInfo.title}</div>);
                             }) : ''}
                         </div>
                     </div>
@@ -146,7 +145,6 @@ const AddBookForm = props => {
                             data.value.length > 1 && getGoogleBooksQuery('title', data.value)
                                 .then(res => {
                                     if (res.hasOwnProperty('items')) {
-                                        console.log(res.items);
                                         setSearchResult(res.items);
                                     } else setSearchResult([]);
                                 });
@@ -163,14 +161,14 @@ const AddBookForm = props => {
                         <div className="dropdownListContainer">
                             {showDropdown && title.length > 1 ? searchResults.map((book, i) => {
                                 return (<div className="dropdownItem" key={i}
-                                             onClick={() => {
-                                                 setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
-                                                 setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
-                                                 setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
-                                                 setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                                 setTitle(book.volumeInfo.title);
-                                                 setShowDropdoown(false);
-                                             }}>{book.volumeInfo.title}</div>);
+                                    onClick={() => {
+                                        setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
+                                        setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
+                                        setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
+                                        setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                        setTitle(book.volumeInfo.title);
+                                        setShowDropdoown(false);
+                                    }}>{book.volumeInfo.title}</div>);
                             }) : ''}
                         </div>
                     </div>
@@ -216,7 +214,7 @@ const AddBookForm = props => {
             >
                 <Label htmlFor="formCategory">Kategoria: </Label>
                 <Select placeholder='select category' options={categories}
-                        onChange={(e, data) => setCategory([data.value])} value={category[0]}/>
+                    onChange={(e, data) => setCategory([data.value])} value={category[0]} />
             </Form.Field>
 
             <Form.Field className={errorImageUrl ? 'errorElementRegistration' : null}>
@@ -249,7 +247,7 @@ const AddBookForm = props => {
                 />
             </Form.Field>
 
-            <ButtonBasic content="Prześlij" handleClick={handleAddBook}/>
+            <ButtonBasic content="Prześlij" handleClick={handleAddBook} />
         </form>
     );
 };

@@ -23,7 +23,6 @@ export const AddBookSearch = ({ loggedUser, match, history }) => {
                 setBooks(res);
                 // Inserting results from Google Api to Postgres
                 res.map(b => {
-                    console.log(b.categories);
                     addBook({
                         title: escape(b.title),
                         imageUrl: b.imageLinks.thumbnail,
@@ -57,8 +56,8 @@ export const AddBookSearch = ({ loggedUser, match, history }) => {
 
     return (
         <div>
-            <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} id={loggedUser.id}/>
-            <BookList books={sortedBooks} id={loggedUser.id} searchBook={() => getGoogleBooks(searchField)}/>
+            <SearchArea handleSearch={handleSearch} searchBook={searchBook} handleSort={handleSort} id={loggedUser.id} />
+            <BookList books={sortedBooks} id={loggedUser.id} searchBook={() => getGoogleBooks(searchField)} />
         </div>
     );
 };

@@ -47,7 +47,6 @@ const UserPage = (props) => {
         setWaiting(false)
         if (response.status === 400) setMessage(<ErrorMessage message="Użytkownik już był dodawany do grupy znajomych" closeError={closeMessage} />);
         if (response.status === 200) {
-          console.log('weszlo')
           setMessage(<SuccessMessage message="Dodano użytkownika do znajomych" closeError={closeMessage} />)
           refreshUser();
         };

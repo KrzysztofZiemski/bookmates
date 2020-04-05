@@ -210,7 +210,6 @@ const _addPoints = (mate, user) => {
     let bookPoints = _addPointsByBook(user.books, mate.books);
 
     let categoryPoints = _addPointsByCategory(user.books, mate.books);
-    console.log(categoryPoints)
     mate.points += birthPoints + bookPoints + categoryPoints;
 
     return mate;
