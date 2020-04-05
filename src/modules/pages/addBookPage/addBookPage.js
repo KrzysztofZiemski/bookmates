@@ -48,7 +48,7 @@ const AddBookPage = (props) => {
 
 
     return (
-        <div>
+        <div className="addBookPage">
             {addBookSuccess === false ? <ErrorMessage message={message} closeError={closeMessage} /> : null}
             {addBookSuccess === true ? <SuccessMessage message={message} closeError={closeMessage} /> : null}
             {/* <AddBookSearch loggedUser={loggedUser}></AddBookSearch> */}
