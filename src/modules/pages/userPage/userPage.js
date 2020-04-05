@@ -115,7 +115,7 @@ const UserPage = (props) => {
               <p>Miasto zamieszkania</p>
               <p>{publicUser.city}</p>
             </div>
-            {loggedUser ? <ButtonBasic handleClick={isExist() ? handleRemoveMate : handleAddMate} content={isExist() ? 'Usuń ze znajomych' : 'Dodaj do znajomych'} /> : null}
+            {loggedUser && loggedUser.id !== publicUser.id ? <ButtonBasic handleClick={isExist() ? handleRemoveMate : handleAddMate} content={isExist() ? 'Usuń ze znajomych' : 'Dodaj do znajomych'} /> : null}
           </div>
         </div>
         <h2>Biblioteczka</h2>
