@@ -37,7 +37,7 @@ const AddBookForm = props => {
     });
     useEffect(() => {
         if (addBookSuccess) {
-            setISBN(null); setTitle(''); setAuthors(''); setPublishedYear(''); setImageUrl(''); setDescription('');
+            setISBN(''); setTitle(''); setAuthors(''); setPublishedYear(''); setImageUrl(''); setDescription('');
         }
     }, [addBookSuccess])
     console.log('isbn', isbn)
