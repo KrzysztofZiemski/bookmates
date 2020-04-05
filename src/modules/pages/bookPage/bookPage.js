@@ -3,7 +3,7 @@ import { getBook, addBookUserMetadata, getBookUserMetadata, removeUserBookMetada
 import { addBookToShelf, getAllBooks, deleteUserBook } from '../../../repos/user';
 import { List } from 'semantic-ui-react';
 import { ButtonBasic } from '../../Button/Button';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import './bookPage.scss';
 
 const BookPage = ({ match, loggedUser }) => {
@@ -17,7 +17,7 @@ const BookPage = ({ match, loggedUser }) => {
         getBook(match.params.id)
             .then(res => {
                 setBook(res[0]);
-                getBookUserMetadata(res[0].id)
+                getBookUserMetadata(res[0].isbn)
                     .then(res => {
                         const indexOfCurrUser = res.map(user => parseInt(user.userId)).indexOf(loggedUser.id);
                         if (indexOfCurrUser === -1) {
@@ -50,7 +50,7 @@ const BookPage = ({ match, loggedUser }) => {
 
             })
             .catch(err => console.log(err));
-        addBookUserMetadata(book.id, {
+        addBookUserMetadata(book.isbn, {
             userId: loggedUser.id,
             userName: loggedUser.name,
             status: 'inlibrary',
@@ -75,20 +75,22 @@ const BookPage = ({ match, loggedUser }) => {
     return book !== undefined ?
         (<div className="card-container">
             <div className='card-container-book'>
-                <img src={book.imageurl} alt="" />
+                <img src={book.imageurl} alt=""/>
                 <div className="desc">
                     <h2>{unescape(book.title)}</h2>
                     <h3>{book.authors}</h3>
                     <h4>{book.publishedYear}</h4>
                     <p>{unescape(book.description)}</p>
                     {userBooks.map(b => b.bookId).indexOf(book.isbn) === -1 ?
-                        (<ButtonBasic handleClick={handleAdd} content='Dodaj na półkę' />) :
-                        (<ButtonBasic handleClick={handleRemove} content='Usuń z półki' />)}
+                        (<ButtonBasic handleClick={handleAdd} content='Dodaj na półkę'/>) :
+                        (<ButtonBasic handleClick={handleRemove} content='Usuń z półki'/>)}
                 </div>
             </div>
             <aside className="matesThatHaveBook">
                 <h1>Użytkownicy, którzy mają tę książkę</h1>
-                <List> {otherUserBooks.map((user, i) => (<Link to={`/user/${user.userId}`} key={i}><li>{user.userName}</li> </Link>))}</List>
+                <List> {otherUserBooks.map((user, i) => (<Link to={`/user/${user.userId}`} key={i}>
+                    <li>{user.userName}</li>
+                </Link>))}</List>
             </aside>
 
 

@@ -9,9 +9,10 @@ import hash from 'object-hash';
 
 import categories from '../../../utils/bookGeneres';
 import { Link } from 'react-router-dom';
+import { addBookUserMetadata } from '../../../repos/book';
 
 const AddBookForm = props => {
-    const { addBookForm } = props;
+    const { addBookForm, user } = props;
 
     let [isbn, setISBN] = React.useState(null);
     let [title, setTitle] = React.useState('');
@@ -38,15 +39,6 @@ const AddBookForm = props => {
     const [searchResults, setSearchResult] = React.useState([]);
     const [showDropdown, setShowDropdoown] = React.useState(true);
 
-    const handeChange = (name) => {
-        getGoogleBooksQuery(`{name}`, name)
-            .then(res => {
-                if (res.hasOwnProperty('items')) {
-                    return setSearchResult(res.items);
-                }
-                return setSearchResult([]);
-            });
-    };
 
     const validateISBN = () => {
         if (isbn !== null && isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
@@ -62,7 +54,7 @@ const AddBookForm = props => {
     };
 
     const validatePublishedYear = () => {
-        console.log(publishedYear)
+        console.log(publishedYear);
         if (!publishedYear) return setErrorPublishedYear(true);
         if (publishedYear.length !== 4 && publishedYear < 1000) return setErrorPublishedYear(true);
         setErrorPublishedYear(false);
@@ -77,14 +69,20 @@ const AddBookForm = props => {
     };
 
 
-    const handleAddBook = async e => {
+    const handleAddBook = e => {
         e.preventDefault();
         const book = { isbn, title, authors, publishedYear, category, imageUrl, description };
         if (isbn === null || (isbn.length !== 10 && isbn.length !== 13) || title === '' || authors === '' || publishedYear === 0) {
             return setErrorMissingFields(false);
         }
-
         addBookForm(book);
+        addBookUserMetadata(isbn, {
+            userId: user.id,
+            userName: user.name,
+            status: 'inlibrary',
+            rating: ''
+        });
+
 
     };
 
@@ -118,13 +116,13 @@ const AddBookForm = props => {
                         <div className="dropdownListContainer">
                             {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
                                 return (<div className="dropdownItem" key={i}
-                                    onClick={() => {
-                                        setTitle(book.volumeInfo.title);
-                                        setAuthors(book.volumeInfo.authors.join(', '));
-                                        setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
-                                        setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                        setShowDropdoown(false);
-                                    }}>{book.volumeInfo.title}</div>);
+                                             onClick={() => {
+                                                 setTitle(book.volumeInfo.title);
+                                                 setAuthors(book.volumeInfo.authors.join(', '));
+                                                 setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                                 setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                                 setShowDropdoown(false);
+                                             }}>{book.volumeInfo.title}</div>);
                             }) : ''}
                         </div>
                     </div>
@@ -162,14 +160,14 @@ const AddBookForm = props => {
                         <div className="dropdownListContainer">
                             {showDropdown && title.length > 1 ? searchResults.map((book, i) => {
                                 return (<div className="dropdownItem" key={i}
-                                    onClick={() => {
-                                        setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
-                                        setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
-                                        setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
-                                        setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                        setTitle(book.volumeInfo.title);
-                                        setShowDropdoown(false);
-                                    }}>{book.volumeInfo.title}</div>);
+                                             onClick={() => {
+                                                 setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
+                                                 setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
+                                                 setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
+                                                 setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                                 setTitle(book.volumeInfo.title);
+                                                 setShowDropdoown(false);
+                                             }}>{book.volumeInfo.title}</div>);
                             }) : ''}
                         </div>
                     </div>
@@ -215,7 +213,7 @@ const AddBookForm = props => {
             >
                 <Label htmlFor="formCategory">Kategoria: </Label>
                 <Select placeholder='select category' options={categories}
-                    onChange={(e, data) => setCategory([data.value])} value={category[0]} />
+                        onChange={(e, data) => setCategory([data.value])} value={category[0]}/>
             </Form.Field>
 
             <Form.Field className={errorImageUrl ? 'errorElementRegistration' : null}>
@@ -248,7 +246,7 @@ const AddBookForm = props => {
                 />
             </Form.Field>
 
-            <ButtonBasic content="Dodaj" handleClick={handleAddBook} />
+            <ButtonBasic content="Dodaj" handleClick={handleAddBook}/>
         </form>
     );
 };

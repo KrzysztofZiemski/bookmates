@@ -7,8 +7,8 @@ const urlAuth = `${BACKEND_URL}/auth/`;
 export const getAllUsers = () => {
     return fetch(urlUser, {
         method: 'GET'
-    })
-}
+    });
+};
 
 export const getUser = (id) => {
     let accessToken = getCookies().accessToken;
@@ -37,7 +37,7 @@ export const updateUser = (id, userData) => {
         headers: {
             'Content-Type': 'application/json'
         }
-    })
+    });
 };
 
 export const changeUserPassword = (id, passwords) => {
@@ -47,13 +47,13 @@ export const changeUserPassword = (id, passwords) => {
         headers: {
             'Content-Type': 'application/json'
         }
-    })
-}
+    });
+};
 
 export const removeUser = id => {
     return fetch(`${urlUser}${id}`, {
-        method: 'DELETE',
-    })
+        method: 'DELETE'
+    });
 };
 
 export const auth = (data) => {
@@ -79,7 +79,7 @@ export const getUserDetails = (accessToken) => {
     }).then(res => {
         if (res.status !== 200) throw new Error(res.status);
         return res.json();
-    })
+    });
 };
 
 export const addBookToShelf = (book, id) => {
@@ -99,7 +99,8 @@ export const getAllBooks = (id) => {
             if (res.status !== 200) throw new Error(res.status);
             return res.json();
         })
-        .catch(err => console.log(err));;
+        .catch(err => console.log(err));
+    ;
 };
 
 export const deleteUserBook = (userId, bookId) => {
@@ -151,6 +152,6 @@ export const getSuggestionMates = () => {
         }
     }).then(response => {
         if (response.status === 200) return response.json();
-        throw new Error(response.status)
-    })
-}
+        throw new Error(response.status);
+    });
+};
