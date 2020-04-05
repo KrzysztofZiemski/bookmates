@@ -10,8 +10,8 @@ export const getBook = id => {
         });
 };
 
-export const getBookUserMetadata = bookId => {
-    return fetch(`${urlBook}/${bookId}/metadata`)
+export const getBookUserMetadata = bookISBN => {
+    return fetch(`${urlBook}/${bookISBN}/metadata`)
         .then(res => {
             if (res.status !== 200) throw new Error(res.status);
             return res.json();
@@ -31,14 +31,14 @@ export const addBook = (book) => {
     });
 };
 
-export const addBookUserMetadata = (bookId, bookEvents) => {
+export const addBookUserMetadata = (bookISBN, bookEvents) => {
     const bookUserMetadata = {
         userId: bookEvents.userId.toString(),
         userName: bookEvents.userName,
         status: bookEvents.status,
         rating: bookEvents.rating
     };
-    return fetch(`${urlBook}/${bookId}/metadata`, {
+    return fetch(`${urlBook}/${bookISBN}/metadata`, {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -48,8 +48,8 @@ export const addBookUserMetadata = (bookId, bookEvents) => {
     }).then(res => res.json());
 };
 
-export const removeUserBookMetadata = (bookId, userId) => {
-    return fetch(`${urlBook}/${bookId}/metadata/${userId}`, {
+export const removeUserBookMetadata = (bookISBN, userId) => {
+    return fetch(`${urlBook}/${bookISBN}/metadata/${userId}`, {
         method: 'DELETE'
     })
         .then(res => res.json());

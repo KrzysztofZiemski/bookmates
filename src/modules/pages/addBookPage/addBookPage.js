@@ -29,6 +29,10 @@ const AddBookPage = (props) => {
                 }
                 //
             })
+            .catch(err => {
+                setMessage('Nie udało się dodać książki. Jeżeli sytuacja będzie się powtarzać, skontaktuj się z administratorem');
+                setAddBookSuccess(false);
+            })
         addBookToShelf({ bookId: book.isbn, ...book }, loggedUser.id)
             .then(data => {
                 setMessage('Dodano książkę');
@@ -46,7 +50,6 @@ const AddBookPage = (props) => {
             {addBookSuccess === true ? <SuccessMessage message={message} closeError={closeMessage} /> : null}
             {/* <AddBookSearch loggedUser={loggedUser}></AddBookSearch> */}
             <AddBookForm addBookForm={addBookForm} addBookSuccess={addBookSuccess} />
-
         </div>
 
     );

@@ -23,7 +23,7 @@ const WelcomePage = (props) => {
         <h1 className="logo">BookMates</h1>
         <p className="companyMessage">książki łączą ludzi</p>
         { registationButton() }
-        <UsersSearchBar />
+        <UsersSearchBar className="searchBar" />
       </div>
     </div>
   );

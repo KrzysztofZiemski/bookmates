@@ -10,7 +10,7 @@ const Slider = ({ content, onClick, id }) => {
     const renderSlideElements = () => {
         return content.map(element => {
             return (
-                < div className="slideElement" key={element.bookId}>
+                <div className="slideElement" key={element.bookId}>
                     <div>
                         <Link to={`/book/${element.bookId}`} >
                             <img src={element.imageUrl && element.imageUrl !== 'http://vrephotels.com/images/NoImageFound.png' ? element.imageUrl : noBookImage} alt={`book ${element.title ? unescape(element.title) : 'Brak'} `} />
@@ -18,15 +18,14 @@ const Slider = ({ content, onClick, id }) => {
                                 <h4>{unescape(element.title)}</h4>
                                 <div>
                                     <p>{element.authors === 'not found' ? null : element.authors}</p>
-                                    <p>{element.categories ? 'Brak określonej kategorii' : element.categories}</p>
+                                    <p>{element.categories ? element.categories : 'Brak określonej kategorii'}</p>
                                     <p>{element.publishedYear === '0000' ? null : element.publishedYear}</p>
                                 </div>
                             </div>
-                        </Link >
+                        </Link>
                     </div>
                     {onClick ? <ButtonBasic handleClick={() => onClick(id, element)} content={'Usuń książkę'} /> : null}
-                </div >
-
+                </div>
             )
         })
     }

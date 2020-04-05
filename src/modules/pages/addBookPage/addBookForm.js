@@ -9,9 +9,10 @@ import hash from 'object-hash';
 
 import categories from '../../../utils/bookGeneres';
 import { Link } from 'react-router-dom';
+import { addBookUserMetadata } from '../../../repos/book';
 
 const AddBookForm = props => {
-    const { addBookForm, addBookSuccess } = props;
+    const { addBookForm, addBookSuccess, user } = props;
 
     let [isbn, setISBN] = React.useState(null);
     let [title, setTitle] = React.useState('');
@@ -41,15 +42,6 @@ const AddBookForm = props => {
     const [searchResults, setSearchResult] = React.useState([]);
     const [showDropdown, setShowDropdoown] = React.useState(true);
 
-    const handeChange = (name) => {
-        getGoogleBooksQuery(`{name}`, name)
-            .then(res => {
-                if (res.hasOwnProperty('items')) {
-                    return setSearchResult(res.items);
-                }
-                return setSearchResult([]);
-            });
-    };
 
     const validateISBN = () => {
         if (isbn !== null && isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
@@ -65,7 +57,7 @@ const AddBookForm = props => {
     };
 
     const validatePublishedYear = () => {
-        console.log(publishedYear)
+        console.log(publishedYear);
         if (!publishedYear) return setErrorPublishedYear(true);
         if (publishedYear.length !== 4 && publishedYear < 1000) return setErrorPublishedYear(true);
         setErrorPublishedYear(false);
@@ -80,14 +72,23 @@ const AddBookForm = props => {
     };
 
 
-    const handleAddBook = async e => {
+    const handleAddBook = e => {
         e.preventDefault();
         const book = { isbn, title, authors, publishedYear, category, imageUrl, description };
         if (isbn === null || (isbn.length !== 10 && isbn.length !== 13) || title === '' || authors === '' || publishedYear === 0) {
             return setErrorMissingFields(false);
         }
-
         addBookForm(book);
+        if (user) {
+            addBookUserMetadata(isbn, {
+                userId: user.id,
+                userName: user.name,
+                status: 'inlibrary',
+                rating: ''
+            });
+        }
+
+
 
     };
 
@@ -251,7 +252,7 @@ const AddBookForm = props => {
                 />
             </Form.Field>
 
-            <ButtonBasic content="Prześlij" handleClick={handleAddBook} />
+            <ButtonBasic content="Dodaj" handleClick={handleAddBook} />
         </form>
     );
 };
