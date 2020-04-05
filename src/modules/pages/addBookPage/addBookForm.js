@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Label } from 'semantic-ui-react';
 import ErrorMessage from './errorMessage';
 import { ButtonBasic } from '../../Button/Button';
@@ -12,9 +12,9 @@ import { Link } from 'react-router-dom';
 import { addBookUserMetadata } from '../../../repos/book';
 
 const AddBookForm = props => {
-    const { addBookForm, user } = props;
+    const { addBookForm, addBookSuccess, user } = props;
 
-    let [isbn, setISBN] = React.useState(null);
+    let [isbn, setISBN] = React.useState('');
     let [title, setTitle] = React.useState('');
     let [authors, setAuthors] = React.useState('');
     let [publishedYear, setPublishedYear] = React.useState();
@@ -35,13 +35,18 @@ const AddBookForm = props => {
         authors: '',
         publishedYear: 0
     });
-
+    useEffect(() => {
+        if (addBookSuccess) {
+            setISBN(''); setTitle(''); setAuthors(''); setPublishedYear(''); setImageUrl(''); setDescription('');
+        }
+    }, [addBookSuccess])
+    console.log('isbn', isbn)
     const [searchResults, setSearchResult] = React.useState([]);
     const [showDropdown, setShowDropdoown] = React.useState(true);
 
 
     const validateISBN = () => {
-        if (isbn !== null && isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
+        if (isbn !== '' && isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
         setErrorISBN(false);
     };
     const validateTitle = () => {
@@ -76,12 +81,15 @@ const AddBookForm = props => {
             return setErrorMissingFields(false);
         }
         addBookForm(book);
-        addBookUserMetadata(isbn, {
-            userId: user.id,
-            userName: user.name,
-            status: 'inlibrary',
-            rating: ''
-        });
+        if (user) {
+            addBookUserMetadata(isbn, {
+                userId: user.id,
+                userName: user.name,
+                status: 'inlibrary',
+                rating: ''
+            });
+        }
+
 
 
     };
@@ -114,13 +122,13 @@ const AddBookForm = props => {
                     <div className="dropdownListContainer">
                         {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
                             return (<div className="dropdownItem" key={i}
-                                            onClick={() => {
-                                                setTitle(book.volumeInfo.title);
-                                                setAuthors(book.volumeInfo.authors.join(', '));
-                                                setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
-                                                setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                                setShowDropdoown(false);
-                                            }}>{book.volumeInfo.title}</div>);
+                                onClick={() => {
+                                    setTitle(book.volumeInfo.title);
+                                    setAuthors(book.volumeInfo.authors.join(', '));
+                                    setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                    setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                    setShowDropdoown(false);
+                                }}>{book.volumeInfo.title}</div>);
                         }) : ''}
                     </div>
                 <ErrorMessage
@@ -204,7 +212,7 @@ const AddBookForm = props => {
             >
                 <Label htmlFor="formCategory">Kategoria: </Label>
                 <Select placeholder='select category' options={categories}
-                        onChange={(e, data) => setCategory([data.value])} value={category[0]}/>
+                    onChange={(e, data) => setCategory([data.value])} value={category[0]} />
             </Form.Field>
 
             <Form.Field className={errorImageUrl ? 'errorElementRegistration' : null}>
@@ -230,6 +238,7 @@ const AddBookForm = props => {
                     id="formDescription"
                     onChange={(e, data) => setDescription(data.value)}
                     onBlur={validateDescription}
+                    value={description}
                 />
                 <ErrorMessage
                     error={errorDescription}
@@ -237,7 +246,7 @@ const AddBookForm = props => {
                 />
             </Form.Field>
 
-            <ButtonBasic content="Dodaj" handleClick={handleAddBook}/>
+            <ButtonBasic content="Dodaj" handleClick={handleAddBook} />
         </form>
     );
 };

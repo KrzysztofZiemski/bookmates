@@ -2,42 +2,55 @@ import React from 'react';
 import { addBook } from '../../../repos/book';
 import AddBookForm from './addBookForm.js';
 import { addBookToShelf } from '../../../repos/user';
-import IsBookAdded from './isBookAdded';
+import { SuccessMessage } from '../../successMessage/SuccessMessage';
+import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
 // import IsRegistered from "../registrationPage/isRegistered";
-import { AddBookSearch } from './addBookSearch/AddBookSearch';
+// import { AddBookSearch } from './addBookSearch/AddBookSearch';
 
 const AddBookPage = (props) => {
     let [addBookSuccess, setAddBookSuccess] = React.useState(null);
-    const [errorMessage, setErrorMessage] = React.useState('');
+    let [message, setMessage] = React.useState('');
     const { loggedUser } = props;
-    const addBookForm = (book) => {
+    const closeMessage = () => {
+        if (addBookSuccess)
+            setAddBookSuccess(null)
+    }
+    const addBookForm = async (book) => {
         addBook(book)
             .then(response => {
-                if (response.status !== 200) return response.json();
-                return setAddBookSuccess(true);
+                if (response.status === 200) return response.json();
+                throw new Error()
             })
             .then(data => {
                 if (data !== undefined && data.hasOwnProperty('code') && data.code === '23505') {
-                    setErrorMessage('Ta książka jest już w twojej biblioteczce!');
-                    return setAddBookSuccess(true);
+                    //todo co tu chciałeś zrobić?
                 }
                 if (data === undefined) {
-                    return setAddBookSuccess(true);
+                    //todo co tu chciałeś zrobić?
                 }
-                return setAddBookSuccess(false);
-            });
+                //
+            })
+            .catch(err => {
+                // setMessage('Nie udało się dodać książki. Jeżeli sytuacja będzie się powtarzać, skontaktuj się z administratorem');
+                // setAddBookSuccess(false);
+            })
         addBookToShelf({ bookId: book.isbn, ...book }, loggedUser.id)
             .then(data => {
+                setMessage('Dodano książkę');
+                setAddBookSuccess(true);
+            }).catch(err => {
+                setMessage('Nie udało się dodać książki. Jeżeli sytuacja będzie się powtarzać, skontaktuj się z administratorem');
+                setAddBookSuccess(false);
             });
-
     };
 
 
     return (
         <div className="addBookPage">
+            {addBookSuccess === false ? <ErrorMessage message={message} closeError={closeMessage} /> : null}
+            {addBookSuccess === true ? <SuccessMessage message={message} closeError={closeMessage} /> : null}
             {/* <AddBookSearch loggedUser={loggedUser}></AddBookSearch> */}
-            {addBookSuccess === null ? <AddBookForm addBookForm={addBookForm} user={loggedUser}/> :
-                <IsBookAdded addBookSuccess={addBookSuccess}/>}
+            <AddBookForm addBookForm={addBookForm} addBookSuccess={addBookSuccess} />
         </div>
 
     );

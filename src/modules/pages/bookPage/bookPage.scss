@@ -1,51 +1,58 @@
 @import '../../../style.scss';
 
 .card-container {
-    margin: 5vw 10% 5vw;
-    width: 80%;
-    min-height: 500px;
+  margin: 5vw 10% 5vw;
+  width: 80%;
+  min-height: 500px;
+  align-items: center;
+  @media (max-width: 1024px) {
+    margin: 5vw 5% 5vw;
+    width: 90%;
+  }
+
+  .card-container-book {
+    display: flex;
     align-items: center;
-    @media (max-width:1024px) {
-        margin: 5vw 5% 5vw;
-        width: 90%;
+    justify-content: center;
+    margin-bottom: 10px;
+    @media screen and (max-width: 600px) {
+      flex-direction: column;
     }
-    .card-container-book {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+    h2 {
+      color: $colorOrange;
+    }
+
+    p {
+      padding: 10px;
+      border: 1px solid $colorBlue;
+    }
+
+    img {
+      margin-right: 50px;
+      @media screen and (max-width: 600px) {
+        margin: 0px auto 50px;
+      }
+    }
+  }
+
+  .matesThatHaveBook {
+    h3 {
+      @media screen and (max-width: 600px) {
+        font-size: 1.3rem;
         margin-bottom: 10px;
-        @media screen and (max-width:600px) {
-            flex-direction: column;
-        }
-        h2 {
-            color: $colorOrange;
-        }
-        p {
-            padding: 10px;
-            border: 1px solid $colorBlue;
-        }
-        img {
-            margin-right: 50px;
-            @media screen and (max-width:600px) {
-                margin: 0px auto 50px;
-            }
-        }
+      }
     }
-    .matesThatHaveBook {
-        h3 {
-            @media screen and (max-width:600px) {
-                font-size: 1.3rem;
-                margin-bottom: 10px;
-            }
-        }
-        .ui.list {
-            display: flex;
-            li {
-                background-color: $colorOrange;
-                padding: 10px 20px;
-                text-transform: uppercase;
-                margin: 0 10px;
-            }
-        }
+
+    .ui.list {
+      display: flex;
+
+      li {
+        background-color: $colorOrange;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        margin: 0 10px;
+      }
     }
+  }
 }

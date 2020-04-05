@@ -96,6 +96,7 @@
           &:focus {
             outline: none;
           }
+
         }
 
       }
@@ -138,9 +139,46 @@
           transition: box-shadow .1s ease, border-color .1s ease;
           box-shadow: none;
 
-
           &:hover {
             border-color: #85b7d9;
+          }
+
+          .bookCard {
+            display: inline-block;
+            width: 100%;
+
+            .bookCardDetails {
+              h1, h2, h3 {
+                margin: 5px 5px;
+              }
+
+              h1 {
+                color: $colorOrange;
+                font-size: 1.4rem;
+              }
+
+              h2 {
+                color: $colorBlue;
+                font-size: 1.2rem;
+              }
+
+              h3 {
+                font-size: 1rem;
+              }
+
+              float: left;
+            }
+
+            .imageContainer {
+              float: right;
+
+              img {
+                right: 10px;
+                max-height: 100px;
+
+              }
+            }
+
           }
         }
       }

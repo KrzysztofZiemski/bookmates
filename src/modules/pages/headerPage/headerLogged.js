@@ -94,7 +94,18 @@ const LoggedHeader = (props) => {
                 <div className="dropdownListContainer">
                     {books.map((book, i) => {
                         return (<Link to={`/book/${book.industryIdentifiers[0].identifier}`} className="dropdownItem"
-                                      key={i}>{book.title}</Link>);
+                                      key={i}>
+                            <div className="bookCard">
+                                <div className="bookCardDetails">
+                                    <h1>{book.title}</h1>
+                                    <h2>{book.hasOwnProperty('authors') && book.authors.join(', ')}</h2>
+                                    <h3>{book.publishedDate.split('-')[0]}</h3>
+                                </div>
+                                <div className="imageContainer">
+                                    <img src={book.imageLinks.thumbnail} alt=""/>
+                                </div>
+                            </div>
+                        </Link>);
                     })}
                 </div>}
 
