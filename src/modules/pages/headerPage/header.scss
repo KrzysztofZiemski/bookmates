@@ -90,6 +90,12 @@
           text-decoration: underline;
           font-size: 1.5rem;
           padding-left: 20px;
+          outline: 0;
+          border: 0;
+
+          &:focus {
+            outline: none;
+          }
         }
 
       }
