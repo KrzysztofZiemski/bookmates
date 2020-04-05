@@ -25,8 +25,8 @@ const LoggedHeader = (props) => {
 
     const handleChange = (e) => {
         setSearchField(e.target.value);
-        if (searchField.length < 1) return;
-        getGoogleBooks(searchField)
+        if (e.target.value.length < 2) return;
+        getGoogleBooks(e.target.value)
             .then(res => {
                 if (res.status !== 200) throw new Error(res.status);
                 return res.json();
