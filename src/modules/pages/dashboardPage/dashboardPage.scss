@@ -1,17 +1,14 @@
 @import '../../../style.scss';
 
 .dashboardPage {
-
-    &>* {
-        padding: 20px;
-    }
-
+    padding-top: 20px;
     h1 {
+        padding-left: 20px;
         border-bottom: 3px solid $colorOrange;
         font-size: 22px;
     }
-
     .panelBooks {
+        padding-left: 20px;
         .searchBar {
             margin: 15px;
         }
