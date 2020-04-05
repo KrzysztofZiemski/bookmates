@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Label } from 'semantic-ui-react';
 import ErrorMessage from './errorMessage';
 import { ButtonBasic } from '../../Button/Button';
@@ -14,7 +14,7 @@ import { addBookUserMetadata } from '../../../repos/book';
 const AddBookForm = props => {
     const { addBookForm, addBookSuccess, user } = props;
 
-    let [isbn, setISBN] = React.useState(null);
+    let [isbn, setISBN] = React.useState('');
     let [title, setTitle] = React.useState('');
     let [authors, setAuthors] = React.useState('');
     let [publishedYear, setPublishedYear] = React.useState();
@@ -35,16 +35,18 @@ const AddBookForm = props => {
         authors: '',
         publishedYear: 0
     });
-    //todo ustawić czyszczenie formularza
-    // if (addBookSuccess) {
-    //     setISBN(null); setTitle(''); setAuthors(''); setPublishedYear(''); setImageUrl(''); setDescription('');
-    // }
+    useEffect(() => {
+        if (addBookSuccess) {
+            setISBN(''); setTitle(''); setAuthors(''); setPublishedYear(''); setImageUrl(''); setDescription('');
+        }
+    }, [addBookSuccess])
+    console.log('isbn', isbn)
     const [searchResults, setSearchResult] = React.useState([]);
     const [showDropdown, setShowDropdoown] = React.useState(true);
 
 
     const validateISBN = () => {
-        if (isbn !== null && isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
+        if (isbn !== '' && isbn.length !== 10 && isbn.length !== 13) return setErrorISBN(true);
         setErrorISBN(false);
     };
     const validateTitle = () => {
@@ -245,6 +247,7 @@ const AddBookForm = props => {
                     id="formDescription"
                     onChange={(e, data) => setDescription(data.value)}
                     onBlur={validateDescription}
+                    value={description}
                 />
                 <ErrorMessage
                     error={errorDescription}

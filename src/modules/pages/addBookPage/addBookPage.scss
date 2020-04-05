@@ -6,31 +6,38 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+
   .field {
     justify-content: center;
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     margin: 5px;
     position: relative;
+
     .label {
       width: 100px;
     }
+
     .input,
     .selection {
       width: 200px;
     }
+
     .correct {
       display: flex;
       align-items: center;
       font-size: 20px;
       color: green;
     }
+
     .inCorrect {
       display: flex;
       align-items: center;
       font-size: 20px;
       color: red;
     }
+
     .registrationErrorMessage {
       display: flex;
       align-items: center;
@@ -42,9 +49,11 @@
 
 .searchBar {
   margin: 0;
+
   .dropdownListContainer {
     position: absolute;
   }
+
   .dropdownItem {
     position: relative;
     z-index: 1;
@@ -65,6 +74,7 @@
     border-radius: .28571429rem;
     transition: box-shadow .1s ease, border-color .1s ease;
     box-shadow: none;
+
     &:hover {
       border-color: #85b7d9;
     }
