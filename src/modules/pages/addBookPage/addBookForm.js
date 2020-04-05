@@ -62,8 +62,9 @@ const AddBookForm = props => {
     };
 
     const validatePublishedYear = () => {
-        if (publishedYear.toString().length !== 4 && publishedYear < 1000)
-            return setErrorPublishedYear(true);
+        console.log(publishedYear)
+        if (!publishedYear) return setErrorPublishedYear(true);
+        if (publishedYear.length !== 4 && publishedYear < 1000) return setErrorPublishedYear(true);
         setErrorPublishedYear(false);
     };
 
