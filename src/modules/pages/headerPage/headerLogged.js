@@ -80,8 +80,8 @@ const LoggedHeader = (props) => {
                 <Menu.Item as={Link} to={'/mates'}>
                     Znajomi
                 </Menu.Item>
-                <Menu.Item className="searchButton">
-                    {!searchClicked ? <FontAwesomeIcon className='searchIcon' icon={faSearch} onClick={handleClick}/> :
+                <Menu.Item className="searchButton" onClick={handleClick}>
+                    {!searchClicked ? <FontAwesomeIcon className='searchIcon' icon={faSearch}/> :
                         <div className="searchField">{searchClicked &&
                         <input className="searchInput" type='search' onBlur={() => {
                             setTimeout(() => {
