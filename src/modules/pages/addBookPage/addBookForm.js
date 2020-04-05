@@ -14,7 +14,7 @@ import { addBookUserMetadata } from '../../../repos/book';
 const AddBookForm = props => {
     const { addBookForm, addBookSuccess, user } = props;
 
-    let [isbn, setISBN] = React.useState('aaa');
+    let [isbn, setISBN] = React.useState('');
     let [title, setTitle] = React.useState('');
     let [authors, setAuthors] = React.useState('');
     let [publishedYear, setPublishedYear] = React.useState();
