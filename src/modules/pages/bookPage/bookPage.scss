@@ -1,0 +1,49 @@
+@import '../../../style.scss';
+
+.card-container {
+            min-height: 500px;
+            height: 100vh;
+
+            .matesThatHaveBook {
+                        padding: 50px;
+
+                        h1 {
+                                    @media screen and (max-width:600px) {
+                                                font-size: 1.3rem;
+                                                margin-bottom: 50px;
+                                    }
+                        }
+
+                        .ui.list {
+                                    display: flex;
+
+
+                                    li {
+                                                background-color: $colorOrange;
+                                                padding: 10px 20px;
+                                                text-transform: uppercase;
+                                                margin: 0 10px;
+
+                                    }
+                        }
+            }
+
+            .card-container-book {
+                        display: flex;
+                        padding: 50px;
+                        align-items: center;
+
+                        @media screen and (max-width:600px) {
+                                    flex-direction: column;
+
+                        }
+
+                        img {
+                                    margin-right: 50px;
+
+                                    @media screen and (max-width:600px) {
+                                                margin-bottom: 50px;
+                                    }
+                        }
+            }
+}

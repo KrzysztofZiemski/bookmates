@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { getBook, addBookUserMetadata, getBookUserMetadata, removeUserBookMetadata } from '../../../repos/book';
 import { addBookToShelf, getAllBooks, deleteUserBook } from '../../../repos/user';
 import { List } from 'semantic-ui-react';
+import { ButtonBasic } from '../../Button/Button';
+import { Link } from "react-router-dom";
+import './bookPage.scss';
 
 const BookPage = ({ match, loggedUser }) => {
     const [book, setBook] = useState([]);
@@ -71,19 +74,21 @@ const BookPage = ({ match, loggedUser }) => {
     };
     return book !== undefined ?
         (<div className="card-container">
-            <img src={book.imageurl} alt="" />
-            <div className="desc">
-                <h2>{unescape(book.title)}</h2>
-                <h3>{book.authors}</h3>
-                <h4>{book.publishedYear}</h4>
-                <p>{unescape(book.description)}</p>
-                {userBooks.map(b => b.bookId).indexOf(book.isbn) === -1 ?
-                    (<button onClick={handleAdd}>Dodaj na półkę</button>) :
-                    (<button onClick={handleRemove}>Usuń z półki</button>)}
+            <div className='card-container-book'>
+                <img src={book.imageurl} alt="" />
+                <div className="desc">
+                    <h2>{unescape(book.title)}</h2>
+                    <h3>{book.authors}</h3>
+                    <h4>{book.publishedYear}</h4>
+                    <p>{unescape(book.description)}</p>
+                    {userBooks.map(b => b.bookId).indexOf(book.isbn) === -1 ?
+                        (<ButtonBasic handleClick={handleAdd} content='Dodaj na półkę' />) :
+                        (<ButtonBasic handleClick={handleRemove} content='Usuń z półki' />)}
+                </div>
             </div>
             <aside className="matesThatHaveBook">
                 <h1>Użytkownicy, którzy mają tę książkę</h1>
-                <List> {otherUserBooks.map((user, i) => <li key={i}>{user.userName}</li>)}</List>
+                <List> {otherUserBooks.map((user, i) => (<Link to={`/user/${user.userId}`} key={i}><li>{user.userName}</li> </Link>))}</List>
             </aside>
 
 
