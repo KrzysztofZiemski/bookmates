@@ -248,7 +248,7 @@ const AddBookForm = props => {
                 />
             </Form.Field>
 
-            <ButtonBasic content="Prześlij" handleClick={handleAddBook} />
+            <ButtonBasic content="Dodaj" handleClick={handleAddBook} />
         </form>
     );
 };
