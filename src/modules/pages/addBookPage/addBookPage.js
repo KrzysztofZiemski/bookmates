@@ -12,7 +12,8 @@ const AddBookPage = (props) => {
     let [message, setMessage] = React.useState('');
     const { loggedUser } = props;
     const closeMessage = () => {
-        setAddBookSuccess(null)
+        if (addBookSuccess)
+            setAddBookSuccess(null)
     }
     const addBookForm = async (book) => {
         addBook(book)
@@ -30,8 +31,8 @@ const AddBookPage = (props) => {
                 //
             })
             .catch(err => {
-                setMessage('Nie udało się dodać książki. Jeżeli sytuacja będzie się powtarzać, skontaktuj się z administratorem');
-                setAddBookSuccess(false);
+                // setMessage('Nie udało się dodać książki. Jeżeli sytuacja będzie się powtarzać, skontaktuj się z administratorem');
+                // setAddBookSuccess(false);
             })
         addBookToShelf({ bookId: book.isbn, ...book }, loggedUser.id)
             .then(data => {
