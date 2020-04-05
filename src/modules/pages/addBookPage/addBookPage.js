@@ -34,7 +34,7 @@ const AddBookPage = (props) => {
 
 
     return (
-        <div>
+        <div className="addBookPage">
             {/* <AddBookSearch loggedUser={loggedUser}></AddBookSearch> */}
             {addBookSuccess === null ? <AddBookForm addBookForm={addBookForm} user={loggedUser}/> :
                 <IsBookAdded addBookSuccess={addBookSuccess}/>}

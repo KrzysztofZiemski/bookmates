@@ -1,72 +1,113 @@
 @import '../../../style.scss';
 
-.addBookForm {
+.addBookPage{
+  margin-top: 15px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
-  width: 100%;
-  .field {
-    justify-content: center;
+    .addBookForm {
+    padding: 1%;
+    margin: 15px 0;
+    width: 50%;
     display: flex;
-    width: 100%;
-    margin: 5px;
-    position: relative;
-    .label {
-      width: 100px;
+    flex-direction: column;
+    align-items: center;
+    @media (max-width: 1024px) {
+      width: 80%;
     }
-    .input,
-    .selection {
-      width: 200px;
+    @media (max-width: 800px) {
+      width: 100%;
     }
-    .correct {
+    .field {
       display: flex;
-      align-items: center;
-      font-size: 20px;
-      color: green;
-    }
-    .inCorrect {
-      display: flex;
-      align-items: center;
-      font-size: 20px;
-      color: red;
-    }
-    .registrationErrorMessage {
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      color: red;
-    }
-  }
-}
-
-.searchBar {
-  margin: 0;
-  .dropdownListContainer {
-    position: absolute;
-  }
-  .dropdownItem {
-    position: relative;
-    z-index: 1;
-    opacity: 0.7;
-    display: block;
-    margin: auto;
-    max-width: 100%;
-    flex: 1 0 auto;
-    outline: 0;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    text-align: left;
-    line-height: 1.21428571em;
-    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    padding: .67857143em 1em;
-    background: #fff;
-    border: 1px solid rgba(34, 36, 38, .15);
-    color: rgba(0, 0, 0, .87);
-    border-radius: .28571429rem;
-    transition: box-shadow .1s ease, border-color .1s ease;
-    box-shadow: none;
-    &:hover {
-      border-color: #85b7d9;
+      flex-wrap: wrap;
+      width: 100%;
+      margin: 5px;
+      position: relative;
+      @media (max-width: 800px) {
+        margin: 2px;
+      }
+      @media (max-width: 460px) {
+        font-size: 10px;
+      }
+      .label {
+        width: 40%;
+        @media (max-width: 800px) {
+          width:30%;
+        }
+        @media (max-width: 460px) {
+          font-size: 12px;
+        }
+      }
+      .input,
+      .selection {
+        width: 50%;
+        @media (max-width: 800px) {
+          width: 60%;
+        }
+        @media (max-width: 460px) {
+          font-size: 12px;
+        }
+      }
+      .correct {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        color: green;
+      }
+      .inCorrect {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        color: red;
+      }
+      .registrationErrorMessage {
+        width: 100%;
+        display: block;
+        text-align: center;
+        font-size: 14px;
+        color: red;
+      }
+      .searchBar {
+        margin: 0;
+        .input {
+          width: 100%;
+          @media (max-width: 800px) {
+            width: 60%;
+          }
+          @media (max-width: 460px) {
+            font-size: 12px;
+          }
+        }
+        .dropdownListContainer {
+          position: absolute;
+        }
+        .dropdownItem {
+          position: relative;
+          z-index: 1;
+          opacity: 0.7;
+          display: block;
+          margin: auto;
+          max-width: 100%;
+          flex: 1 0 auto;
+          outline: 0;
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+          text-align: left;
+          line-height: 1.21428571em;
+          font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+          padding: .67857143em 1em;
+          background: #fff;
+          border: 1px solid rgba(34, 36, 38, .15);
+          color: rgba(0, 0, 0, .87);
+          border-radius: .28571429rem;
+          transition: box-shadow .1s ease, border-color .1s ease;
+          box-shadow: none;
+          &:hover {
+            border-color: #85b7d9;
+          }
+        }
+      }
     }
   }
 }
