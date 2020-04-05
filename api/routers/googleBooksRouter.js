@@ -9,7 +9,7 @@ const cleanData = (data) => {
             book.volumeInfo['publishedDate'] = '0000';
         }
         if (!book.volumeInfo.hasOwnProperty('imageLinks')) {
-            book.volumeInfo['imageLinks'] = { thumbnail: 'http://vrephotels.com/images/NoImageFound.png' };
+            book.volumeInfo['imageLinks'] = { thumbnail: 'http://indyanin.myqnapcloud.com/imageNotFound.png' };
         }
         if (!book.volumeInfo.hasOwnProperty('authors')) {
             book.volumeInfo['authors'] = ['not found'];

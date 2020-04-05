@@ -31,18 +31,22 @@ const getSingleBook = (req, res) => {
 const updateBookMetadata = async (req, res) => {
     const metaData = req.body;
     const bookId = req.params.bookId;
-
     try {
         let currentUserMetadata = await getAllBookUserMetadataController(bookId);
         let metaDataArr = currentUserMetadata[0].userbookmetadata || [];
         const indexOfMetadata = metaDataArr.map(b => b.userId).indexOf(metaData.userId);
+        console.log(indexOfMetadata);
         if (indexOfMetadata === -1) {
             await updateBookMetaDataController(bookId, metaData);
             return res.status(200).json(metaDataArr);
         } else {
-            const allMetadata = await getAllBookUserMetadataController(bookId);
-            const metadataToStay = allMetadata.slice(indexOfMetadata, 1);
-            const updatedMeta = [...metaData, metadataToStay];
+            let newUserMetadata = await getAllBookUserMetadataController(bookId);
+            let newMetaDataArr = newUserMetadata[0].userbookmetadata || [];
+            newMetaDataArr.splice(indexOfMetadata, 1);
+            console.log(newMetaDataArr);
+
+            const updatedMeta = [metaData, ...newMetaDataArr];
+            console.log(updatedMeta);
             await removeUserMetadataController(updatedMeta, bookId);
             return res.status(200).json(updatedMeta);
         }

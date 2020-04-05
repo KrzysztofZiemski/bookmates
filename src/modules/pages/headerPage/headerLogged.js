@@ -9,7 +9,7 @@ import {
 
 import './header.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { AddBookSearch } from '../addBookPage/addBookSearch/AddBookSearch';
 import getGoogleBooks from '../../../utils/googleBooksApi';
 import { addBook } from '../../../repos/book';
@@ -31,10 +31,11 @@ const LoggedHeader = (props) => {
                 if (res.status !== 200) throw new Error(res.status);
                 return res.json();
             })
+            .catch(err => console.log(err))
             .then(res => {
                 setBooks(res);
                 // Inserting results from Google Api to Postgres
-                res.map(b => {
+                res && res.map(b => {
                     addBook({
                         title: escape(b.title),
                         imageUrl: b.imageLinks.thumbnail,
@@ -48,14 +49,13 @@ const LoggedHeader = (props) => {
             });
     };
 
-
     const logout = () => {
         deleteCookie('accessToken');
         setLoginUser(false);
     };
 
     const handleClick = () => {
-        setSearchClicked(!searchClicked);
+        setSearchClicked(true);
         setBooks([]);
     };
 
@@ -85,14 +85,15 @@ const LoggedHeader = (props) => {
                         <div className="searchField">{searchClicked &&
                         <input className="searchInput" type='search' onBlur={() => {
                             setTimeout(() => {
-                                handleClick();
+                                setSearchClicked(false);
                             }, 300);
                         }} autoFocus
-                               onChange={(e) => handleChange(e)}/>}</div>}
+                               onChange={(e) => handleChange(e)}/>}
+                        </div>}
                 </Menu.Item>
                 {searchClicked &&
                 <div className="dropdownListContainer">
-                    {books.map((book, i) => {
+                    {books && books.map((book, i) => {
                         return (<Link to={`/book/${book.industryIdentifiers[0].identifier}`} className="dropdownItem"
                                       key={i}>
                             <div className="bookCard">
@@ -108,7 +109,6 @@ const LoggedHeader = (props) => {
                         </Link>);
                     })}
                 </div>}
-
                 <Menu.Item position='right'>
                     <ButtonBasic content="Wyloguj" handleClick={logout}/>
                 </Menu.Item>

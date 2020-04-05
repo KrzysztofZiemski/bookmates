@@ -37,10 +37,14 @@ const AddBookForm = props => {
     });
     useEffect(() => {
         if (addBookSuccess) {
-            setISBN(''); setTitle(''); setAuthors(''); setPublishedYear(''); setImageUrl(''); setDescription('');
+            setISBN('');
+            setTitle('');
+            setAuthors('');
+            setPublishedYear('');
+            setImageUrl('');
+            setDescription('');
         }
-    }, [addBookSuccess])
-    console.log('isbn', isbn)
+    }, [addBookSuccess]);
     const [searchResults, setSearchResult] = React.useState([]);
     const [showDropdown, setShowDropdoown] = React.useState(true);
 
@@ -59,7 +63,6 @@ const AddBookForm = props => {
     };
 
     const validatePublishedYear = () => {
-        console.log(publishedYear);
         if (!publishedYear) return setErrorPublishedYear(true);
         if (publishedYear.length !== 4 && publishedYear < 1000) return setErrorPublishedYear(true);
         setErrorPublishedYear(false);
@@ -91,46 +94,45 @@ const AddBookForm = props => {
         }
 
 
-
     };
 
     return (
         <form className="addBookForm" onSubmit={handleAddBook}>
             <Form.Field className={errorISBN ? 'errorElementRegistration' : null}>
                 <Label className="itemLabel" htmlFor="formISBN">ISBN: </Label>
-                    <Input
-                        type="number"
-                        id="formISBN"
-                        value={isbn}
-                        onBlur={() => {
-                            validateISBN();
-                            setTimeout(() => {
-                                setShowDropdoown(false);
-                            }, 300);
-                        }}
-                        onChange={(e, data) => {
-                            setISBN(data.value);
-                            setShowDropdoown(true);
-                            data.value.length > 8 && getGoogleBooksQuery('isbn', data.value)
-                                .then(res => {
-                                    if (res.hasOwnProperty('items')) {
-                                        setSearchResult(res.items);
-                                    } else setSearchResult([]);
-                                });
-                        }}
-                    />
-                    <div className="dropdownListContainer">
-                        {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
-                            return (<div className="dropdownItem" key={i}
-                                onClick={() => {
-                                    setTitle(book.volumeInfo.title);
-                                    setAuthors(book.volumeInfo.authors.join(', '));
-                                    setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
-                                    setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                    setShowDropdoown(false);
-                                }}>{book.volumeInfo.title}</div>);
-                        }) : ''}
-                    </div>
+                <Input
+                    type="number"
+                    id="formISBN"
+                    value={isbn}
+                    onBlur={() => {
+                        validateISBN();
+                        setTimeout(() => {
+                            setShowDropdoown(false);
+                        }, 300);
+                    }}
+                    onChange={(e, data) => {
+                        setISBN(data.value);
+                        setShowDropdoown(true);
+                        data.value.length > 8 && getGoogleBooksQuery('isbn', data.value)
+                            .then(res => {
+                                if (res.hasOwnProperty('items')) {
+                                    setSearchResult(res.items);
+                                } else setSearchResult([]);
+                            });
+                    }}
+                />
+                <div className="dropdownListContainer">
+                    {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
+                        return (<div className="dropdownItem" key={i}
+                                     onClick={() => {
+                                         setTitle(book.volumeInfo.title);
+                                         setAuthors(book.volumeInfo.authors.join(', '));
+                                         setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                         setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                         setShowDropdoown(false);
+                                     }}>{book.volumeInfo.title}</div>);
+                    }) : ''}
+                </div>
                 <ErrorMessage
                     error={errorISBN}
                     message={'ISBN powinien mieć 10 lub 13 znaków'}
@@ -138,40 +140,40 @@ const AddBookForm = props => {
             </Form.Field>
             <Form.Field className={errorTitle ? 'errorElementRegistration' : null}>
                 <Label htmlFor="formTitle">Tytuł: </Label>
-                    <Input
-                        type="text"
-                        id="formTitle"
-                        onChange={(e, data) => {
-                            setTitle(data.value);
-                            setShowDropdoown(true);
-                            data.value.length > 1 && getGoogleBooksQuery('title', data.value)
-                                .then(res => {
-                                    if (res.hasOwnProperty('items')) {
-                                        setSearchResult(res.items);
-                                    } else setSearchResult([]);
-                                });
-                        }}
-                        onBlur={() => {
-                            validateTitle();
-                            setTimeout(() => {
-                                setShowDropdoown(false);
-                            }, 300);
-                        }}
-                        value={title}
-                    />
-                    <div className="dropdownListContainer">
-                        {showDropdown && title.length > 1 ? searchResults.map((book, i) => {
-                            return (<div className="dropdownItem" key={i}
-                                            onClick={() => {
-                                                setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
-                                                setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
-                                                setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
-                                                setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                                setTitle(book.volumeInfo.title);
-                                                setShowDropdoown(false);
-                                            }}>{book.volumeInfo.title}</div>);
-                        }) : ''}
-                    </div>
+                <Input
+                    type="text"
+                    id="formTitle"
+                    onChange={(e, data) => {
+                        setTitle(data.value);
+                        setShowDropdoown(true);
+                        data.value.length > 1 && getGoogleBooksQuery('title', data.value)
+                            .then(res => {
+                                if (res.hasOwnProperty('items')) {
+                                    setSearchResult(res.items);
+                                } else setSearchResult([]);
+                            });
+                    }}
+                    onBlur={() => {
+                        validateTitle();
+                        setTimeout(() => {
+                            setShowDropdoown(false);
+                        }, 300);
+                    }}
+                    value={title}
+                />
+                <div className="dropdownListContainer">
+                    {showDropdown && title.length > 1 ? searchResults.map((book, i) => {
+                        return (<div className="dropdownItem" key={i}
+                                     onClick={() => {
+                                         setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
+                                         setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
+                                         setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
+                                         setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                         setTitle(book.volumeInfo.title);
+                                         setShowDropdoown(false);
+                                     }}>{book.volumeInfo.title}</div>);
+                    }) : ''}
+                </div>
                 <ErrorMessage
                     error={errorTitle}
                     message={'Podaj poprawny tytuł książki'}
@@ -212,7 +214,7 @@ const AddBookForm = props => {
             >
                 <Label htmlFor="formCategory">Kategoria: </Label>
                 <Select placeholder='select category' options={categories}
-                    onChange={(e, data) => setCategory([data.value])} value={category[0]} />
+                        onChange={(e, data) => setCategory([data.value])} value={category[0]}/>
             </Form.Field>
 
             <Form.Field className={errorImageUrl ? 'errorElementRegistration' : null}>
@@ -246,7 +248,7 @@ const AddBookForm = props => {
                 />
             </Form.Field>
 
-            <ButtonBasic content="Dodaj" handleClick={handleAddBook} />
+            <ButtonBasic content="Dodaj" handleClick={handleAddBook}/>
         </form>
     );
 };

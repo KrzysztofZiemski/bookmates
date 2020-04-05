@@ -4,16 +4,33 @@ import { addBookToShelf, getAllBooks, deleteUserBook } from '../../../repos/user
 import { List } from 'semantic-ui-react';
 import { ButtonBasic } from '../../Button/Button';
 import { Link } from 'react-router-dom';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 import './bookPage.scss';
 
 const BookPage = ({ match, loggedUser }) => {
     const [book, setBook] = useState([]);
+    const [bookMetadata, setBookMetadata] = useState([]);
     const [userBooks, setUserBooks] = useState([]);
     const [otherUserBooks, setOtherUserBooks] = useState([]);
+    const [starValue, setStarValue] = useState(0.00);
+    const [globalStarValue, setGlobalStarValue] = useState(0.00);
 
+
+    const returnBookRating = (data) => {
+        const indexOfCurrUser = data.map(user => parseInt(user.userId)).indexOf(loggedUser.id);
+        const sum = data.length > 1 ? data.reduce((userPrev, userCurr) => parseInt(userPrev.rating) + parseInt(userCurr.rating), 0) : data[0].rating;
+        const avg = (sum / data.length) || 0;
+        setGlobalStarValue(avg);
+        if (indexOfCurrUser === -1) {
+            setStarValue(avg);
+        } else {
+            const value = parseInt(data[indexOfCurrUser].rating);
+            setStarValue(value);
+        }
+    };
 
     useEffect(() => {
-
         getBook(match.params.id)
             .then(res => {
                 setBook(res[0]);
@@ -22,7 +39,10 @@ const BookPage = ({ match, loggedUser }) => {
                         const indexOfCurrUser = res.map(user => parseInt(user.userId)).indexOf(loggedUser.id);
                         if (indexOfCurrUser === -1) {
                             setOtherUserBooks(res);
-                        } else setOtherUserBooks(res.splice(indexOfCurrUser, 1));
+                        } else {
+                            res.splice(indexOfCurrUser, 1);
+                            setOtherUserBooks(res);
+                        }
                     })
                     .catch(err => console.log(err));
             })
@@ -30,9 +50,14 @@ const BookPage = ({ match, loggedUser }) => {
         getAllBooks(loggedUser.id)
             .then(res => setUserBooks(res))
             .catch(err => console.log(err));
+        getBookUserMetadata(match.params.id)
+            .then(res => {
+                setBookMetadata(res);
+                res.length > 0 && returnBookRating(res);
+            });
+
 
     }, [getBook, getAllBooks, getBookUserMetadata, match.params.id]);
-
     const handleAdd = () => {
         const userBook = {
             bookId: book.isbn,
@@ -72,13 +97,39 @@ const BookPage = ({ match, loggedUser }) => {
             .catch(err => console.log(err));
         removeUserBookMetadata(book.id, loggedUser.id);
     };
+
+
     return book !== undefined ?
         (<div className="card-container">
             <div className='card-container-book'>
-                <img src={book.imageurl} alt=""/>
+                <div>
+                    <img src={book.imageurl} alt=""/>
+                    <Box component="fieldset" mb={3} borderColor="transparent">
+                        <Rating
+                            name="simple-controlled"
+                            value={starValue}
+                            precision={0.5}
+                            onChange={(event, newValue) => {
+                                addBookUserMetadata(book.isbn, {
+                                    userId: loggedUser.id,
+                                    userName: loggedUser.name,
+                                    status: 'inlibrary',
+                                    rating: newValue.toString()
+                                });
+                                getBookUserMetadata(match.params.id)
+                                    .then(res => {
+                                        setBookMetadata(res);
+                                        res.length > 0 && returnBookRating(res);
+                                    });
+                            }}
+                        />
+                    </Box>
+                    <h4>Śr. ocen użytk. : {globalStarValue}</h4>
+                    <h5>Liczba ocen: {bookMetadata.length || 0}</h5>
+                </div>
                 <div className="desc">
                     <h2>{unescape(book.title)}</h2>
-                    <h3>{book.authors}</h3>
+                    <h3>{book.authors !== undefined && book.authors.join(', ')}</h3>
                     <h4>{book.publishedYear}</h4>
                     <p>{unescape(book.description)}</p>
                     {userBooks.map(b => b.bookId).indexOf(book.isbn) === -1 ?
