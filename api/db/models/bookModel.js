@@ -37,7 +37,7 @@ const updateUserBookMetaDataDB = (bookId, metaData) => {
         ELSE userbookmetadata
     END
 ) ||  '${JSON.stringify(metaData)}'::jsonb
-        WHERE id = ${bookId};
+        WHERE isbn = '${bookId}';
     `;
     return connection.query(sql).then(response => response.rows);
 };
@@ -47,13 +47,13 @@ const removeFromUserMetadata = (metaData, bookId) => {
     const sql = `
     UPDATE ${tableName}
     SET userbookmetadata = '${JSON.stringify(metaData)}'::jsonb
-    WHERE id = ${bookId}`;
+    WHERE isbn = '${bookId}'`;
     return connection.query(sql);
 };
 
 const getAllBookUserMetadata = (bookId) => {
     const sql = `SELECT userbookmetadata
-  FROM ${tableName} WHERE id=${bookId}
+  FROM ${tableName} WHERE isbn='${bookId}'
     `;
     return connection.query(sql)
         .then(response => response.rows);
