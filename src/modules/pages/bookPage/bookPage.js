@@ -102,30 +102,32 @@ const BookPage = ({ match, loggedUser }) => {
     return book !== undefined ?
         (<div className="card-container">
             <div className='card-container-book'>
-                <div>
+                <div className="containerImage">
                     <img src={book.imageurl} alt=""/>
-                    <Box component="fieldset" mb={3} borderColor="transparent">
-                        <Rating
-                            name="simple-controlled"
-                            value={starValue}
-                            precision={0.5}
-                            onChange={(event, newValue) => {
-                                addBookUserMetadata(book.isbn, {
-                                    userId: loggedUser.id,
-                                    userName: loggedUser.name,
-                                    status: 'inlibrary',
-                                    rating: newValue.toString()
-                                });
-                                getBookUserMetadata(match.params.id)
-                                    .then(res => {
-                                        setBookMetadata(res);
-                                        res.length > 0 && returnBookRating(res);
+                    <div className='ratingDetails'>
+                        <Box component="fieldset" mb={3} borderColor="transparent">
+                            <Rating
+                                name="simple-controlled"
+                                value={starValue}
+                                precision={0.5}
+                                onChange={(event, newValue) => {
+                                    addBookUserMetadata(book.isbn, {
+                                        userId: loggedUser.id,
+                                        userName: loggedUser.name,
+                                        status: 'inlibrary',
+                                        rating: newValue.toString()
                                     });
-                            }}
-                        />
-                    </Box>
-                    <h4>Śr. ocen użytk. : {globalStarValue}</h4>
-                    <h5>Liczba ocen: {bookMetadata.length || 0}</h5>
+                                    getBookUserMetadata(match.params.id)
+                                        .then(res => {
+                                            setBookMetadata(res);
+                                            res.length > 0 && returnBookRating(res);
+                                        });
+                                }}
+                            />
+                        </Box>
+                        <h4>Śr. ocen użytk. : {globalStarValue}</h4>
+                        <h5>Liczba ocen: {bookMetadata.length || 0}</h5>
+                    </div>
                 </div>
                 <div className="desc">
                     <h2>{unescape(book.title)}</h2>

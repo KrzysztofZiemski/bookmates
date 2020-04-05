@@ -19,22 +19,61 @@
       flex-direction: column;
     }
 
-    h2 {
-      color: $colorOrange;
+    .containerImage {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      img {
+        margin-right: 50px;
+        @media screen and (max-width: 600px) {
+          margin: 0px auto 50px;
+        }
+      }
     }
 
-    p {
-      padding: 10px;
-      border: 1px solid $colorBlue;
-    }
-
-    img {
+    .ratingDetails {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       margin-right: 50px;
       @media screen and (max-width: 600px) {
         margin: 0px auto 50px;
       }
+
+      fieldset {
+        margin-bottom: 0px;
+        padding: 5px;
+        text-align: center;
+
+      }
+
+      h4 {
+        margin: 5px;
+        font-size: 1rem;
+        text-align: center;
+      }
+
+      h5 {
+        margin: 5px;
+        font-size: 0.8rem;
+        text-align: center;
+
+      }
+
     }
   }
+
+
+  h2 {
+    color: $colorOrange;
+  }
+
+  p {
+    padding: 10px;
+    border: 1px solid $colorBlue;
+  }
+
 
   .matesThatHaveBook {
     h3 {
