@@ -1,5 +1,5 @@
 import React from "react";
-import { getPublicUser, addMate } from '../../../repos/user';
+import { getPublicUser, addMate, deleteMate } from '../../../repos/user';
 import { Loader } from '../../Loader/Loader';
 import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
 import { SuccessMessage } from '../../successMessage/SuccessMessage';
@@ -37,7 +37,18 @@ const UserPage = (props) => {
         setMessage(<ErrorMessage message="Nie udało się pobrać użytkownika. Sprawdź poprawność adresu URL" closeError={closeMessage} />)
       })
   };
-
+  const handleRemoveMate = () => {
+    setWaiting(<Loader />);
+    deleteMate(publicUser.id).then(response => {
+      setWaiting(false);
+      setMessage(<SuccessMessage message="Usunięto użytkownika ze znajomych" closeError={closeMessage} />)
+      refreshUser();
+    })
+      .catch(err => {
+        setWaiting(false);
+        setMessage(<ErrorMessage message="Wystąpił błąd. Jeżeli sytuacja będzie się powtarzać skontaktuj się z administratorem" closeError={closeMessage} />);
+      })
+  }
   const handleAddMate = () => {
     const { id, email, name } = publicUser;
     setWaiting(<Loader />)
@@ -104,7 +115,7 @@ const UserPage = (props) => {
               <p>Miasto zamieszkania</p>
               <p>{publicUser.city}</p>
             </div>
-            {loggedUser && !isExist() ? <ButtonBasic handleClick={handleAddMate} content='Dodaj do znajomych' /> : null}
+            {loggedUser ? <ButtonBasic handleClick={isExist() ? handleRemoveMate : handleAddMate} content={isExist() ? 'Usuń ze znajomych' : 'Dodaj do znajomych'} /> : null}
           </div>
         </div>
         <h2>Biblioteczka</h2>
