@@ -31,7 +31,7 @@ const BookPage = ({ match, loggedUser }) => {
             .then(res => setUserBooks(res))
             .catch(err => console.log(err));
 
-    }, [getBook, getAllBooks, getBookUserMetadata]);
+    }, [getBook, getAllBooks, getBookUserMetadata, match.params.id]);
 
     const handleAdd = () => {
         const userBook = {
