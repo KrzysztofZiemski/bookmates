@@ -87,7 +87,7 @@ const BookPage = ({ match, loggedUser }) => {
                 </div>
             </div>
             <aside className="matesThatHaveBook">
-                <h1>Użytkownicy, którzy mają tę książkę</h1>
+                <h3>Użytkownicy, którzy mają tę książkę:</h3>
                 <List> {otherUserBooks.map((user, i) => (<Link to={`/user/${user.userId}`} key={i}><li>{user.userName}</li> </Link>))}</List>
             </aside>
 
