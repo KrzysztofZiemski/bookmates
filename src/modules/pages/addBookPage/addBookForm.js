@@ -90,7 +90,6 @@ const AddBookForm = props => {
         <form className="addBookForm" onSubmit={handleAddBook}>
             <Form.Field className={errorISBN ? 'errorElementRegistration' : null}>
                 <Label className="itemLabel" htmlFor="formISBN">ISBN: </Label>
-                <div className="searchBar">
                     <Input
                         type="number"
                         id="formISBN"
@@ -112,21 +111,18 @@ const AddBookForm = props => {
                                 });
                         }}
                     />
-                    <div>
-                        <div className="dropdownListContainer">
-                            {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
-                                return (<div className="dropdownItem" key={i}
-                                             onClick={() => {
-                                                 setTitle(book.volumeInfo.title);
-                                                 setAuthors(book.volumeInfo.authors.join(', '));
-                                                 setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
-                                                 setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                                 setShowDropdoown(false);
-                                             }}>{book.volumeInfo.title}</div>);
-                            }) : ''}
-                        </div>
+                    <div className="dropdownListContainer">
+                        {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
+                            return (<div className="dropdownItem" key={i}
+                                            onClick={() => {
+                                                setTitle(book.volumeInfo.title);
+                                                setAuthors(book.volumeInfo.authors.join(', '));
+                                                setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                                setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                                setShowDropdoown(false);
+                                            }}>{book.volumeInfo.title}</div>);
+                        }) : ''}
                     </div>
-                </div>
                 <ErrorMessage
                     error={errorISBN}
                     message={'ISBN powinien mieć 10 lub 13 znaków'}
@@ -134,7 +130,6 @@ const AddBookForm = props => {
             </Form.Field>
             <Form.Field className={errorTitle ? 'errorElementRegistration' : null}>
                 <Label htmlFor="formTitle">Tytuł: </Label>
-                <div className="searchBar">
                     <Input
                         type="text"
                         id="formTitle"
@@ -156,23 +151,19 @@ const AddBookForm = props => {
                         }}
                         value={title}
                     />
-                    <div>
-                        <div className="dropdownListContainer">
-                            {showDropdown && title.length > 1 ? searchResults.map((book, i) => {
-                                return (<div className="dropdownItem" key={i}
-                                             onClick={() => {
-                                                 setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
-                                                 setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
-                                                 setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
-                                                 setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                                 setTitle(book.volumeInfo.title);
-                                                 setShowDropdoown(false);
-                                             }}>{book.volumeInfo.title}</div>);
-                            }) : ''}
-                        </div>
+                    <div className="dropdownListContainer">
+                        {showDropdown && title.length > 1 ? searchResults.map((book, i) => {
+                            return (<div className="dropdownItem" key={i}
+                                            onClick={() => {
+                                                setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
+                                                setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
+                                                setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
+                                                setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                                setTitle(book.volumeInfo.title);
+                                                setShowDropdoown(false);
+                                            }}>{book.volumeInfo.title}</div>);
+                        }) : ''}
                     </div>
-                </div>
-
                 <ErrorMessage
                     error={errorTitle}
                     message={'Podaj poprawny tytuł książki'}
