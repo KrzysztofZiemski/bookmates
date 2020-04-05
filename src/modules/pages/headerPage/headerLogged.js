@@ -29,7 +29,7 @@ const LoggedHeader = (props) => {
                     BookMates
                 </Menu.Item>
                 <Menu.Item as={Link} to={'/profile'}>
-                    Profile
+                    Profil
                 </Menu.Item>
                 <Menu.Item as={Link} to={'/dashboard'}>
                     Biblioteczka
