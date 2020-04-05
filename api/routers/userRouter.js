@@ -92,12 +92,11 @@ const addUserBookToBookshelf = async (req, res) => {
 
 const getAllUserBooks = (req, res) => {
     getAllUserBooksController(req.params.userId)
-        .catch(err => {
-            res.status(400).send(err);
-        })
         .then(result => {
-            if (result.rows.length > 0) return res.json(result.rows[0].bookdata || []);
+            if (result && result.hasOwnProperty('rows') && result.rows.length > 0) return res.json(result.rows[0].bookdata || []);
             res.json([]);
+        }).catch(err => {
+            res.status(400).send(err);
         });
 };
 

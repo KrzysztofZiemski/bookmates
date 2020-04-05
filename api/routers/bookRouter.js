@@ -13,10 +13,10 @@ const getAllBooks = (req, res) => {
 const addBook = (req, res) => {
     const book = req.body;
     addBookToDB(book)
+        .then(result => res.status(200).json(result))
         .catch(err => {
             res.status(400).send(err);
-        })
-        .then(result => res.send(result));
+        });
 };
 
 const getSingleBook = (req, res) => {

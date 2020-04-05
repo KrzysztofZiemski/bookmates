@@ -11,7 +11,7 @@ import categories from '../../../utils/bookGeneres';
 import { Link } from 'react-router-dom';
 
 const AddBookForm = props => {
-    const { addBookForm } = props;
+    const { addBookForm, addBookSuccess } = props;
 
     let [isbn, setISBN] = React.useState(null);
     let [title, setTitle] = React.useState('');
@@ -34,7 +34,10 @@ const AddBookForm = props => {
         authors: '',
         publishedYear: 0
     });
-
+    //todo ustawić czyszczenie formularza
+    // if (addBookSuccess) {
+    //     setISBN(null); setTitle(''); setAuthors(''); setPublishedYear(''); setImageUrl(''); setDescription('');
+    // }
     const [searchResults, setSearchResult] = React.useState([]);
     const [showDropdown, setShowDropdoown] = React.useState(true);
 
