@@ -9,8 +9,6 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
         //todo 2 autorów
         if (!Array.isArray(books)) throw new Error('no Array type');
         if (Array.isArray(book[filterBy])) {
-            console.log(book[filterBy]);
-
             book[filterBy].forEach(property => {
                 options.hasOwnProperty(property) ? options[property].push(book) : options[property] = [book];
             });
@@ -19,7 +17,6 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
             options.hasOwnProperty(book[filterBy]) ? options[book[filterBy]].push(book) : options[book[filterBy]] = [book];
         }
     });
-    console.log(options);
     //zmiana obiektu na tablicę podwójnie zagnieżdżoną w celu możliwości sortowania po kluczu obiektu
     let optionsArr = [];
     for (let option in options) {

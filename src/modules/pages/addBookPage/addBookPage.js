@@ -24,6 +24,8 @@ const AddBookPage = (props) => {
             .then(data => {
                 if (data !== undefined && data.hasOwnProperty('code') && data.code === '23505') {
                     //todo co tu chciałeś zrobić?
+                    // setMessage('Książka już jest dodana do Twojej biblioteki');
+                    //setAddBookSuccess(false);
                 }
                 if (data === undefined) {
                     //todo co tu chciałeś zrobić?

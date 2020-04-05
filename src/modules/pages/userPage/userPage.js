@@ -20,7 +20,6 @@ const UserPage = (props) => {
   let [filter, setFilter] = React.useState('categories');
   let [search, setSearch] = React.useState('');
   let { loggedUser, match, refreshUser } = props;
-
   const closeMessage = () => {
     setMessage(false);
   }
@@ -66,7 +65,12 @@ const UserPage = (props) => {
         return nogenderAvatar
     }
   }
-
+  const isExist = () => {
+    if (!loggedUser || !publicUser) return false;
+    return loggedUser.mates.find(mate => {
+      if (mate.id === publicUser.id) return true;
+    });
+  }
   React.useEffect(() => {
     const { id } = match.params;
     if (id) getUser(id);
@@ -100,7 +104,7 @@ const UserPage = (props) => {
               <p>Miasto zamieszkania</p>
               <p>{publicUser.city}</p>
             </div>
-            {loggedUser ? <ButtonBasic handleClick={handleAddMate} content='Dodaj do znajomych' /> : null}
+            {loggedUser && !isExist() ? <ButtonBasic handleClick={handleAddMate} content='Dodaj do znajomych' /> : null}
           </div>
         </div>
         <h2>Biblioteczka</h2>

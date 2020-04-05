@@ -64,38 +64,38 @@ function App() {
 
     return (
         <Router>
-            <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
+            <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars} /></div>
             <header className={menuVisibility ? 'headerUnlogged show' : 'headerUnlogged'}>
                 {loggedUser ?
-                    <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} toggleMenu={toggleMenu}/> :
-                    <MainHeader setLoginUser={setLoginUser} toggleMenu={toggleMenu}/>}
+                    <LoggedHeader loggedUser={loggedUser} setLoginUser={setLoginUser} toggleMenu={toggleMenu} /> :
+                    <MainHeader setLoginUser={setLoginUser} toggleMenu={toggleMenu} />}
             </header>
             <main>
                 <Switch>
                     <Route exact path="/">
-                        <WelcomePage loggedUser={loggedUser}/>
+                        <WelcomePage loggedUser={loggedUser} />
                     </Route>
                     <Route path="/dashboard">
-                        {loggedUser === false ? <Redirect to="/"/> : <Dashboard loggedUser={loggedUser}/>}
+                        {loggedUser === false ? <Redirect to="/" /> : <Dashboard loggedUser={loggedUser} />}
                     </Route>
                     <Route path="/addbook">
-                        {loggedUser === false ? <Redirect to="/"/> : <AddBookPage loggedUser={loggedUser}/>}
+                        {loggedUser === false ? <Redirect to="/" /> : <AddBookPage loggedUser={loggedUser} />}
                     </Route>
                     <Route path="/registration">
-                        {loggedUser === false ? <RegistrationPage/> : <Redirect to="/dashboard"/>}
+                        {loggedUser === false ? <RegistrationPage /> : <Redirect to="/dashboard" />}
                     </Route>
                     <PrivateRoute exact path="/addbook/:query" component={AddBookPage}>
                     </PrivateRoute>
-                    <Route path='/book/:id' render={(props) => <BookPage {...props} loggedUser={loggedUser}/>}/>
+                    <Route path='/book/:id' render={(props) => <BookPage {...props} loggedUser={loggedUser} />} />
                     <Route path="/user/:id" render={(props) => <UserPage {...props} loggedUser={loggedUser}
-                                                                         refreshUser={refreshUser}/>}/>
+                        refreshUser={refreshUser} />} />
                     <Route path="/profile/">
-                        {loggedUser === false ? <Redirect to="/"/> :
-                            <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser}/>}
+                        {loggedUser === false ? <Redirect to="/" /> :
+                            <ProfilePage loggedUser={loggedUser} setLoginUser={setLoginUser} />}
                     </Route>
                     <Route path="/mates">
-                        {loggedUser === false ? <Redirect to="/"/> :
-                            <Mates loggedUser={loggedUser} refreshUser={refreshUser}/>}
+                        {loggedUser === false ? <Redirect to="/" /> :
+                            <Mates loggedUser={loggedUser} refreshUser={refreshUser} />}
                     </Route>
                     <Route>
                         <ErrorPage></ErrorPage>
