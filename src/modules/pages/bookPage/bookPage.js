@@ -25,7 +25,7 @@ const BookPage = ({ match, loggedUser }) => {
         if (indexOfCurrUser === -1) {
             setStarValue(avg);
         } else {
-            const value = parseInt(data[indexOfCurrUser].rating);
+            const value = parseFloat(data[indexOfCurrUser].rating);
             setStarValue(value);
         }
     };
