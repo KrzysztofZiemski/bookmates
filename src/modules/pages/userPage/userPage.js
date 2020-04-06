@@ -17,12 +17,13 @@ const UserPage = (props) => {
   let [publicUser, setPublicUser] = React.useState(null);
   let [waiting, setWaiting] = React.useState(false);
   let [message, setMessage] = React.useState(false);
-  let [filter, setFilter] = React.useState('categories');
+  let [filter, setFilter] = React.useState('category');
   let [search, setSearch] = React.useState('');
   let { loggedUser, match, refreshUser } = props;
   const closeMessage = () => {
     setMessage(false);
   }
+
   const getUser = (id) => {
     setWaiting(<Loader />)
     getPublicUser(id)

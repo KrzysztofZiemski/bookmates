@@ -12,8 +12,8 @@ const AddBookPage = (props) => {
     let [message, setMessage] = React.useState('');
     const { loggedUser } = props;
     const closeMessage = () => {
-        if (addBookSuccess)
-            setAddBookSuccess(null)
+        setAddBookSuccess(null)
+
     }
     const addBookForm = async (book) => {
         addBook(book)

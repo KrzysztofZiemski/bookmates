@@ -103,7 +103,7 @@ const BookPage = ({ match, loggedUser }) => {
         (<div className="card-container">
             <div className='card-container-book'>
                 <div className="containerImage">
-                    <img src={book.imageurl} alt=""/>
+                    <img src={book.imageurl} alt="" />
                     <div className='ratingDetails'>
                         <Box component="fieldset" mb={3} borderColor="transparent">
                             <Rating
@@ -135,8 +135,8 @@ const BookPage = ({ match, loggedUser }) => {
                     <h4>{book.publishedYear}</h4>
                     <p>{unescape(book.description)}</p>
                     {userBooks.map(b => b.bookId).indexOf(book.isbn) === -1 ?
-                        (<ButtonBasic handleClick={handleAdd} content='Dodaj na półkę'/>) :
-                        (<ButtonBasic handleClick={handleRemove} content='Usuń z półki'/>)}
+                        (<ButtonBasic handleClick={handleAdd} content='Dodaj na półkę' />) :
+                        (<ButtonBasic handleClick={handleRemove} content='Usuń z półki' />)}
                 </div>
             </div>
             <aside className="matesThatHaveBook">
