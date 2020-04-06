@@ -97,6 +97,7 @@ export const addBookToShelf = (book, id) => {
 };
 
 export const getAllBooks = (id) => {
+    console.log(id)
     return fetch(`${urlUser}books/${id}`)
         .then(res => {
             if (res.status !== 200) throw new Error(res.status);

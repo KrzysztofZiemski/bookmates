@@ -6,7 +6,7 @@ const OptionFilterBook = ({ setFilter, value }) => {
 
     const selectTypes = [
         {
-            name: 'categories',
+            name: 'category',
             pl: 'Kategorie'
         },
         {

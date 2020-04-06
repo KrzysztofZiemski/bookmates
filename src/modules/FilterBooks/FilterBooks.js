@@ -4,16 +4,16 @@ import Slider from './Slider/Slider';
 import _ from 'lodash';
 
 export const FilterBooks = ({ books, filterBy, onClick, id }) => {
+    if (!Array.isArray(books)) throw new Error('no Array type');
     const options = {};
     books.forEach(book => {
         //todo 2 autorów
-        if (!Array.isArray(books)) throw new Error('no Array type');
         if (Array.isArray(book[filterBy])) {
             book[filterBy].forEach(property => {
+                console.log('property', property)
                 options.hasOwnProperty(property) ? options[property].push(book) : options[property] = [book];
             });
         } else {
-
             options.hasOwnProperty(book[filterBy]) ? options[book[filterBy]].push(book) : options[book[filterBy]] = [book];
         }
     });
@@ -28,6 +28,7 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
     });
 
     const output = optionsArr.map(option => {
+
         return (
             <div className="single-slider" key={option[0]}>
                 <h3>{option[0] === 'not found' || option[0] === 'undefined' || option[0] === '0000' ? 'Brak' : option[0]}</h3>
