@@ -1,1 +1,2 @@
-export const BACKEND_URL = "http://localhost:3010";
+const newLocal = "http://indyanin.myqnapcloud.com:3010";
+export const BACKEND_URL = newLocal;
