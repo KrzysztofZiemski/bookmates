@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const authRouter = express.Router();
 const { checkPassword } = require('../db/utils/passwordEncryption');
 const { getUserByMailController } = require('../controllers/user');
@@ -12,13 +12,13 @@ const login = async (req, res) => {
     const user = responseUser[0];
     const isOk = await checkPassword(user, userData.password);
     if (!isOk) return res.status(401).json('błąd logowania');
-    const token = generateToken(user)
+    const token = generateToken(user);
 
     const { password_salt, password_hash, ...safeUserData } = user;
-    const data = { ...safeUserData, token }
+    const data = { ...safeUserData, token };
 
     return res.status(200).json(data);
-}
+};
 
 //localhost:3010/auth
 
