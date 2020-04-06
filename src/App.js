@@ -63,7 +63,7 @@ function App() {
     }, []);
 
     return (
-        <Router basename='/bookmates'>
+        <Router basename='bookmates'>
             <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
             <header className={menuVisibility ? 'headerUnlogged show' : 'headerUnlogged'}>
                 {loggedUser ?
