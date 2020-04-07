@@ -63,54 +63,54 @@ const LoggedHeader = (props) => {
 
     return (
         <Menu className="navbar">
-            <button className="close" onClick={toggleMenu}><FontAwesomeIcon icon={faTimes}/></button>
+            <button className="close" onClick={toggleMenu}><FontAwesomeIcon icon={faTimes} /></button>
             <Container>
-                <Menu.Item as={Link} to={'/'} active className="logo">
+                <Menu.Item as={Link} to={'/'} active className="logo" onClick={toggleMenu}>
                     BookMates
                 </Menu.Item>
-                <Menu.Item as={Link} to={'/profile'}>
+                <Menu.Item as={Link} to={'/profile'} onClick={toggleMenu}>
                     Profil
                 </Menu.Item>
-                <Menu.Item as={Link} to={'/dashboard'}>
+                <Menu.Item as={Link} to={'/dashboard'} onClick={toggleMenu}>
                     Biblioteczka
                 </Menu.Item>
-                <Menu.Item as={Link} to={'/addbook'}>
+                <Menu.Item as={Link} to={'/addbook'} onClick={toggleMenu}>
                     Dodaj książkę
                 </Menu.Item>
-                <Menu.Item as={Link} to={'/mates'}>
+                <Menu.Item as={Link} to={'/mates'} onClick={toggleMenu}>
                     Znajomi
                 </Menu.Item>
                 <Menu.Item className="searchButton" onClick={handleClick}>
-                    {!searchClicked ? <FontAwesomeIcon className='searchIcon' icon={faSearch}/> :
+                    {!searchClicked ? <FontAwesomeIcon className='searchIcon' icon={faSearch} /> :
                         <div className="searchField">{searchClicked &&
-                        <input className="searchInput" type='search' onBlur={() => {
-                            setTimeout(() => {
-                                setSearchClicked(false);
-                            }, 300);
-                        }} autoFocus
-                               onChange={(e) => handleChange(e)}/>}
+                            <input className="searchInput" type='search' onBlur={() => {
+                                setTimeout(() => {
+                                    setSearchClicked(false);
+                                }, 300);
+                            }} autoFocus
+                                onChange={(e) => handleChange(e)} />}
                         </div>}
                 </Menu.Item>
                 {searchClicked &&
-                <div className="dropdownListContainer">
-                    {books && books.map((book, i) => {
-                        return (<Link to={`/book/${book.industryIdentifiers[0].identifier}`} className="dropdownItem"
-                                      key={i}>
-                            <div className="bookCard">
-                                <div className="bookCardDetails">
-                                    <h1>{book.title}</h1>
-                                    <h2>{book.hasOwnProperty('authors') && book.authors.join(', ')}</h2>
-                                    <h3>{book.publishedDate.split('-')[0]}</h3>
+                    <div className="dropdownListContainer">
+                        {books && books.map((book, i) => {
+                            return (<Link to={`/book/${book.industryIdentifiers[0].identifier}`} className="dropdownItem"
+                                key={i}>
+                                <div className="bookCard">
+                                    <div className="bookCardDetails">
+                                        <h1>{book.title}</h1>
+                                        <h2>{book.hasOwnProperty('authors') && book.authors.join(', ')}</h2>
+                                        <h3>{book.publishedDate.split('-')[0]}</h3>
+                                    </div>
+                                    <div className="imageContainer">
+                                        <img src={book.imageLinks.thumbnail} alt="" />
+                                    </div>
                                 </div>
-                                <div className="imageContainer">
-                                    <img src={book.imageLinks.thumbnail} alt=""/>
-                                </div>
-                            </div>
-                        </Link>);
-                    })}
-                </div>}
+                            </Link>);
+                        })}
+                    </div>}
                 <Menu.Item position='right'>
-                    <ButtonBasic content="Wyloguj" handleClick={logout}/>
+                    <ButtonBasic content="Wyloguj" handleClick={logout} />
                 </Menu.Item>
             </Container>
         </Menu>
