@@ -1,7 +1,7 @@
 import React from 'react';
 import './FilterBooks.scss';
 import Slider from './Slider/Slider';
-import _ from 'lodash';
+
 
 export const FilterBooks = ({ books, filterBy, onClick, id }) => {
     if (!Array.isArray(books)) throw new Error('no Array type');
@@ -9,8 +9,8 @@ export const FilterBooks = ({ books, filterBy, onClick, id }) => {
     books.forEach(book => {
         //todo 2 autorów
         if (Array.isArray(book[filterBy])) {
+            console.log(book[filterBy])
             book[filterBy].forEach(property => {
-                console.log('property', property)
                 options.hasOwnProperty(property) ? options[property].push(book) : options[property] = [book];
             });
         } else {

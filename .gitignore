@@ -28,3 +28,5 @@ api/config.json
 src/config.json
 
 .idea/
+# Local Netlify folder
+.netlify

@@ -1,7 +1,7 @@
 {
   "name": "book",
   "version": "0.1.0",
-  "homepage": "https://krzysztofziemski.github.io/bookmates/",
+  "homepage": "https://bookmates.netlify.app/",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",

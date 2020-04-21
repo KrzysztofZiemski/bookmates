@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { Form, Input, Label } from 'semantic-ui-react';
-import ErrorMessage from './errorMessage';
+import { ErrorMessage } from '../../ErrorMessage/ErrorMessage';
+import ErrorField from './ErrorField';
 import { ButtonBasic } from '../../Button/Button';
 import './addBookPage.scss';
 import { Select } from 'semantic-ui-react';
 import { getGoogleBooksQuery } from './googleBookSearchAutocomplete';
-import hash from 'object-hash';
 
 import categories from '../../../utils/bookGeneres';
-import { Link } from 'react-router-dom';
 import { addBookUserMetadata } from '../../../repos/book';
 
 const AddBookForm = props => {
@@ -27,14 +26,10 @@ const AddBookForm = props => {
     let [errorPublishedYear, setErrorPublishedYear] = React.useState(null);
     let [errorImageUrl, setErrorImageUrl] = React.useState(null);
     let [errorDescription, setErrorDescription] = React.useState(null);
-    let [errorMissingFields, setErrorMissingFields] = React.useState(null);
+
+    let [submit, setSubmit] = React.useState(null);
     let [category, setCategory] = React.useState([]);
-    let [searchTerm, setSearchTerm] = React.useState({
-        isbn: '',
-        title: '',
-        authors: '',
-        publishedYear: 0
-    });
+
     useEffect(() => {
         if (addBookSuccess) {
             setISBN('');
@@ -80,8 +75,8 @@ const AddBookForm = props => {
     const handleAddBook = e => {
         e.preventDefault();
         const book = { isbn, title, authors, publishedYear, category, imageUrl, description };
-        if (isbn === null || (isbn.length !== 10 && isbn.length !== 13) || title === '' || authors === '' || publishedYear === 0) {
-            return setErrorMissingFields(false);
+        if (isbn === null || (isbn.length !== 10 && isbn.length !== 13) || title === '' || authors === '' || publishedYear === 0 || category.length > 0) {
+            return setSubmit(false)
         }
         addBookForm(book);
         if (user) {
@@ -98,6 +93,7 @@ const AddBookForm = props => {
 
     return (
         <form className="addBookForm" onSubmit={handleAddBook}>
+            {submit === false ? <ErrorMessage message="wypełnij wszystkie wymagane pola" closeError={() => setSubmit(null)} /> : null}
             <Form.Field className={errorISBN ? 'errorElementRegistration' : null}>
                 <Label className="itemLabel" htmlFor="formISBN">ISBN: </Label>
                 <Input
@@ -124,16 +120,17 @@ const AddBookForm = props => {
                 <div className="dropdownListContainer">
                     {showDropdown && isbn !== null && isbn.length > 9 ? searchResults.map((book, i) => {
                         return (<div className="dropdownItem" key={i}
-                                     onClick={() => {
-                                         setTitle(book.volumeInfo.title);
-                                         setAuthors(book.volumeInfo.authors.join(', '));
-                                         setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
-                                         setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                         setShowDropdoown(false);
-                                     }}>{book.volumeInfo.title}</div>);
+                            onClick={() => {
+                                setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
+                                setTitle(book.volumeInfo.title);
+                                setAuthors(book.volumeInfo.authors.join(', '));
+                                setPublishedYear(book.volumeInfo.publishedDate.split('-')[0]);
+                                setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                setShowDropdoown(false);
+                            }}>{book.volumeInfo.title}</div>);
                     }) : ''}
                 </div>
-                <ErrorMessage
+                <ErrorField
                     error={errorISBN}
                     message={'ISBN powinien mieć 10 lub 13 znaków'}
                 />
@@ -164,17 +161,17 @@ const AddBookForm = props => {
                 <div className="dropdownListContainer">
                     {showDropdown && title.length > 1 ? searchResults.map((book, i) => {
                         return (<div className="dropdownItem" key={i}
-                                     onClick={() => {
-                                         setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
-                                         setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
-                                         setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
-                                         setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
-                                         setTitle(book.volumeInfo.title);
-                                         setShowDropdoown(false);
-                                     }}>{book.volumeInfo.title}</div>);
+                            onClick={() => {
+                                setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
+                                setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
+                                setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
+                                setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
+                                setTitle(book.volumeInfo.title);
+                                setShowDropdoown(false);
+                            }}>{book.volumeInfo.title}</div>);
                     }) : ''}
                 </div>
-                <ErrorMessage
+                <ErrorField
                     error={errorTitle}
                     message={'Podaj poprawny tytuł książki'}
                 />
@@ -188,7 +185,7 @@ const AddBookForm = props => {
                     onBlur={validateAuthors}
                     value={authors}
                 />
-                <ErrorMessage
+                <ErrorField
                     error={errorAuthors}
                     message={'Podaj poprawnie autora/autorów'}
                 />
@@ -204,7 +201,7 @@ const AddBookForm = props => {
                     onChange={(e, data) => setPublishedYear(data.value)}
                     value={publishedYear}
                 />
-                <ErrorMessage
+                <ErrorField
                     error={errorPublishedYear}
                     message={'Rok publikacji powinien mieć 4 cyfry'}
                 />
@@ -214,7 +211,7 @@ const AddBookForm = props => {
             >
                 <Label htmlFor="formCategory">Kategoria: </Label>
                 <Select placeholder='select category' options={categories}
-                        onChange={(e, data) => setCategory([data.value])} value={category[0]}/>
+                    onChange={(e, data) => setCategory([data.value])} value={category[0]} />
             </Form.Field>
 
             <Form.Field className={errorImageUrl ? 'errorElementRegistration' : null}>
@@ -226,7 +223,7 @@ const AddBookForm = props => {
                     onChange={(e, data) => setImageUrl(data.value)}
                     onBlur={validateImageURL}
                 />
-                <ErrorMessage
+                <ErrorField
                     error={errorImageUrl}
                     message={'Podaj poprawnie adres obrazka'}
                 />
@@ -242,13 +239,13 @@ const AddBookForm = props => {
                     onBlur={validateDescription}
                     value={description}
                 />
-                <ErrorMessage
+                <ErrorField
                     error={errorDescription}
                     message={'Podaj poprawnie opis książki'}
                 />
             </Form.Field>
 
-            <ButtonBasic content="Dodaj" handleClick={handleAddBook}/>
+            <ButtonBasic content="Dodaj" handleClick={handleAddBook} />
         </form>
     );
 };

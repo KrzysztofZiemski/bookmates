@@ -65,7 +65,7 @@ const BookPage = ({ match, loggedUser }) => {
             imageUrl: book.imageurl,
             authors: book.authors.join(', '),
             publishedYear: book.publishedYear.toString(),
-            categories: book.category
+            category: book.category
         };
         addBookToShelf(userBook, loggedUser.id)
             .then(data => {

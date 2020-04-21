@@ -9,22 +9,18 @@ import {
 
 import './header.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faSearch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { AddBookSearch } from '../addBookPage/addBookSearch/AddBookSearch';
+import { faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 import getGoogleBooks from '../../../utils/googleBooksApi';
 import { addBook } from '../../../repos/book';
 
 const LoggedHeader = (props) => {
     const [searchClicked, setSearchClicked] = useState(false);
 
-    const { setLoginUser, toggleMenu, loggedUser } = props;
+    const { setLoginUser, toggleMenu } = props;
 
     let [books, setBooks] = React.useState([]);
-    let [searchField, setSearchField] = React.useState('');
-    let [sort, setSort] = React.useState('');
 
     const handleChange = (e) => {
-        setSearchField(e.target.value);
         if (e.target.value.length < 2) return;
         getGoogleBooks(e.target.value)
             .then(res => {
@@ -36,14 +32,15 @@ const LoggedHeader = (props) => {
                 setBooks(res);
                 // Inserting results from Google Api to Postgres
                 res && res.map(b => {
-                    addBook({
+                    console.log('sssss', b)
+                    return addBook({
                         title: escape(b.title),
                         imageUrl: b.imageLinks.thumbnail,
                         authors: b.authors.join(', '),
                         publishedYear: parseInt(b.publishedDate.split('-')[0]),
                         description: escape(b.description),
                         isbn: b.industryIdentifiers[0].identifier,
-                        category: b.hasOwnProperty('categories') ? b.categories : []
+                        category: b.hasOwnProperty('categories') ? b.categories : ['brak']
                     });
                 });
             });

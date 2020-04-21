@@ -47,6 +47,7 @@ function App() {
         if (!menuVisibility) return setMenuVisibility(true);
         setMenuVisibility(false);
     };
+    console.log(loggedUser)
     //TODO - NIE CHCIAŁO SIĘ USTAWIAĆ setLoginUser(false) w then funkcji getUserDetails(trzeba ustawić też błąd
     // pobierania danych usera(niepoprawny token))
     const refreshUser = () => {
