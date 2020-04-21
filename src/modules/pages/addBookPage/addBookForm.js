@@ -29,7 +29,7 @@ const AddBookForm = props => {
 
     let [submit, setSubmit] = React.useState(null);
     let [category, setCategory] = React.useState([]);
-
+    console.log(category)
     useEffect(() => {
         if (addBookSuccess) {
             setISBN('');
@@ -75,7 +75,8 @@ const AddBookForm = props => {
     const handleAddBook = e => {
         e.preventDefault();
         const book = { isbn, title, authors, publishedYear, category, imageUrl, description };
-        if (isbn === null || (isbn.length !== 10 && isbn.length !== 13) || title === '' || authors === '' || publishedYear === 0 || category.length > 0) {
+        console.log(book)
+        if (!isbn || (isbn.length !== 10 && isbn.length !== 13) || title === '' || authors === '' || publishedYear === 0 || category.length < 1) {
             return setSubmit(false)
         }
         addBookForm(book);
@@ -140,6 +141,7 @@ const AddBookForm = props => {
                 <Input
                     type="text"
                     id="formTitle"
+                    value={title}
                     onChange={(e, data) => {
                         setTitle(data.value);
                         setShowDropdoown(true);
@@ -156,15 +158,14 @@ const AddBookForm = props => {
                             setShowDropdoown(false);
                         }, 300);
                     }}
-                    value={title}
                 />
                 <div className="dropdownListContainer">
                     {showDropdown && title.length > 1 ? searchResults.map((book, i) => {
                         return (<div className="dropdownItem" key={i}
                             onClick={() => {
-                                setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : null);
+                                setISBN(book.volumeInfo.hasOwnProperty('industryIdentifiers') ? book.volumeInfo.industryIdentifiers[0].identifier : '');
                                 setAuthors(book.volumeInfo.hasOwnProperty('authors') ? book.volumeInfo.authors.join(', ') : null);
-                                setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : null);
+                                setPublishedYear(book.volumeInfo.hasOwnProperty('publishedDate') ? book.volumeInfo.publishedDate.split('-')[0] : '');
                                 setImageUrl(book.volumeInfo.hasOwnProperty('imageLinks') ? book.volumeInfo.imageLinks.thumbnail : '');
                                 setTitle(book.volumeInfo.title);
                                 setShowDropdoown(false);

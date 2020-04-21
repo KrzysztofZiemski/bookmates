@@ -40,7 +40,7 @@ const LoggedHeader = (props) => {
                         publishedYear: parseInt(b.publishedDate.split('-')[0]),
                         description: escape(b.description),
                         isbn: b.industryIdentifiers[0].identifier,
-                        category: b.hasOwnProperty('categories') ? b.categories : ['brak']
+                        category: b.hasOwnProperty('categories') ? b.categories : ['Brak']
                     });
                 });
             });

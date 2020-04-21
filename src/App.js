@@ -47,7 +47,7 @@ function App() {
         if (!menuVisibility) return setMenuVisibility(true);
         setMenuVisibility(false);
     };
-    console.log(loggedUser)
+    console.log()
     //TODO - NIE CHCIAŁO SIĘ USTAWIAĆ setLoginUser(false) w then funkcji getUserDetails(trzeba ustawić też błąd
     // pobierania danych usera(niepoprawny token))
     const refreshUser = () => {
@@ -62,7 +62,7 @@ function App() {
     }, []);
 
     return (
-        <Router basename='bookmates'>
+        <Router basename='#'>
             <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars} /></div>
             <div className="menuBurger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars} /></div>
             <header className={menuVisibility ? 'headerUnlogged show' : 'headerUnlogged'}>
